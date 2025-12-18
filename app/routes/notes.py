@@ -245,14 +245,22 @@ def reject_note(note_id):
 @login_required
 def download_file(filename):
     # Only allow if verified or if user is uploader/teacher/admin
-    # Simplified for MVP: Check if file exists in DB
     note = Note.query.filter_by(filename=filename).first_or_404()
     if not note.is_verified:
         if current_user.role.name == 'Student' and current_user.id != note.user_id:
             flash('This note is not yet verified.', 'warning')
             return redirect(url_for('notes.list_notes'))
             
-    return send_from_directory(current_app.config['UPLOAD_FOLDER'], filename)
+    if note.file_url:
+        # If it's a Cloudinary URL, attempt to add attachment flag for direct download
+        if "res.cloudinary.com" in note.file_url:
+            if "/upload/" in note.file_url:
+                parts = note.file_url.split('/upload/')
+                download_url = f"{parts[0]}/upload/fl_attachment/{parts[1]}"
+                return redirect(download_url)
+        return redirect(note.file_url)
+
+    return send_from_directory(current_app.config['UPLOAD_FOLDER'], filename, as_attachment=True)
 
 @notes.route('/notes/view/<filename>')
 @login_required
@@ -264,5 +272,8 @@ def view_file(filename):
             flash('This note is not yet verified.', 'warning')
             return redirect(url_for('notes.list_notes'))
     
+    if note.file_url:
+        return redirect(note.file_url)
+
     # Send file with inline disposition to view in browser
     return send_from_directory(current_app.config['UPLOAD_FOLDER'], filename, as_attachment=False)
