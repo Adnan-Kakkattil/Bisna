@@ -5,7 +5,7 @@ from werkzeug.security import generate_password_hash
 app = create_app()
 
 with app.app_context():
-    db.drop_all() # Reset DB for schema changes
+    # Only create tables if they don't exist. db.drop_all() is removed for safety.
     db.create_all()
     
     # Seed Roles
