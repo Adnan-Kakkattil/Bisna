@@ -26,7 +26,7 @@ def dashboard():
 
     verified_teachers = User.query.join(Role).filter(
         User.is_verified == True,
-        Role.name.in_(['Teacher', 'Admin']),
+        Role.name == 'Teacher',
         User.college_id == current_user.college_id
     ).all()
 

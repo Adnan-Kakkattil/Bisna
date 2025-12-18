@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}User Profile{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+        <div class="glass-card p-5 text-center">
+            <div class="mb-4">
+                <div class="profile-avatar mx-auto mb-3 bg-glass border border-glass rounded-circle d-flex align-items-center justify-content-center"
+                    style="width: 100px; height: 100px;">
+                    <i class="fas fa-user-circle fa-4x text-accent"></i>
+                </div>
+                <h3 class="fw-bold mb-1">{{ current_user.username }}</h3>
+                <span class="badge-futuristic px-3 py-1" style="font-size: 0.75rem;">{{ current_user.role.name }}</span>
+            </div>
+
+            <div class="row g-3 text-start mt-4">
+                <div class="col-12">
+                    <div class="bg-glass border border-glass rounded-3 p-3">
+                        <label class="small text-muted mb-1 d-block uppercase tracking-widest"
+                            style="font-size: 0.6rem;">Email Address</label>
+                        <div class="text-white">{{ current_user.email }}</div>
+                    </div>
+                </div>
+
+                {% if current_user.college %}
+                <div class="col-12">
+                    <div class="bg-glass border border-glass rounded-3 p-3">
+                        <label class="small text-muted mb-1 d-block uppercase tracking-widest"
+                            style="font-size: 0.6rem;">Associated College</label>
+                        <div class="text-white">{{ current_user.college.name }}</div>
+                        <div class="small text-accent mt-1" style="font-size: 0.65rem;">ID: {{
+                            current_user.college.formatted_id }}</div>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if current_user.register_number %}
+                <div class="col-12">
+                    <div class="bg-glass border border-glass rounded-3 p-3">
+                        <label class="small text-muted mb-1 d-block uppercase tracking-widest"
+                            style="font-size: 0.6rem;">Register Number</label>
+                        <div class="text-white">{{ current_user.register_number }}</div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="col-12">
+                    <div class="bg-glass border border-glass rounded-3 p-3">
+                        <label class="small text-muted mb-1 d-block uppercase tracking-widest"
+                            style="font-size: 0.6rem;">Security</label>
+                        <div class="d-flex justify-content-between align-items-center mt-1">
+                            <span class="text-white">Account Password</span>
+                            <button class="btn btn-outline-futuristic btn-sm disabled"
+                                title="Password update logic coming soon">
+                                <i class="fas fa-lock me-2"></i>Update
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-5 pt-3 border-top border-glass">
+                <p class="small text-muted mb-4">Account activity is monitored for security compliance.</p>
+                <a href="{{ url_for('auth.logout') }}"
+                    class="btn btn-outline-futuristic text-danger border-danger px-4">
+                    <i class="fas fa-sign-out-alt me-2"></i>Logout Session
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

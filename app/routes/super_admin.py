@@ -22,7 +22,7 @@ def dashboard():
     
     verified_admins = User.query.join(Role).filter(
         User.is_verified == True,
-        Role.name.in_(['Admin', 'Super Admin'])
+        Role.name == 'Admin'
     ).all()
     
     return render_template('super_admin/dashboard.html', 

@@ -194,3 +194,8 @@ def logout():
         log_activity('Logout', f'User {current_user.username} logged out.')
     logout_user()
     return redirect(url_for('main.index'))
+
+@auth.route("/profile")
+@login_required
+def profile():
+    return render_template('auth/profile.html', title='User Profile')

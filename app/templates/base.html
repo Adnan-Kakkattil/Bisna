@@ -38,6 +38,11 @@
                     <li class="nav-item"><a class="nav-link px-3" href="{{ url_for('notes.list_notes') }}">Syllabus
                             Explorer</a></li>
                     {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link px-3" href="{{ url_for('auth.profile') }}">
+                            <i class="fas fa-user-circle me-1"></i>Profile
+                        </a>
+                    </li>
                     <li class="nav-item ms-lg-3">
                         <a class="btn btn-outline-futuristic btn-sm py-2 px-4" href="{{ url_for('auth.logout') }}">
                             <i class="fas fa-sign-out-alt me-2"></i>Logout
