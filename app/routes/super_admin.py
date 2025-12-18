@@ -20,10 +20,9 @@ def dashboard():
         User.college_id != None
     ).all()
     
-    # Verified Admins
     verified_admins = User.query.join(Role).filter(
         User.is_verified == True,
-        Role.name == 'Admin'
+        Role.name.in_(['Admin', 'Super Admin'])
     ).all()
     
     return render_template('super_admin/dashboard.html', 

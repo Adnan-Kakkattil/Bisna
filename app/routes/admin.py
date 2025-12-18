@@ -24,10 +24,9 @@ def dashboard():
         User.college_id == current_user.college_id
     ).all()
 
-    # Fetch verified teachers for THIS college
     verified_teachers = User.query.join(Role).filter(
         User.is_verified == True,
-        Role.name == 'Teacher',
+        Role.name.in_(['Teacher', 'Admin']),
         User.college_id == current_user.college_id
     ).all()
 
