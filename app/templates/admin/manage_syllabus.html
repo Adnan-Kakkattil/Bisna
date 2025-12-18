@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="glass-card p-4 p-md-5">
+            <h3 class="fw-bold mb-4 text-gradient"><i class="fas fa-edit me-2"></i>{{ title }}</h3>
+            <form method="POST" action="">
+                {{ form.hidden_tag() }}
+                {% for field in form %}
+                {% if field.name != 'csrf_token' and field.name != 'submit' %}
+                <div class="mb-4">
+                    {{ field.label(class="form-label small fw-bold text-muted") }}
+                    {% if field.errors %}
+                    {{ field(class="form-control form-control-futuristic is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in field.errors %}
+                        <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ field(class="form-control form-control-futuristic") }}
+                    {% endif %}
+                </div>
+                {% endif %}
+                {% endfor %}
+                <div class="d-grid mt-4">
+                    {{ form.submit(class="btn btn-futuristic") }}
+                </div>
+                <div class="text-center mt-3">
+                    <a href="{{ url_for('admin.dashboard') }}" class="text-muted small text-decoration-none hover-glow">
+                        <i class="fas fa-arrow-left me-1"></i> Return to Nexus
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

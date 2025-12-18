@@ -1,0 +1,160 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="row min-vh-100 align-items-center py-5">
+    <div class="col-lg-6">
+        <div class="mb-4">
+            <span class="badge-futuristic">Academic Platform</span>
+        </div>
+        <h1 class="display-1 fw-bold mb-4" style="line-height: 0.9;">
+            STREAMLINE<br>
+            YOUR<br>
+            <span class="text-gradient">LEARNING</span>
+        </h1>
+        <p class="lead text-muted mb-5" style="max-width: 500px; font-size: 1.1rem;">
+            A comprehensive platform connecting students, faculty, and administrators for efficient academic resource
+            management.
+        </p>
+        <div class="d-flex gap-3 flex-wrap">
+            <a href="{{ url_for('auth.register') }}" class="btn btn-futuristic btn-lg px-5">
+                Get Started
+            </a>
+            <a href="{{ url_for('notes.list_notes') }}" class="btn btn-outline-futuristic btn-lg px-5">
+                Browse Materials
+            </a>
+        </div>
+    </div>
+
+    <div class="col-lg-6 d-none d-lg-flex align-items-center justify-content-center">
+        <div class="position-relative" style="width: 100%; max-width: 500px;">
+            <!-- Orange Circle -->
+            <div
+                style="width: 400px; height: 400px; background: radial-gradient(circle, rgba(255, 107, 0, 0.3) 0%, transparent 70%); border-radius: 50%; filter: blur(60px); position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+            </div>
+
+            <!-- Center Icon -->
+            <div class="glass-card text-center p-5 position-relative" style="border: 2px solid var(--border-medium);">
+                <i class="fas fa-graduation-cap" style="font-size: 8rem; color: var(--accent-primary);"></i>
+                <h3 class="fw-bold mt-4 mb-2">LEARNING HUB</h3>
+                <p class="text-muted small mb-0">Verified Content | Quality Assured</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Section -->
+<div class="section py-5 mb-5">
+    <div class="row g-4">
+        <div class="col-md-3">
+            <div class="glass-card h-100 p-4 text-center"
+                style="background: var(--accent-primary); border-color: var(--accent-primary);">
+                <div class="accent-dot mb-3 mx-auto"></div>
+                <h2 class="fw-bold mb-2" style="font-size: 3rem; color: var(--text-dark);">1000+</h2>
+                <p class="mb-0 fw-medium" style="color: var(--text-dark);">Study Materials</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="glass-card h-100 p-4 text-center">
+                <div class="accent-dot mb-3 mx-auto" style="background: #888;"></div>
+                <h2 class="fw-bold mb-2" style="font-size: 3rem;">500+</h2>
+                <p class="text-muted mb-0 fw-medium">Active Students</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="glass-card h-100 p-4 text-center">
+                <div class="accent-dot mb-3 mx-auto" style="background: #888;"></div>
+                <h2 class="fw-bold mb-2" style="font-size: 3rem;">50+</h2>
+                <p class="text-muted mb-0 fw-medium">Faculty Members</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="glass-card h-100 p-4 text-center">
+                <div class="accent-dot mb-3 mx-auto" style="background: #888;"></div>
+                <h2 class="fw-bold mb-2" style="font-size: 3rem;">10+</h2>
+                <p class="text-muted mb-0 fw-medium">Departments</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="section py-5">
+    <div class="mb-5">
+        <div class="d-flex align-items-center gap-3 mb-3">
+            <div class="accent-dot"></div>
+            <h2 class="fw-bold mb-0" style="font-size: 3.5rem; letter-spacing: -0.02em;">FEATURES</h2>
+        </div>
+        <div style="width: 100px; height: 2px; background: var(--accent-primary);"></div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="glass-card h-100 p-0 overflow-hidden hover-lift">
+                <div
+                    style="height: 200px; background: linear-gradient(135deg, #FF6B00 0%, #FF8533 100%); display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-folder-open" style="font-size: 4rem; color: white;"></i>
+                </div>
+                <div class="p-4">
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <span class="fw-bold text-muted" style="font-size: 0.875rem;">01</span>
+                        <div style="flex: 1; height: 1px; background: var(--border-medium);"></div>
+                    </div>
+                    <h4 class="fw-bold mb-3">Resource Library</h4>
+                    <p class="text-muted mb-0">Organized study materials with easy access to course-specific content and
+                        resources.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="glass-card h-100 p-0 overflow-hidden hover-lift">
+                <div
+                    style="height: 200px; background: linear-gradient(135deg, #2A2A2A 0%, #1A1A1A 100%); display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-user-check" style="font-size: 4rem; color: var(--accent-primary);"></i>
+                </div>
+                <div class="p-4">
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <span class="fw-bold text-muted" style="font-size: 0.875rem;">02</span>
+                        <div style="flex: 1; height: 1px; background: var(--border-medium);"></div>
+                    </div>
+                    <h4 class="fw-bold mb-3">Faculty Approval</h4>
+                    <p class="text-muted mb-0">Multi-level verification system ensuring all content meets academic
+                        standards.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="glass-card h-100 p-0 overflow-hidden hover-lift">
+                <div
+                    style="height: 200px; background: linear-gradient(135deg, #1A1A1A 0%, #0A0A0A 100%); display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-search" style="font-size: 4rem; color: white;"></i>
+                </div>
+                <div class="p-4">
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <span class="fw-bold text-muted" style="font-size: 0.875rem;">03</span>
+                        <div style="flex: 1; height: 1px; background: var(--border-medium);"></div>
+                    </div>
+                    <h4 class="fw-bold mb-3">Smart Search</h4>
+                    <p class="text-muted mb-0">Advanced filtering to quickly find materials by course, semester, and
+                        subject.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CTA Section -->
+<div class="section py-5 my-5">
+    <div class="glass-card text-center p-5" style="border: 2px solid var(--border-medium);">
+        <h2 class="fw-bold mb-4" style="font-size: 2.5rem;">Ready to Get Started?</h2>
+        <p class="text-muted mb-4" style="max-width: 600px; margin: 0 auto;">
+            Join thousands of students and faculty members using our platform for academic excellence.
+        </p>
+        <a href="{{ url_for('auth.register') }}" class="btn btn-futuristic btn-lg px-5">
+            Create Account
+        </a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}Verification Queue{% endblock %}
+{% block content %}
+<div class="glass-card p-4 p-md-5">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <div>
+            <h2 class="fw-bold mb-1">Content <span class="text-gradient">Review</span></h2>
+            <p class="text-muted small">Verify and approve submitted materials</p>
+        </div>
+        <div class="badge-futuristic">
+            {{ notes|length }} PENDING
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover border-glass align-middle">
+            <thead>
+                <tr class="text-muted small">
+                    <th>RESOURCE</th>
+                    <th>TOPIC</th>
+                    <th>SOURCE</th>
+                    <th>TIMESTAMP</th>
+                    <th class="text-end">ACTIONS</th>
+                </tr>
+            </thead>
+            <tbody class="text-white">
+                {% for note in notes %}
+                <tr class="border-glass align-middle">
+                    <td>
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="rounded bg-glass p-2 border border-glass">
+                                {% if note.material_type == 'url' %}
+                                <i class="fas fa-link text-accent"></i>
+                                {% elif note.material_type in ['pdf', 'docx'] %}
+                                <i class="fas fa-file-code text-accent"></i>
+                                {% else %}
+                                <i class="fas fa-file-medical text-accent"></i>
+                                {% endif %}
+                            </div>
+                            <div>
+                                <div class="fw-bold">
+                                    {% if note.material_type == 'url' %}
+                                    <a href="{{ note.file_url }}" target="_blank"
+                                        class="text-white text-decoration-none hover-glow">{{ note.title }}</a>
+                                    {% else %}
+                                    <a href="{{ url_for('notes.download_file', filename=note.filename) }}"
+                                        target="_blank" class="text-white text-decoration-none hover-glow">{{ note.title
+                                        }}</a>
+                                    {% endif %}
+                                </div>
+                                <span class="badge-futuristic py-0 px-2"
+                                    style="font-size: 0.6rem; background: rgba(255,255,255,0.05); color: #888;">{{
+                                    note.material_type|upper }}</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td><span class="small opacity-75">{{ note.topic.name }}</span></td>
+                    <td><span class="small text-accent fw-bold">{{ note.uploader.username }}</span></td>
+                    <td><span class="small opacity-50">{{ note.upload_date.strftime('%d %b %Y') }}</span></td>
+                    <td class="text-end">
+                        <div class="d-flex gap-2 justify-content-end">
+                            <a href="{{ url_for('notes.approve_note', note_id=note.id) }}"
+                                class="btn btn-sm btn-futuristic px-3">Approve</a>
+                            <a href="{{ url_for('notes.reject_note', note_id=note.id) }}"
+                                class="btn btn-sm btn-outline-futuristic text-danger border-danger px-3">Reject</a>
+                        </div>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" class="text-center py-5 opacity-50">
+                        <i class="fas fa-folder-open fa-3x mb-3"></i>
+                        <p>No pending materials for review.</p>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

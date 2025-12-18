@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+{% block title %}Upload Study Material{% endblock %}
+{% block content %}
+<div class="row justify-content-center py-5">
+    <div class="col-12 col-md-9">
+        <div class="glass-card p-4 p-md-5">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold display-6">Upload <span class="text-gradient">Material</span></h2>
+                <p class="text-muted">Share educational resources with your students</p>
+            </div>
+
+            <form method="POST" action="" enctype="multipart/form-data" id="uploadForm">
+                {{ form.hidden_tag() }}
+
+                <div class="row mb-5">
+                    <div class="col-12">
+                        <div class="bg-glass rounded-4 p-4 border border-glass">
+                            <h5 class="fw-bold mb-4 text-accent uppercase tracking-widest" style="font-size: 0.7rem;"><i
+                                    class="fas fa-project-diagram me-2"></i>ACADEMIC CONTEXT</h5>
+                            <div class="row g-3">
+                                <div class="col-12 col-md-4">
+                                    <label class="form-label small fw-bold text-muted">Course</label>
+                                    <select class="form-select form-control-futuristic" id="courseSelect">
+                                        <option value="">Select Course...</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <label class="form-label small fw-bold text-muted">Semester</label>
+                                    <select class="form-select form-control-futuristic" id="semesterSelect" disabled>
+                                        <option value="">Select Semester...</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <label class="form-label small fw-bold text-muted">Subject</label>
+                                    <select class="form-select form-control-futuristic" id="subjectSelect" disabled>
+                                        <option value="">Select Subject...</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <label class="form-label small fw-bold text-muted">Unit</label>
+                                    <select class="form-select form-control-futuristic" id="unitSelect" disabled>
+                                        <option value="">Select Unit...</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <label class="form-label small fw-bold text-muted">Topic</label>
+                                    {{ form.topic(class="form-select form-control-futuristic", id="topicSelect",
+                                    disabled=True) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4 mb-4">
+                    <div class="col-12 col-md-8">
+                        {{ form.title.label(class="form-label small fw-bold text-muted") }}
+                        {{ form.title(class="form-control form-control-futuristic", placeholder="e.g., Quantum Mechanics
+                        Lecture Notes") }}
+                        {% if form.title.errors %}
+                        {% for error in form.title.errors %}<div class="text-danger small mt-1">{{ error }}</div>{%
+                        endfor %}
+                        {% endif %}
+                    </div>
+                    <div class="col-md-4">
+                        {{ form.material_type.label(class="form-label small fw-bold text-muted") }}
+                        {{ form.material_type(class="form-select form-control-futuristic", id="materialTypeSelect") }}
+                    </div>
+                </div>
+
+                <div class="mb-5" id="fileUploadGroup">
+                    {{ form.file.label(class="form-label small fw-bold text-muted mb-2") }}
+                    <div id="dropZone" class="drop-zone text-center p-5"
+                        style="border: 2px dashed rgba(202, 255, 51, 0.2); transition: var(--transition-smooth);">
+                        <div class="py-2">
+                            <i class="fas fa-cloud-upload-alt fa-3x text-accent mb-3"></i>
+                            <h5 class="fw-bold">Upload Material</h5>
+                            <p class="text-muted px-4 small">PDF, DOCX, PPT, or Media Files (Max 100MB)</p>
+                            <span id="fileNameDisplay" class="badge-futuristic d-none mt-3"></span>
+                            {{ form.file(class="d-none", id="fileInput") }}
+                        </div>
+                    </div>
+                    {% if form.file.errors %}
+                    {% for error in form.file.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                    {% endif %}
+                </div>
+
+                <div class="mb-5 d-none" id="urlInputGroup">
+                    {{ form.file_url.label(class="form-label small fw-bold text-muted") }}
+                    {{ form.file_url(class="form-control form-control-futuristic",
+                    placeholder="https://youtube.com/...") }}
+                    <div class="form-text small text-muted">Integrate resources from Google Drive, YouTube, or external
+                        silos.</div>
+                    {% if form.file_url.errors %}
+                    {% for error in form.file_url.errors %}<div class="text-danger small mt-1">{{ error }}</div>{%
+                    endfor %}
+                    {% endif %}
+                </div>
+
+                <div class="d-grid pt-3">
+                    {{ form.submit(class="btn btn-futuristic py-3 fs-5") }}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const typeSelect = document.getElementById('materialTypeSelect');
+        const fileGroup = document.getElementById('fileUploadGroup');
+        const urlGroup = document.getElementById('urlInputGroup');
+
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const fileNameDisplay = document.getElementById('fileNameDisplay');
+
+        // Toggle URL vs File
+        function toggleFields() {
+            if (typeSelect.value === 'url') {
+                fileGroup.classList.add('d-none');
+                urlGroup.classList.remove('d-none');
+            } else {
+                fileGroup.classList.remove('d-none');
+                urlGroup.classList.add('d-none');
+            }
+        }
+
+        typeSelect.addEventListener('change', toggleFields);
+        toggleFields();
+
+        // Drag and Drop Logic
+        dropZone.addEventListener('click', () => fileInput.click());
+
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = 'var(--accent-primary)';
+            dropZone.style.background = 'rgba(202, 255, 51, 0.05)';
+        });
+
+        ['dragleave', 'dragend'].forEach(type => {
+            dropZone.addEventListener(type, () => {
+                dropZone.style.borderColor = 'rgba(202, 255, 51, 0.2)';
+                dropZone.style.background = 'transparent';
+            });
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.style.borderColor = 'rgba(202, 255, 51, 0.2)';
+            dropZone.style.background = 'transparent';
+
+            if (e.dataTransfer.files.length) {
+                fileInput.files = e.dataTransfer.files;
+                updateFileName(e.dataTransfer.files[0].name);
+            }
+        });
+
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length) {
+                updateFileName(fileInput.files[0].name);
+            }
+        });
+
+        function updateFileName(name) {
+            fileNameDisplay.innerText = "Target: " + name;
+            fileNameDisplay.classList.remove('d-none');
+        }
+    });
+</script>
+
+<script src="{{ url_for('static', filename='js/upload.js') }}"></script>
+{% endblock %}

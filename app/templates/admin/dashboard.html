@@ -1,0 +1,278 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const userModal = document.getElementById('userModal');
+        if (userModal) {
+            userModal.addEventListener('show.bs.modal', function (event) {
+                const trigger = event.relatedTarget;
+                const row = trigger.closest('.user-row') || trigger.closest('.clickable-row') || trigger;
+
+                const username = row.getAttribute('data-username') || 'N/A';
+                const email = row.getAttribute('data-email') || 'N/A';
+                const deleteUrl = row.getAttribute('data-delete-url') || '';
+                const reportUrl = row.getAttribute('data-report-url') || '#';
+
+                userModal.querySelector('#modal-username').innerText = username;
+                userModal.querySelector('#modal-email').innerText = email;
+                userModal.querySelector('#modal-delete-form').action = deleteUrl;
+                userModal.querySelector('#modal-report-link').href = reportUrl;
+            });
+        }
+
+        const studentModal = document.getElementById('studentModal');
+        if (studentModal) {
+            studentModal.addEventListener('show.bs.modal', function (event) {
+                const trigger = event.relatedTarget;
+                const row = trigger.closest('.clickable-row') || trigger;
+
+                const username = row.getAttribute('data-username') || 'N/A';
+                const regNum = row.getAttribute('data-reg-num') || 'N/A';
+                const reportUrl = row.getAttribute('data-report-url') || '#';
+
+                studentModal.querySelector('#student-modal-username').innerText = username;
+                studentModal.querySelector('#student-modal-reg-num').innerText = regNum;
+                studentModal.querySelector('#student-modal-report-link').href = reportUrl;
+            });
+        }
+    });
+</script>
+{% endblock %}
+{% block content %}
+<div class="row g-3 g-md-4">
+    <div class="col-12 col-lg-4">
+        <!-- Infrastructure Management -->
+        <div class="glass-card mb-4 p-4" style="border-top: 4px solid var(--accent-primary);">
+            <h4 class="fw-bold mb-4 text-gradient"><i class="fas fa-microchip me-2"></i>Infrastructure</h4>
+            <div class="d-grid gap-3">
+                <a href="{{ url_for('admin.manage_course') }}" class="btn btn-outline-futuristic text-start">
+                    <i class="fas fa-layer-group me-2 text-accent"></i>Add Course
+                </a>
+                <a href="{{ url_for('admin.manage_semester') }}" class="btn btn-outline-futuristic text-start">
+                    <i class="fas fa-calendar-alt me-2 text-accent"></i>Add Semester
+                </a>
+                <a href="{{ url_for('admin.manage_subject') }}" class="btn btn-outline-futuristic text-start">
+                    <i class="fas fa-book me-2 text-accent"></i>Add Subject
+                </a>
+                <hr class="border-glass opacity-25">
+                <a href="{{ url_for('admin.upload_student_data') }}" class="btn btn-futuristic text-start">
+                    <i class="fas fa-file-import me-2"></i>Import Student Data
+                </a>
+            </div>
+        </div>
+
+        <!-- Audit Center -->
+        <div class="glass-card p-4">
+            <h4 class="fw-bold mb-4 text-gradient"><i class="fas fa-user-shield me-2"></i>Audit Center</h4>
+            <div class="d-grid gap-2">
+                <a href="{{ url_for('admin.view_logs') }}" class="btn btn-outline-futuristic btn-sm text-start">
+                    <i class="fas fa-stream me-2 text-accent"></i>View Faculty Activity
+                </a>
+                <a href="{{ url_for('admin.download_logs', role_name='Student') }}"
+                    class="btn btn-outline-futuristic btn-sm text-start">
+                    <i class="fas fa-download me-2 text-accent"></i>Download Student Logs
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-lg-8">
+        <!-- Gateway Authorization -->
+        <div class="glass-card mb-4 p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="fw-bold mb-0 text-gradient"><i class="fas fa-key me-2"></i>Faculty Verification</h4>
+                <div class="badge-futuristic">
+                    {{ pending_teachers|length }} PENDING
+                </div>
+            </div>
+            {% if pending_teachers %}
+            <div class="table-responsive">
+                <table class="table table-hover border-glass align-middle">
+                    <thead>
+                        <tr class="text-muted small">
+                            <th>FACULTY NAME</th>
+                            <th>EMAIL ADDRESS</th>
+                            <th class="text-end">ACTIONS</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-white">
+                        {% for teacher in pending_teachers %}
+                        <tr class="border-glass">
+                            <td class="fw-bold">{{ teacher.username }}</td>
+                            <td class="small opacity-50">{{ teacher.email }}</td>
+                            <td class="text-end">
+                                <div class="d-flex gap-2 justify-content-end">
+                                    <a href="{{ url_for('admin.verify_teacher', user_id=teacher.id, action='approve') }}"
+                                        class="btn btn-sm btn-futuristic px-3">Approve</a>
+                                    <a href="{{ url_for('admin.verify_teacher', user_id=teacher.id, action='reject') }}"
+                                        class="btn btn-sm btn-outline-futuristic text-danger border-danger px-3"
+                                        onclick="return confirm('Deny access to this faculty member?');">Reject</a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="text-center py-5 opacity-50">
+                <i class="fas fa-satellite-dish fa-3x mb-3"></i>
+                <p class="small mb-0">All faculty members verified.</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="row g-3 g-md-4">
+            <div class="col-12 col-md-6">
+                <!-- Faculty Registry -->
+                <div class="glass-card p-4 h-100">
+                    <h6 class="fw-bold mb-4 text-accent uppercase tracking-widest" style="font-size: 0.7rem;">AUTHORIZED
+                        FACULTY</h6>
+                    {% if verified_teachers %}
+                    {% for teacher in verified_teachers %}
+                    <div class="user-row clickable-row bg-glass border border-glass rounded-3 p-3 mb-2 hover-lift"
+                        data-bs-toggle="modal" data-bs-target="#userModal" data-username="{{ teacher.username }}"
+                        data-email="{{ teacher.email }}" data-user-id="{{ teacher.id }}"
+                        data-delete-url="{{ url_for('admin.delete_teacher', user_id=teacher.id) }}"
+                        data-report-url="{{ url_for('admin.user_report', user_id=teacher.id) }}"
+                        style="cursor: pointer;">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <div class="fw-bold fw-bold">{{ teacher.username }}</div>
+                                <div class="small text-muted" style="font-size: 0.7rem;">{{ teacher.email }}</div>
+                            </div>
+                            {% if teacher.is_online %}
+                            <div class="bg-accent rounded-circle"
+                                style="width: 6px; height: 6px; box-shadow: 0 0 10px var(--accent-primary);"
+                                title="Online"></div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <p class="text-muted small text-center py-3">Node list empty.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <!-- Student Registry -->
+                <div class="glass-card p-4 h-100">
+                    <h6 class="fw-bold mb-4 text-accent uppercase tracking-widest" style="font-size: 0.7rem;">SYNCED
+                        STUDENTS</h6>
+                    {% if verified_students %}
+                    {% for student in verified_students %}
+                    <div class="clickable-row bg-glass border border-glass rounded-3 p-3 mb-2 hover-lift"
+                        data-bs-toggle="modal" data-bs-target="#studentModal" data-username="{{ student.username }}"
+                        data-reg-num="{{ student.register_number }}"
+                        data-report-url="{{ url_for('main.student_report', user_id=student.id) }}"
+                        style="cursor: pointer;">
+                        <div class="fw-bold">{{ student.username }}</div>
+                        <div class="small text-muted" style="font-size: 0.7rem;">ID: {{ student.register_number }}</div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <p class="text-muted small text-center py-3">Registry null.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- System Topology -->
+        <div class="glass-card mt-4 p-4">
+            <h5 class="fw-bold mb-4 text-gradient"><i class="fas fa-sitemap me-2"></i>Academic Structure</h5>
+            <div class="accordion accordion-flush" id="syllabusAccordion">
+                {% for course in courses %}
+                <div class="accordion-item bg-transparent border-glass mb-2 rounded-3 overflow-hidden">
+                    <div class="accordion-header px-1 d-flex align-items-center">
+                        <button
+                            class="accordion-button collapsed bg-transparent text-white border-0 shadow-none fw-bold flex-grow-1"
+                            type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ course.id }}">
+                            <i class="fas fa-folder text-accent me-3"></i>{{ course.name }}
+                        </button>
+                        <div class="d-flex gap-2 pe-3">
+                            <a href="{{ url_for('admin.edit_course', course_id=course.id) }}"
+                                class="text-accent small"><i class="fas fa-edit"></i></a>
+                        </div>
+                    </div>
+                    <div id="collapse-{{ course.id }}" class="accordion-collapse collapse"
+                        data-bs-parent="#syllabusAccordion">
+                        <div class="accordion-body bg-glass">
+                            {% for sem in course.semesters %}
+                            <div class="mb-3 ps-3 border-start border-accent border-2">
+                                <div class="small fw-bold text-accent mb-2">PHASE {{ sem.number }}</div>
+                                <div class="row g-2">
+                                    {% for sub in sem.subjects %}
+                                    <div class="col-6">
+                                        <div class="bg-glass rounded p-2 small border border-glass">{{ sub.name }}</div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Entity Detail Modal -->
+<div class="modal fade" id="userModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content glass-card border-glass overflow-hidden shadow-lg">
+            <div class="modal-header border-glass">
+                <h5 class="modal-title fw-bold text-gradient">Faculty Analysis</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center p-4 p-md-5">
+                <div class="rounded-circle bg-glass p-4 d-inline-block border border-accent border-2 mb-4">
+                    <i class="fas fa-id-card-alt fa-5x text-accent"></i>
+                </div>
+                <h3 id="modal-username" class="fw-bold text-white mb-2"></h3>
+                <p id="modal-email" class="text-muted mb-4"></p>
+                <div class="badge-futuristic bg-danger text-white border-0 py-1">CRITICAL ACCESS NODE</div>
+            </div>
+            <div class="modal-footer border-glass d-flex justify-content-between p-4 bg-glass">
+                <a id="modal-report-link" href="#" class="btn btn-futuristic">
+                    <i class="fas fa-file-invoice me-2"></i>AUDIT LOGS
+                </a>
+                <form id="modal-delete-form" method="POST" action="" class="d-inline">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="submit" class="btn btn-outline-futuristic text-danger border-danger">PURGE
+                        ACCESS</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Student Detail Modal -->
+<div class="modal fade" id="studentModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content glass-card border-glass overflow-hidden shadow-lg">
+            <div class="modal-header border-glass">
+                <h5 class="modal-title fw-bold text-gradient">Entity Profile</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center p-4 p-md-5">
+                <div class="rounded-circle bg-glass p-4 d-inline-block border border-accent border-2 mb-4">
+                    <i class="fas fa-user-tag fa-5x text-accent"></i>
+                </div>
+                <h3 id="student-modal-username" class="fw-bold text-white mb-2"></h3>
+                <div class="badge-futuristic" id="student-modal-reg-num"></div>
+            </div>
+            <div class="modal-footer border-glass p-4">
+                <a id="student-modal-report-link" href="#" class="btn btn-futuristic w-100">
+                    <i class="fas fa-external-link-alt me-2"></i>GENERATE ACTIVITY AUDIT
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+{% block title %}EduStack{% endblock %}
+{% block content %}
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-5 mt-4">
+    <div>
+        <h2 class="display-6 fw-bold mb-1">Resource <span class="text-gradient">Explorer</span></h2>
+        <p class="text-muted small mb-0">High-fidelity academic payloads synchronized from the nexus</p>
+    </div>
+    {% if current_user.is_authenticated and current_user.role.name in ['Teacher', 'Senior Student', 'Admin'] %}
+    <div>
+        <a href="{{ url_for('notes.upload_note') }}" class="btn btn-futuristic">
+            <i class="fas fa-plus-circle me-2"></i>Provision Material
+        </a>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Filter Bar -->
+<div class="glass-card mb-5 p-4" style="border-left: 4px solid var(--accent-primary);">
+    <form id="filterForm" method="GET" action="{{ url_for('notes.list_notes') }}">
+        <div class="mb-4">
+            <div class="input-group">
+                <span class="input-group-text bg-transparent border-glass border-end-0 px-3">
+                    <i class="fas fa-search text-accent"></i>
+                </span>
+                <input type="text" name="q" class="form-control form-control-futuristic border-start-0"
+                    placeholder="Search by title, subject, topic or uploader..." value="{{ search_query }}">
+                <button class="btn btn-futuristic px-4 ms-2" type="submit">SEARCH</button>
+            </div>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-12 col-sm-6 col-md-3">
+                <label for="course_id" class="form-label small fw-bold text-muted mb-2">DOMAIN</label>
+                <select name="course_id" id="course_id" class="form-select form-control-futuristic"
+                    onchange="this.form.submit()">
+                    <option value="">All Domains</option>
+                    {% for course in courses %}
+                    <option value="{{ course.id }}" {% if selected_course==course.id %}selected{% endif %}>{{
+                        course.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3">
+                <label for="semester_num" class="form-label small fw-bold text-muted mb-2">PHASE</label>
+                <select name="semester_num" id="semester_num" class="form-select form-control-futuristic"
+                    onchange="this.form.submit()">
+                    <option value="">All Phases</option>
+                    {% for num in semester_nums %}
+                    <option value="{{ num }}" {% if selected_semester_num==num %}selected{% endif %}>Semester {{ num
+                        }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3">
+                <label for="subject_id" class="form-label small fw-bold text-muted mb-2">MODULE</label>
+                <select name="subject_id" id="subject_id" class="form-select form-control-futuristic"
+                    onchange="this.form.submit()">
+                    <option value="">All Modules</option>
+                    {% for sub in subjects %}
+                    <option value="{{ sub.id }}" {% if selected_subject==sub.id %}selected{% endif %}>{{ sub.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-12 col-md-3 d-flex align-items-end">
+                <a href="{{ url_for('notes.list_notes') }}" class="btn btn-outline-futuristic w-100">
+                    <i class="fas fa-sync-alt me-2"></i>RESET
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="row g-4">
+    {% for note in notes %}
+    <div class="col-xl-4 col-md-6 mb-2">
+        <div class="glass-card h-100 p-4 hover-lift">
+            <div class="d-flex justify-content-between align-items-start mb-4">
+                <div class="badge-futuristic">
+                    {{ note.topic.unit.subject.semester.course.name }}
+                </div>
+                <span class="text-accent opacity-75">
+                    {% if note.material_type == 'pdf' %}<i class="far fa-file-pdf fa-xl"></i>
+                    {% elif note.material_type == 'docx' %}<i class="far fa-file-word fa-xl"></i>
+                    {% elif note.material_type == 'ppt' %}<i class="far fa-file-powerpoint fa-xl"></i>
+                    {% elif note.material_type == 'video' %}<i class="fas fa-play-circle fa-xl"></i>
+                    {% elif note.material_type == 'url' %}<i class="fas fa-link fa-xl"></i>
+                    {% endif %}
+                </span>
+            </div>
+
+            <h5 class="fw-bold mb-3">{{ note.title }}</h5>
+            <div class="d-flex align-items-center mb-4">
+                <div class="rounded-circle bg-glass p-2 me-3 border border-glass">
+                    <i class="fas fa-bookmark text-accent small"></i>
+                </div>
+                <div class="small fw-bold text-muted">{{ note.topic.unit.subject.name }}</div>
+            </div>
+
+            <div class="bg-glass rounded-3 p-3 mb-4 border border-glass">
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="small text-muted uppercase tracking-wider" style="font-size: 0.65rem;">TOPIC</span>
+                    <span class="small fw-bold text-white">{{ note.topic.name }}</span>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <span class="small text-muted uppercase tracking-wider" style="font-size: 0.65rem;">SOURCE</span>
+                    <span class="small fw-bold text-accent">{{ note.uploader.username }}</span>
+                </div>
+            </div>
+
+            <div class="d-flex gap-2">
+                {% if current_user.is_authenticated %}
+                {% if note.material_type == 'url' %}
+                <a href="{{ note.file_url }}" target="_blank" class="btn btn-futuristic btn-sm flex-grow-1">
+                    ACCESS RESOURCE
+                </a>
+                {% else %}
+                <a href="{{ url_for('notes.view_file', filename=note.filename) }}" target="_blank"
+                    class="btn btn-outline-futuristic btn-sm flex-grow-1">
+                    <i class="fas fa-eye me-2"></i>View
+                </a>
+                <a href="{{ url_for('notes.download_file', filename=note.filename) }}"
+                    class="btn btn-futuristic btn-sm flex-grow-1">
+                    <i class="fas fa-download me-2"></i>Download
+                </a>
+                {% endif %}
+
+                {% if current_user.role.name in ['Teacher', 'Admin'] or current_user.id == note.user_id %}
+                <a href="{{ url_for('notes.edit_note', note_id=note.id) }}"
+                    class="btn btn-outline-futuristic btn-sm px-3" title="Edit Metadata">
+                    <i class="fas fa-sliders-h"></i>
+                </a>
+                {% endif %}
+                {% else %}
+                <a href="{{ url_for('auth.login') }}" class="btn btn-outline-futuristic btn-sm w-100">
+                    <i class="fas fa-lock me-2"></i>SECURE LOGIN
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="col-12 text-center py-5 mt-5">
+        <div class="glass-card d-inline-block p-5 text-center">
+            <i class="fas fa-database fa-4x text-muted opacity-25 mb-4 d-block"></i>
+            <h4 class="text-white fw-bold">No Records Found</h4>
+            <p class="text-muted mb-0">The requested payload is not currently in the repository.</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Upload Student Registry{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-info text-white">
+                <h3 class="mb-0">Upload Student Data</h3>
+            </div>
+            <div class="card-body">
+                <p>Upload a CSV or Excel file containing the list of authorized students for your college.</p>
+                <p><strong>Required Columns:</strong> <code>Register Number</code>, <code>Email</code></p>
+
+                <form method="POST" action="" enctype="multipart/form-data">
+                    {{ form.hidden_tag() }}
+
+                    <div class="mb-3">
+                        {{ form.file.label(class="form-label") }}
+                        {{ form.file(class="form-control") }}
+                        {% if form.file.errors %}
+                        <div class="text-danger">
+                            {% for error in form.file.errors %}
+                            <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="d-grid">
+                        {{ form.submit(class="btn btn-info") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
