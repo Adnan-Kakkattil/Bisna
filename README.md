@@ -19,19 +19,21 @@ Bisna streamlines college administration by providing distinct portals for stude
 - **Resource Distribution**: Teachers can upload study materials (PDF, DOCX, Video, or URLs).
 - **Verification Workflow**: Content can be reviewed and verified by teachers or admins before becoming public.
 
-## �️ Visual Tour
+## 🎨 Core Aesthetic
 
-````carousel
-![Academic Nexus - Landing Page](file:///C:/Users/LENOVO/.gemini/antigravity/brain/5ee8c34f-12e0-4df1-a5d9-a20c81ddd157/uploaded_media_0_1769511425121.png)
-<!-- slide -->
-![Authorized Access Portal](file:///C:/Users/LENOVO/.gemini/antigravity/brain/5ee8c34f-12e0-4df1-a5d9-a20c81ddd157/uploaded_media_1_1769511425121.png)
-<!-- slide -->
-![Command Center - Super Admin Dashboard](file:///C:/Users/LENOVO/.gemini/antigravity/brain/5ee8c34f-12e0-4df1-a5d9-a20c81ddd157/uploaded_media_2_1769511425121.png)
-<!-- slide -->
-![Infrastructure Control - Admin Dashboard](file:///C:/Users/LENOVO/.gemini/antigravity/brain/5ee8c34f-12e0-4df1-a5d9-a20c81ddd157/uploaded_media_3_1769511425121.png)
-<!-- slide -->
-![Teacher Portal - Academic Node](file:///C:/Users/LENOVO/.gemini/antigravity/brain/5ee8c34f-12e0-4df1-a5d9-a20c81ddd157/uploaded_media_4_1769511425121.png)
-````
+EduStack utilizes a bespoke Neumorphic (Soft UI) design system, creating a tactile and immersive digital experience.
+
+| Landing Page | Login Page |
+| :---: | :---: |
+| ![Landing Page](file:///C:/Users/LENOVO/.gemini/antigravity/brain/5ee8c34f-12e0-4df1-a5d9-a20c81ddd157/uploaded_media_0_1769511425121.png) | ![Login Page](file:///C:/Users/LENOVO/.gemini/antigravity/brain/5ee8c34f-12e0-4df1-a5d9-a20c81ddd157/uploaded_media_1_1769511425121.png) |
+
+| Super Admin Dashboard | Admin Dashboard |
+| :---: | :---: |
+| ![Super Admin Dashboard](file:///C:/Users/LENOVO/.gemini/antigravity/brain/5ee8c34f-12e0-4df1-a5d9-a20c81ddd157/uploaded_media_2_1769511425121.png) | ![Admin Dashboard](file:///C:/Users/LENOVO/.gemini/antigravity/brain/5ee8c34f-12e0-4df1-a5d9-a20c81ddd157/uploaded_media_3_1769511425121.png) |
+
+| Teacher Portal | Student Dashboard |
+| :---: | :---: |
+| ![Teacher Portal](file:///C:/Users/LENOVO/.gemini/antigravity/brain/5ee8c34f-12e0-4df1-a5d9-a20c81ddd157/uploaded_media_4_1769511425121.png) | ![Student Dashboard](file:///C:/Users/LENOVO/.gemini/antigravity/brain/5ee8c34f-12e0-4df1-a5d9-a20c81ddd157/uploaded_media_1769511719893.png) |
 
 ## �🛠️ Tech Stack
 - **Backend**: Python, Flask, Jinja2
