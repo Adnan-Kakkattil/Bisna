@@ -1,3 +1,7 @@
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from app import create_app, db
 from app.models import Role, User, College
 from werkzeug.security import generate_password_hash
@@ -27,7 +31,7 @@ with app.app_context():
     # Create Super Admin
     super_admin_role = Role.query.filter_by(name='Super Admin').first()
     super_user = User(
-        username='superadmin',
+        username='superadmin@example.com',
         email='superadmin@example.com',
         password_hash=generate_password_hash('admin123'),
         role=super_admin_role,

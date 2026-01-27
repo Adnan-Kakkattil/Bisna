@@ -43,6 +43,30 @@ def dashboard():
                            verified_teachers=verified_teachers,
                            verified_students=verified_students)
 
+@admin.route('/admin/faculty')
+@login_required
+@role_required('Admin')
+def view_faculty():
+    verified_teachers = User.query.join(Role).filter(
+        User.is_verified == True,
+        Role.name == 'Teacher',
+        User.college_id == current_user.college_id
+    ).all()
+    return render_template('admin/faculty.html', verified_teachers=verified_teachers)
+
+@admin.route('/admin/students')
+@login_required
+@role_required('Admin', 'Teacher')
+def view_students():
+    verified_students = User.query.join(Role).filter(
+        User.is_verified == True,
+        Role.name == 'Student',
+        User.college_id == current_user.college_id
+    ).all()
+    
+    # Contextual title/back link for Admin vs Teacher
+    return render_template('admin/students.html', verified_students=verified_students)
+
 @admin.route('/admin/verify_teacher/<int:user_id>/<action>')
 @login_required
 @role_required('Admin')

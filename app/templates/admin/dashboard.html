@@ -40,239 +40,172 @@
 </script>
 {% endblock %}
 {% block content %}
-<div class="row g-3 g-md-4">
-    <div class="col-12 col-lg-4">
-        <!-- Infrastructure Management -->
-        <div class="glass-card mb-4 p-4" style="border-top: 4px solid var(--accent-primary);">
-            <h4 class="fw-bold mb-4 text-gradient"><i class="fas fa-microchip me-2"></i>Infrastructure</h4>
-            <div class="d-grid gap-3">
-                <a href="{{ url_for('admin.manage_course') }}" class="btn btn-outline-futuristic text-start">
-                    <i class="fas fa-layer-group me-2 text-accent"></i>Add Course
-                </a>
-                <a href="{{ url_for('admin.manage_semester') }}" class="btn btn-outline-futuristic text-start">
-                    <i class="fas fa-calendar-alt me-2 text-accent"></i>Add Semester
-                </a>
-                <a href="{{ url_for('admin.manage_subject') }}" class="btn btn-outline-futuristic text-start">
-                    <i class="fas fa-book me-2 text-accent"></i>Add Subject
-                </a>
-                <hr class="border-glass opacity-25">
-                <a href="{{ url_for('admin.upload_student_data') }}" class="btn btn-futuristic text-start">
-                    <i class="fas fa-file-import me-2"></i>Import Student Data
-                </a>
-            </div>
+<div class="flex flex-col gap-6 max-w-6xl mx-auto py-4">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+        <div>
+            <h2 class="text-3xl font-black text-soft-dark tracking-tight">Admin <span
+                    class="text-soft-primary">Dashboard</span></h2>
+            <p class="text-[0.55rem] font-bold text-soft-primary uppercase tracking-[0.2em] opacity-60">Infrastructure
+                Control Node</p>
         </div>
-
-        <!-- Audit Center -->
-        <div class="glass-card p-4">
-            <h4 class="fw-bold mb-4 text-gradient"><i class="fas fa-user-shield me-2"></i>Audit Center</h4>
-            <div class="d-grid gap-2">
-                <a href="{{ url_for('admin.view_logs') }}" class="btn btn-outline-futuristic btn-sm text-start">
-                    <i class="fas fa-stream me-2 text-accent"></i>View Faculty Activity
-                </a>
-                <a href="{{ url_for('admin.download_logs', role_name='Student') }}"
-                    class="btn btn-outline-futuristic btn-sm text-start">
-                    <i class="fas fa-download me-2 text-accent"></i>Download Student Logs
-                </a>
-            </div>
+        <div class="nm-flat px-4 py-2 rounded-full flex items-center gap-2">
+            <div class="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
+            <span class="text-[0.55rem] font-black text-soft-primary uppercase tracking-widest">Active</span>
         </div>
     </div>
 
-    <div class="col-12 col-lg-8">
-        <!-- Gateway Authorization -->
-        <div class="glass-card mb-4 p-4">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h4 class="fw-bold mb-0 text-gradient"><i class="fas fa-key me-2"></i>Faculty Verification</h4>
-                <div class="badge-futuristic">
-                    {{ pending_teachers|length }} PENDING
+    <!-- Minimal Stats -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <a href="{{ url_for('admin.view_faculty') }}" class="nm-button p-5 text-center no-underline block group">
+            <div
+                class="nm-inset w-10 h-10 mx-auto flex items-center justify-center mb-3 rounded-lg text-soft-primary group-hover:scale-105 transition-transform">
+                <i class="fas fa-chalkboard-teacher text-base"></i>
+            </div>
+            <div class="text-xl font-black text-soft-dark mb-0.5">{{ verified_teachers|length }}</div>
+            <div class="text-[0.45rem] font-black text-soft-primary uppercase tracking-widest opacity-50">Faculty
+                Registry</div>
+        </a>
+        <a href="{{ url_for('admin.view_students') }}" class="nm-button p-5 text-center no-underline block group">
+            <div
+                class="nm-inset w-10 h-10 mx-auto flex items-center justify-center mb-3 rounded-lg text-soft-primary group-hover:scale-105 transition-transform">
+                <i class="fas fa-user-graduate text-base"></i>
+            </div>
+            <div class="text-xl font-black text-soft-dark mb-0.5">{{ verified_students|length }}</div>
+            <div class="text-[0.45rem] font-black text-soft-primary uppercase tracking-widest opacity-50">Student
+                Registry</div>
+        </a>
+        <div class="nm-flat p-5 text-center border-t-2 border-red-500/5">
+            <div class="nm-inset w-10 h-10 mx-auto flex items-center justify-center mb-3 rounded-lg text-red-500/60">
+                <i class="fas fa-key text-base"></i>
+            </div>
+            <div class="text-xl font-black text-red-600 mb-0.5">{{ pending_teachers|length }}</div>
+            <div class="text-[0.45rem] font-black text-red-600/30 uppercase tracking-widest">Pending Syncs</div>
+        </div>
+    </div>
+
+    <!-- Tactical Hub -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Registry Hub -->
+        <div class="nm-flat p-6 flex flex-col">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="nm-inset p-2 rounded-lg text-soft-primary">
+                    <i class="fas fa-address-book text-sm"></i>
+                </div>
+                <h5 class="text-[0.6rem] font-black text-soft-dark uppercase tracking-widest">Registry Hub</h5>
+            </div>
+
+            <div class="flex flex-col gap-4">
+                <a href="{{ url_for('admin.view_faculty') }}" class="nm-button p-4 no-underline block group">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[0.65rem] font-black text-soft-dark uppercase">Personnel</span>
+                        <i
+                            class="fas fa-chevron-right text-soft-primary opacity-20 group-hover:opacity-100 transition-opacity"></i>
+                    </div>
+                </a>
+                <a href="{{ url_for('admin.view_students') }}" class="nm-button p-4 no-underline block group">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[0.65rem] font-black text-soft-dark uppercase">Students</span>
+                        <i
+                            class="fas fa-chevron-right text-soft-primary opacity-20 group-hover:opacity-100 transition-opacity"></i>
+                    </div>
+                </a>
+            </div>
+
+            <div class="mt-auto pt-6">
+                <div class="nm-inset p-3 flex items-center justify-between">
+                    <span class="text-[0.5rem] font-black text-soft-primary uppercase tracking-widest opacity-30">Node
+                        Status</span>
+                    <span class="text-[0.5rem] font-black text-soft-primary/60 uppercase">Operational</span>
                 </div>
             </div>
+        </div>
+
+        <!-- Verification Nexus -->
+        <div class="nm-flat p-6 lg:col-span-2">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="nm-inset p-2 rounded-lg text-soft-primary">
+                    <i class="fas fa-user-check text-sm"></i>
+                </div>
+                <h5 class="text-[0.6rem] font-black text-soft-dark uppercase tracking-widest">Verification Nexus</h5>
+            </div>
+
             {% if pending_teachers %}
-            <div class="table-responsive">
-                <table class="table table-hover border-glass align-middle">
-                    <thead>
-                        <tr class="text-muted small">
-                            <th>FACULTY NAME</th>
-                            <th>EMAIL ADDRESS</th>
-                            <th class="text-end">ACTIONS</th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-white">
-                        {% for teacher in pending_teachers %}
-                        <tr class="border-glass">
-                            <td class="fw-bold">{{ teacher.username }}</td>
-                            <td class="small opacity-50">{{ teacher.email }}</td>
-                            <td class="text-end">
-                                <div class="d-flex gap-2 justify-content-end">
-                                    <a href="{{ url_for('admin.verify_teacher', user_id=teacher.id, action='approve') }}"
-                                        class="btn btn-sm btn-futuristic px-3">Approve</a>
-                                    <a href="{{ url_for('admin.verify_teacher', user_id=teacher.id, action='reject') }}"
-                                        class="btn btn-sm btn-outline-futuristic text-danger border-danger px-3"
-                                        onclick="return confirm('Deny access to this faculty member?');">Reject</a>
-                                </div>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-            {% else %}
-            <div class="text-center py-5 opacity-50">
-                <i class="fas fa-satellite-dish fa-3x mb-3"></i>
-                <p class="small mb-0">All faculty members verified.</p>
-            </div>
-            {% endif %}
-        </div>
-
-        <div class="row g-3 g-md-4">
-            <div class="col-12 col-md-6">
-                <!-- Faculty Registry -->
-                <div class="glass-card p-4 h-100">
-                    <h6 class="fw-bold mb-4 text-accent uppercase tracking-widest" style="font-size: 0.7rem;">AUTHORIZED
-                        FACULTY</h6>
-                    {% if verified_teachers %}
-                    {% for teacher in verified_teachers %}
-                    <div class="user-row clickable-row bg-glass border border-glass rounded-3 p-3 mb-2 hover-lift"
-                        data-bs-toggle="modal" data-bs-target="#userModal" data-username="{{ teacher.username }}"
-                        data-email="{{ teacher.email }}" data-user-id="{{ teacher.id }}"
-                        data-delete-url="{{ url_for('admin.delete_teacher', user_id=teacher.id) }}"
-                        data-report-url="{{ url_for('admin.user_report', user_id=teacher.id) }}"
-                        style="cursor: pointer;">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <div class="fw-bold">{{ teacher.username }}</div>
-                                <div class="small text-muted" style="font-size: 0.7rem;">{{ teacher.email }}</div>
-                            </div>
-                            {% if teacher.is_online %}
-                            <div class="bg-accent rounded-circle"
-                                style="width: 6px; height: 6px; box-shadow: 0 0 10px var(--accent-primary);"
-                                title="Online"></div>
-                            {% endif %}
+            <div class="flex flex-col gap-3">
+                {% for teacher in pending_teachers %}
+                <div class="nm-inset p-3 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <div>
+                        <div class="text-xs font-black text-soft-dark">{{ teacher.username }}</div>
+                        <div class="text-[0.55rem] font-bold text-soft-primary uppercase opacity-50">{{ teacher.email }}
                         </div>
                     </div>
-                    {% endfor %}
-                    {% else %}
-                    <p class="text-muted small text-center py-3">Node list empty.</p>
-                    {% endif %}
-                </div>
-            </div>
-
-            <div class="col-12 col-md-6">
-                <!-- Student Registry -->
-                <div class="glass-card p-4 h-100">
-                    <h6 class="fw-bold mb-4 text-accent uppercase tracking-widest" style="font-size: 0.7rem;">SYNCED
-                        STUDENTS</h6>
-                    {% if verified_students %}
-                    {% for student in verified_students %}
-                    <div class="clickable-row bg-glass border border-glass rounded-3 p-3 mb-2 hover-lift"
-                        data-bs-toggle="modal" data-bs-target="#studentModal" data-username="{{ student.username }}"
-                        data-reg-num="{{ student.register_number }}"
-                        data-report-url="{{ url_for('main.student_report', user_id=student.id) }}"
-                        style="cursor: pointer;">
-                        <div class="fw-bold">{{ student.username }}</div>
-                        <div class="small text-muted" style="font-size: 0.7rem;">ID: {{ student.register_number }}</div>
-                    </div>
-                    {% endfor %}
-                    {% else %}
-                    <p class="text-muted small text-center py-3">Registry null.</p>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-
-        <!-- System Topology -->
-        <div class="glass-card mt-4 p-4">
-            <h5 class="fw-bold mb-4 text-gradient"><i class="fas fa-sitemap me-2"></i>Academic Structure</h5>
-            <div class="accordion accordion-flush" id="syllabusAccordion">
-                {% for course in courses %}
-                <div class="accordion-item bg-transparent border-glass mb-2 rounded-3 overflow-hidden">
-                    <div class="accordion-header px-1 d-flex align-items-center">
-                        <button
-                            class="accordion-button collapsed bg-transparent text-white border-0 shadow-none fw-bold flex-grow-1"
-                            type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ course.id }}">
-                            <i class="fas fa-folder text-accent me-3"></i>{{ course.name }}
-                        </button>
-                        <div class="d-flex gap-2 pe-3">
-                            <a href="{{ url_for('admin.edit_course', course_id=course.id) }}"
-                                class="text-accent small"><i class="fas fa-edit"></i></a>
-                        </div>
-                    </div>
-                    <div id="collapse-{{ course.id }}" class="accordion-collapse collapse"
-                        data-bs-parent="#syllabusAccordion">
-                        <div class="accordion-body bg-glass">
-                            {% for sem in course.semesters %}
-                            <div class="mb-3 ps-3 border-start border-accent border-2">
-                                <div class="small fw-bold text-accent mb-2">PHASE {{ sem.number }}</div>
-                                <div class="row g-2">
-                                    {% for sub in sem.subjects %}
-                                    <div class="col-6">
-                                        <div class="bg-glass rounded p-2 small border border-glass">{{ sub.name }}</div>
-                                    </div>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                            {% endfor %}
-                        </div>
+                    <div class="flex gap-2">
+                        <a href="{{ url_for('admin.verify_teacher', user_id=teacher.id, action='approve') }}"
+                            class="nm-button px-4 py-1 text-[0.55rem]">Approve</a>
+                        <a href="{{ url_for('admin.verify_teacher', user_id=teacher.id, action='reject') }}"
+                            class="nm-button px-4 py-1 text-[0.55rem] text-red-600/70"
+                            onclick="return confirm('Reject access?');">Reject</a>
                     </div>
                 </div>
                 {% endfor %}
             </div>
+            {% else %}
+            <div class="flex flex-col items-center justify-center py-8 opacity-20">
+                <i class="fas fa-satellite-dish text-4xl mb-3"></i>
+                <p class="text-[0.5rem] font-black uppercase">Queue Clean</p>
+            </div>
+            {% endif %}
         </div>
     </div>
-</div>
 
-<!-- Entity Detail Modal -->
-<div class="modal fade" id="userModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content glass-card border-glass overflow-hidden shadow-lg">
-            <div class="modal-header border-glass">
-                <h5 class="modal-title fw-bold text-gradient">Faculty Analysis</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body text-center p-4 p-md-5">
-                <div class="rounded-circle bg-glass p-4 d-inline-block border border-accent border-2 mb-4">
-                    <i class="fas fa-id-card-alt fa-5x text-accent"></i>
+    <!-- Syllabus Matrix -->
+    <div class="nm-flat p-6">
+        <div class="flex items-center justify-between mb-6">
+            <div class="flex items-center gap-3">
+                <div class="nm-inset p-2 rounded-lg text-soft-primary">
+                    <i class="fas fa-sitemap text-sm"></i>
                 </div>
-                <h3 id="modal-username" class="fw-bold text-white mb-2"></h3>
-                <p id="modal-email" class="text-muted mb-4"></p>
-                <div class="badge-futuristic bg-danger text-white border-0 py-1">CRITICAL ACCESS NODE</div>
+                <h5 class="text-[0.6rem] font-black text-soft-dark uppercase tracking-widest">Syllabus Matrix</h5>
             </div>
-            <div class="modal-footer border-glass d-flex justify-content-between p-4 bg-glass">
-                <a id="modal-report-link" href="#" class="btn btn-futuristic">
-                    <i class="fas fa-file-invoice me-2"></i>AUDIT LOGS
+            <div class="flex gap-2">
+                <a href="{{ url_for('admin.manage_course') }}"
+                    class="nm-button px-3 py-1.5 text-[0.55rem] no-underline">
+                    <i class="fas fa-plus me-1 text-[0.5rem]"></i> Course
                 </a>
-                <form id="modal-delete-form" method="POST" action="" class="d-inline">
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                    <button type="submit" class="btn btn-outline-futuristic text-danger border-danger">PURGE
-                        ACCESS</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Student Detail Modal -->
-<div class="modal fade" id="studentModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content glass-card border-glass overflow-hidden shadow-lg">
-            <div class="modal-header border-glass">
-                <h5 class="modal-title fw-bold text-gradient">Entity Profile</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body text-center p-4 p-md-5">
-                <div class="rounded-circle bg-glass p-4 d-inline-block border border-accent border-2 mb-4">
-                    <i class="fas fa-user-tag fa-5x text-accent"></i>
-                </div>
-                <h3 id="student-modal-username" class="fw-bold text-white mb-2"></h3>
-                <div class="badge-futuristic" id="student-modal-reg-num"></div>
-            </div>
-            <div class="modal-footer border-glass p-4">
-                <a id="student-modal-report-link" href="#" class="btn btn-futuristic w-100">
-                    <i class="fas fa-external-link-alt me-2"></i>GENERATE ACTIVITY AUDIT
+                <a href="{{ url_for('admin.upload_student_data') }}"
+                    class="nm-button px-3 py-1.5 text-[0.55rem] no-underline bg-soft-primary/5">
+                    <i class="fas fa-file-import me-1 text-[0.5rem]"></i> Sync Registry
                 </a>
             </div>
         </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for course in courses %}
+            <div class="nm-inset p-5">
+                <div class="flex justify-between items-center mb-4">
+                    <h4 class="text-[0.7rem] font-black text-soft-dark uppercase tracking-tight">{{ course.name }}</h4>
+                    <a href="{{ url_for('admin.edit_course', course_id=course.id) }}"
+                        class="text-soft-primary/30 hover:text-soft-primary transition-colors"><i
+                            class="fas fa-edit text-[0.6rem]"></i></a>
+                </div>
+                <div class="space-y-4">
+                    {% for sem in course.semesters %}
+                    <div class="pl-3 border-l-2 border-soft-primary/10">
+                        <span
+                            class="text-[0.45rem] font-black text-soft-primary/40 uppercase tracking-widest block mb-1.5">P{{
+                            sem.number }} Phase</span>
+                        <div class="flex flex-wrap gap-2">
+                            {% for sub in sem.subjects %}
+                            <span class="nm-flat px-2 py-0.5 text-[0.55rem] font-bold text-soft-dark/70">{{ sub.name
+                                }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
     </div>
-</div>
-</div>
 </div>
 {% endblock %}

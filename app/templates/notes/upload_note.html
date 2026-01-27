@@ -1,104 +1,146 @@
 {% extends "base.html" %}
 {% block title %}Upload Study Material{% endblock %}
 {% block content %}
-<div class="row justify-content-center py-5">
-    <div class="col-12 col-md-9">
-        <div class="glass-card p-4 p-md-5">
-            <div class="text-center mb-5">
-                <h2 class="fw-bold display-6">Upload <span class="text-gradient">Material</span></h2>
-                <p class="text-muted">Share educational resources with your students</p>
+<div class="flex flex-col justify-center items-center min-vh-100 py-12 px-4">
+    <div class="w-full max-w-3xl">
+        <div class="nm-flat p-8 md:p-10 border-t-4 border-soft-primary/20">
+            <div class="mb-10 text-center">
+                <h2 class="text-3xl font-black text-soft-dark tracking-tight">Sync <span
+                        class="text-soft-primary">Material</span></h2>
+                <p class="text-[0.55rem] font-bold text-soft-primary uppercase tracking-[0.2em] opacity-50">Upload
+                    academic intelligence to the repository</p>
             </div>
 
             <form method="POST" action="" enctype="multipart/form-data" id="uploadForm">
                 {{ form.hidden_tag() }}
 
-                <div class="row mb-5">
-                    <div class="col-12">
-                        <div class="bg-glass rounded-4 p-4 border border-glass">
-                            <h5 class="fw-bold mb-4 text-accent uppercase tracking-widest" style="font-size: 0.7rem;"><i
-                                    class="fas fa-project-diagram me-2"></i>ACADEMIC CONTEXT</h5>
-                            <div class="row g-3">
-                                <div class="col-12 col-md-4">
-                                    <label class="form-label small fw-bold text-muted">Course</label>
-                                    <select class="form-select form-control-futuristic" id="courseSelect">
-                                        <option value="">Select Course...</option>
-                                    </select>
-                                </div>
-                                <div class="col-12 col-md-4">
-                                    <label class="form-label small fw-bold text-muted">Semester</label>
-                                    <select class="form-select form-control-futuristic" id="semesterSelect" disabled>
-                                        <option value="">Select Semester...</option>
-                                    </select>
-                                </div>
-                                <div class="col-12 col-md-4">
-                                    <label class="form-label small fw-bold text-muted">Subject</label>
-                                    <select class="form-select form-control-futuristic" id="subjectSelect" disabled>
-                                        <option value="">Select Subject...</option>
-                                    </select>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <label class="form-label small fw-bold text-muted">Unit</label>
-                                    <select class="form-select form-control-futuristic" id="unitSelect" disabled>
-                                        <option value="">Select Unit...</option>
-                                    </select>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <label class="form-label small fw-bold text-muted">Topic</label>
-                                    {{ form.topic(class="form-select form-control-futuristic", id="topicSelect",
-                                    disabled=True) }}
-                                </div>
-                            </div>
+                <!-- Academic Context -->
+                <div class="nm-inset p-6 rounded-2xl mb-8">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div
+                            class="nm-flat w-8 h-8 rounded-lg flex items-center justify-center text-soft-primary text-xs">
+                            <i class="fas fa-project-diagram"></i>
+                        </div>
+                        <h5 class="text-[0.6rem] font-black text-soft-dark uppercase tracking-widest">Academic Context
+                        </h5>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                        <div>
+                            <label
+                                class="block text-[0.5rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">Course
+                                Node</label>
+                            <select class="nm-input h-10 text-xs font-bold" id="courseSelect">
+                                <option value="">Select Course...</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label
+                                class="block text-[0.5rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">Phase
+                                Segment</label>
+                            <select class="nm-input h-10 text-xs font-bold opacity-50" id="semesterSelect" disabled>
+                                <option value="">Select Semester...</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label
+                                class="block text-[0.5rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">Module
+                                Nexus</label>
+                            <select class="nm-input h-10 text-xs font-bold opacity-50" id="subjectSelect" disabled>
+                                <option value="">Select Subject...</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label
+                                class="block text-[0.5rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">Unit
+                                Layer</label>
+                            <select class="nm-input h-10 text-xs font-bold opacity-50" id="unitSelect" disabled>
+                                <option value="">Select Unit...</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label
+                                class="block text-[0.5rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">Specific
+                                Topic</label>
+                            {{ form.topic(class="nm-input h-10 text-xs font-bold opacity-50", id="topicSelect",
+                            disabled=True) }}
                         </div>
                     </div>
                 </div>
 
-                <div class="row g-4 mb-4">
-                    <div class="col-12 col-md-8">
-                        {{ form.title.label(class="form-label small fw-bold text-muted") }}
-                        {{ form.title(class="form-control form-control-futuristic", placeholder="e.g., Quantum Mechanics
-                        Lecture Notes") }}
+                <!-- Material Details -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div class="md:col-span-3">
+                        <label
+                            class="block text-[0.55rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">Resource
+                            Title</label>
+                        {{ form.title(class="nm-input h-11 text-sm", placeholder="e.g., Quantum Mechanics Lecture
+                        Notes") }}
                         {% if form.title.errors %}
-                        {% for error in form.title.errors %}<div class="text-danger small mt-1">{{ error }}</div>{%
-                        endfor %}
+                        {% for error in form.title.errors %}<div
+                            class="text-red-500 text-[0.55rem] font-bold mt-1 ml-1">{{ error }}</div>{% endfor %}
                         {% endif %}
                     </div>
-                    <div class="col-md-4">
-                        {{ form.material_type.label(class="form-label small fw-bold text-muted") }}
-                        {{ form.material_type(class="form-select form-control-futuristic", id="materialTypeSelect") }}
+                    <div>
+                        <label
+                            class="block text-[0.55rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">Type</label>
+                        {{ form.material_type(class="nm-input h-11 text-sm cursor-pointer", id="materialTypeSelect") }}
                     </div>
                 </div>
 
-                <div class="mb-5" id="fileUploadGroup">
-                    {{ form.file.label(class="form-label small fw-bold text-muted mb-2") }}
-                    <div id="dropZone" class="drop-zone text-center p-5"
-                        style="border: 2px dashed rgba(202, 255, 51, 0.2); transition: var(--transition-smooth);">
-                        <div class="py-2">
-                            <i class="fas fa-cloud-upload-alt fa-3x text-accent mb-3"></i>
-                            <h5 class="fw-bold">Upload Material</h5>
-                            <p class="text-muted px-4 small">PDF, DOCX, PPT, or Media Files (Max 100MB)</p>
-                            <span id="fileNameDisplay" class="badge-futuristic d-none mt-3"></span>
+                <!-- Upload Section -->
+                <div id="fileUploadGroup" class="mb-10">
+                    <label
+                        class="block text-[0.55rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">Material
+                        Source</label>
+                    <div id="dropZone"
+                        class="nm-inset p-10 rounded-2xl text-center cursor-pointer transition-all hover:scale-[0.99] active:scale-[0.98]">
+                        <div class="py-4">
+                            <div
+                                class="nm-flat w-16 h-16 mx-auto flex items-center justify-center mb-4 rounded-2xl text-soft-primary">
+                                <i class="fas fa-cloud-upload-alt text-2xl"></i>
+                            </div>
+                            <h5 class="text-xs font-black text-soft-dark uppercase tracking-wide">Drop target or click
+                                to browse</h5>
+                            <p
+                                class="text-[0.5rem] text-soft-primary font-bold uppercase tracking-widest opacity-40 mt-1">
+                                PDF, DOCX, PPT, or Media (Max 100MB)</p>
+                            <span id="fileNameDisplay"
+                                class="nm-flat inline-block px-4 py-1.5 rounded-full text-[0.5rem] font-black text-soft-primary uppercase tracking-widest d-none mt-6"></span>
                             {{ form.file(class="d-none", id="fileInput") }}
                         </div>
                     </div>
                     {% if form.file.errors %}
-                    {% for error in form.file.errors %}<div class="text-danger small mt-1">{{ error }}</div>{% endfor %}
+                    {% for error in form.file.errors %}<div
+                        class="text-red-500 text-[0.55rem] font-bold mt-1 ml-1 text-center">{{ error }}</div>{% endfor
+                    %}
                     {% endif %}
                 </div>
 
-                <div class="mb-5 d-none" id="urlInputGroup">
-                    {{ form.file_url.label(class="form-label small fw-bold text-muted") }}
-                    {{ form.file_url(class="form-control form-control-futuristic",
-                    placeholder="https://youtube.com/...") }}
-                    <div class="form-text small text-muted">Integrate resources from Google Drive, YouTube, or external
-                        silos.</div>
+                <div id="urlInputGroup" class="mb-10 d-none">
+                    <label
+                        class="block text-[0.55rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">External
+                        Nexus Link</label>
+                    {{ form.file_url(class="nm-input h-11 text-sm", placeholder="https://youtube.com/...") }}
+                    <p class="text-[0.5rem] text-soft-primary font-bold uppercase tracking-widest opacity-40 mt-2 ml-1">
+                        Integrate resources from Google Drive, YouTube, or external silos.</p>
                     {% if form.file_url.errors %}
-                    {% for error in form.file_url.errors %}<div class="text-danger small mt-1">{{ error }}</div>{%
-                    endfor %}
+                    {% for error in form.file_url.errors %}<div class="text-red-500 text-[0.55rem] font-bold mt-1 ml-1">
+                        {{ error }}</div>{% endfor %}
                     {% endif %}
                 </div>
 
-                <div class="d-grid pt-3">
-                    {{ form.submit(class="btn btn-futuristic py-3 fs-5") }}
+                <div class="pt-4">
+                    {{ form.submit(class="nm-button w-full py-4 text-[0.7rem] uppercase tracking-[0.2em] font-black") }}
+                </div>
+
+                <div class="text-center mt-8">
+                    <a href="{{ url_for('main.teacher_dashboard') }}"
+                        class="text-[0.55rem] font-black text-soft-primary uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity no-underline">
+                        <i class="fas fa-chevron-left mr-1"></i> Return to Portal
+                    </a>
                 </div>
             </form>
         </div>

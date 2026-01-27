@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block title %}Student Directory{% endblock %}
+
+{% block content %}
+<div class="flex flex-col gap-8 max-w-6xl mx-auto py-4 px-4">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="flex items-center gap-3">
+            <a href="{% if current_user.role.name == 'Admin' %}{{ url_for('admin.dashboard') }}{% else %}{{ url_for('main.teacher_dashboard') }}{% endif %}"
+                class="nm-button w-10 h-10 flex items-center justify-center no-underline">
+                <i class="fas fa-chevron-left"></i>
+            </a>
+            <div>
+                <h2 class="text-2xl font-black text-soft-dark tracking-tight">Student <span
+                        class="text-soft-primary">Registry</span></h2>
+                <p class="text-[0.5rem] font-bold text-soft-primary uppercase tracking-[0.2em] opacity-60">Synced Campus
+                    Entities</p>
+            </div>
+        </div>
+        <div class="nm-flat px-4 py-2 rounded-full flex items-center gap-2">
+            <i class="fas fa-user-graduate text-soft-primary text-[0.6rem]"></i>
+            <span class="text-[0.55rem] font-black text-soft-primary uppercase tracking-widest">{{
+                verified_students|length }} Synced Units</span>
+        </div>
+    </div>
+
+    <!-- Registry Grid -->
+    <div class="nm-flat p-6">
+        {% if verified_students %}
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+            {% for student in verified_students %}
+            <div class="nm-inset p-4 group cursor-pointer hover:bg-white/40 transition-colors" data-bs-toggle="modal"
+                data-bs-target="#studentModal" data-username="{{ student.username }}"
+                data-reg-num="{{ student.register_number }}"
+                data-report-url="{{ url_for('main.student_report', user_id=student.id) }}">
+                <div class="flex items-start justify-between mb-3">
+                    <div class="nm-flat w-8 h-8 rounded-lg flex items-center justify-center text-soft-primary text-xs">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                    <i
+                        class="fas fa-chevron-right text-[0.5rem] text-soft-primary opacity-20 group-hover:opacity-100 transition-opacity"></i>
+                </div>
+                <h4 class="text-[0.65rem] font-black text-soft-dark truncate mb-0.5 uppercase tracking-tight">{{
+                    student.username }}</h4>
+                <div class="text-[0.5rem] text-soft-primary font-black opacity-40 uppercase tracking-widest">{{
+                    student.register_number or 'PENDING' }}</div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="flex flex-col items-center justify-center py-16 opacity-20">
+            <i class="fas fa-user-slash text-5xl mb-3"></i>
+            <p class="text-[0.5rem] font-black uppercase tracking-[0.2em]">Zero Synced Entities</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Modal for reports -->
+<div class="modal fade" id="studentModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content nm-flat border-0 overflow-hidden">
+            <div class="modal-header border-soft-primary/5 p-4">
+                <h5 class="text-[0.55rem] font-black text-soft-dark uppercase tracking-widest">Entity Analysis</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" style="font-size: 0.6rem;"></button>
+            </div>
+            <div class="modal-body p-6 text-center">
+                <div
+                    class="nm-inset w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-soft-primary">
+                    <i class="fas fa-user-circle text-2xl"></i>
+                </div>
+                <h3 id="student-modal-username" class="text-sm font-black text-soft-dark mb-1"></h3>
+                <div id="student-modal-reg-num"
+                    class="text-[0.55rem] font-black text-soft-primary uppercase tracking-[0.1em] mb-6"></div>
+
+                <a id="student-modal-report-link" href="#"
+                    class="nm-button block w-full py-2.5 text-[0.55rem] font-black uppercase tracking-widest no-underline">
+                    <i class="fas fa-file-export me-1"></i>Generate Audit
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const studentModal = document.getElementById('studentModal');
+        if (studentModal) {
+            studentModal.addEventListener('show.bs.modal', function (event) {
+                const trigger = event.relatedTarget;
+                const username = trigger.getAttribute('data-username') || 'N/A';
+                const regNum = trigger.getAttribute('data-reg-num') || 'PENDING';
+                const reportUrl = trigger.getAttribute('data-report-url') || '#';
+
+                studentModal.querySelector('#student-modal-username').innerText = username;
+                studentModal.querySelector('#student-modal-reg-num').innerText = regNum;
+                studentModal.querySelector('#student-modal-report-link').href = reportUrl;
+            });
+        }
+    });
+</script>
+{% endblock %}
+{% endblock %}

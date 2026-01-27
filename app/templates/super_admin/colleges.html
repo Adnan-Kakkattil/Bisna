@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}College Registry{% endblock %}
+{% block content %}
+<div class="flex flex-col gap-10 max-w-6xl mx-auto py-8 px-4">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+        <div>
+            <h2 class="text-4xl font-black text-soft-dark tracking-tight">Institutional <span
+                    class="text-soft-primary">Registry</span></h2>
+            <p class="text-[0.65rem] font-bold text-soft-primary uppercase tracking-[0.2em] opacity-60">Manage
+                across-node college registrations</p>
+        </div>
+        <div class="flex gap-4">
+            <a href="{{ url_for('super_admin.add_college') }}"
+                class="nm-button flex items-center gap-2 text-sm font-black bg-soft-primary/5">
+                <i class="fas fa-plus-circle"></i> Register College
+            </a>
+        </div>
+    </div>
+
+    <!-- Colleges Grid -->
+    <div class="nm-flat p-6 md:p-10">
+        <div class="flex items-center gap-4 mb-10">
+            <div class="nm-inset p-3 rounded-2xl text-soft-primary">
+                <i class="fas fa-university text-xl"></i>
+            </div>
+            <div>
+                <h5 class="text-xs font-black text-soft-dark uppercase tracking-[0.2em] leading-none mb-1">Global
+                    Database</h5>
+                <p class="text-[0.6rem] font-bold text-soft-primary uppercase tracking-widest opacity-60">Verified
+                    Educational Nodes</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for college in colleges %}
+            <div
+                class="nm-flat p-8 flex flex-col hover:scale-[1.03] transition-transform duration-500 border-t-4 border-soft-primary/10">
+                <div class="flex justify-between items-start mb-6">
+                    <div class="nm-inset w-12 h-12 flex items-center justify-center rounded-xl text-soft-primary">
+                        <i class="fas fa-school text-xl"></i>
+                    </div>
+                    <div
+                        class="nm-inset px-4 py-2 rounded-full text-[0.6rem] font-black text-soft-primary uppercase tracking-widest bg-white/30">
+                        {{ college.users|length }} Entities
+                    </div>
+                </div>
+
+                <h4 class="text-2xl font-black text-soft-dark mb-2 leading-tight tracking-tight">{{ college.name }}</h4>
+                <div class="text-[0.65rem] font-black text-soft-primary uppercase tracking-widest opacity-60 mb-8">
+                    NODE_ID: {{ college.formatted_id }}</div>
+
+                <div class="mt-auto flex gap-3">
+                    <a href="{{ url_for('super_admin.edit_college', college_id=college.id) }}"
+                        class="nm-button flex-1 py-4 text-[0.65rem] font-black uppercase tracking-[0.2em] no-underline">
+                        <i class="fas fa-cog mr-2"></i> Configure
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

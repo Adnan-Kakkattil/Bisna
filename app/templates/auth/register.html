@@ -1,121 +1,145 @@
 {% extends "base.html" %}
 {% block title %}Register{% endblock %}
 {% block content %}
-<div class="row justify-content-center py-5">
-    <div class="col-md-7">
-        <div class="glass-card p-5" style="border: 2px solid var(--border-medium);">
-            <div class="mb-5">
-                <div class="accent-dot mb-3"></div>
-                <h2 class="fw-bold mb-2" style="font-size: 2.5rem;">Create Account</h2>
-                <p class="text-muted">Join your college's academic management system</p>
+<div class="flex flex-col justify-center items-center min-vh-100 py-12 px-4">
+    <div class="w-full max-w-2xl">
+        <div class="nm-flat p-8 md:p-10 border-t-4 border-soft-primary/20">
+            <div class="mb-10 text-center">
+                <h2 class="text-3xl font-black text-soft-dark tracking-tight">Create <span
+                        class="text-soft-primary">Account</span></h2>
+                <p class="text-[0.55rem] font-bold text-soft-primary uppercase tracking-[0.2em] opacity-50">Join
+                    Institutional Learning Community</p>
             </div>
 
             <form method="POST" action="">
                 {{ form.hidden_tag() }}
 
-                <div class="row g-4 mb-4">
-                    <div class="col-md-6">
-                        {{ form.role.label(class="form-label") }}
-                        {{ form.role(class="form-select form-control-futuristic", id="role_select") }}
+                <!-- Role & College Selection -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div>
+                        <label
+                            class="block text-[0.55rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">Role
+                            Node</label>
+                        {{ form.role(class="nm-input h-11 text-sm cursor-pointer", id="role_select") }}
                     </div>
 
-                    <div class="col-md-6" id="college_dropdown_div">
-                        {{ form.college.label(class="form-label") }}
-                        {{ form.college(class="form-select form-control-futuristic") }}
+                    <div id="college_dropdown_div" style="display: none;">
+                        <label
+                            class="block text-[0.55rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">Campus
+                            Node</label>
+                        {{ form.college(class="nm-input h-11 text-sm cursor-pointer") }}
                     </div>
 
-                    <div class="col-md-6" id="college_id_div">
-                        {{ form.college_id.label(class="form-label") }}
-                        {{ form.college_id(class="form-control form-control-futuristic", placeholder="e.g., CIDA001") }}
-                        <div class="form-text">Contact your administrator for your College ID.</div>
+                    <div id="college_id_div" style="display: none;">
+                        <label
+                            class="block text-[0.55rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">CID
+                            Node</label>
+                        {{ form.college_id(class="nm-input h-11 text-sm", placeholder="CIDA001") }}
                     </div>
                 </div>
 
-                <div class="row g-4 mb-4">
-                    <div class="col-md-6">
-                        {{ form.username.label(class="form-label") }}
-                        {{ form.username(class="form-control form-control-futuristic", placeholder="john_doe") }}
+                <!-- Username & Email -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div>
+                        <label
+                            class="block text-[0.55rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">Entity
+                            Name</label>
+                        {{ form.username(class="nm-input h-11 text-sm", placeholder="john_doe") }}
                         {% if form.username.errors %}
-                        {% for error in form.username.errors %}<div class="text-danger small mt-2">{{ error }}</div>{%
-                        endfor %}
+                        {% for error in form.username.errors %}
+                        <div class="text-red-600 text-[0.55rem] font-bold mt-1 ml-1">{{ error }}</div>
+                        {% endfor %}
                         {% endif %}
                     </div>
-                    <div class="col-md-6">
-                        {{ form.email.label(class="form-label") }}
-                        {{ form.email(class="form-control form-control-futuristic", placeholder="john@college.edu") }}
+                    <div>
+                        <label
+                            class="block text-[0.55rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">Email
+                            Node</label>
+                        {{ form.email(class="nm-input h-11 text-sm", placeholder="john@college.edu") }}
                         {% if form.email.errors %}
-                        {% for error in form.email.errors %}<div class="text-danger small mt-2">{{ error }}</div>{%
-                        endfor %}
+                        {% for error in form.email.errors %}
+                        <div class="text-red-600 text-[0.55rem] font-bold mt-1 ml-1">{{ error }}</div>
+                        {% endfor %}
                         {% endif %}
                     </div>
                 </div>
 
-                <div class="mb-4" id="reg_num_div">
-                    {{ form.register_number.label(class="form-label") }}
-                    {{ form.register_number(class="form-control form-control-futuristic", placeholder="REG2024001") }}
+                <!-- Register Number -->
+                <div id="reg_num_div" class="mb-6" style="display: none;">
+                    <label
+                        class="block text-[0.55rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">Registry
+                        Number</label>
+                    {{ form.register_number(class="nm-input h-11 text-sm", placeholder="REG2024001") }}
                     {% if form.register_number.errors %}
-                    {% for error in form.register_number.errors %}<div class="text-danger small mt-2">{{ error }}</div>
+                    {% for error in form.register_number.errors %}
+                    <div class="text-red-600 text-[0.55rem] font-bold mt-1 ml-1">{{ error }}</div>
                     {% endfor %}
                     {% endif %}
                 </div>
 
-                <div class="row g-4 mb-4">
-                    <div class="col-md-6">
-                        {{ form.password.label(class="form-label") }}
-                        <div class="input-group">
-                            {{ form.password(class="form-control form-control-futuristic", id="password_input",
+                <!-- Password & Confirm Password -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
+                    <div>
+                        <label
+                            class="block text-[0.55rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">Sequence
+                            Key</label>
+                        <div class="relative">
+                            {{ form.password(class="nm-input h-11 text-sm pr-10", id="password_input",
                             placeholder="••••••••") }}
-                            <button class="btn btn-outline-futuristic border-start-0" type="button" id="togglePassword">
-                                <i class="fas fa-eye text-accent"></i>
+                            <button
+                                class="absolute right-3 top-1/2 -translate-y-1/2 text-soft-primary/40 hover:text-soft-primary transition-colors"
+                                type="button" id="togglePassword">
+                                <i class="fas fa-eye text-xs"></i>
                             </button>
                         </div>
-                        <!-- Password Strength Indicator -->
-                        <div class="mt-2">
-                            <div class="d-flex gap-1 mb-2" id="strengthBars">
-                                <div class="flex-grow-1"
-                                    style="height: 3px; background: var(--border-medium); border-radius: 2px;"></div>
-                                <div class="flex-grow-1"
-                                    style="height: 3px; background: var(--border-medium); border-radius: 2px;"></div>
-                                <div class="flex-grow-1"
-                                    style="height: 3px; background: var(--border-medium); border-radius: 2px;"></div>
-                                <div class="flex-grow-1"
-                                    style="height: 3px; background: var(--border-medium); border-radius: 2px;"></div>
-                            </div>
-                            <small id="strengthText" class="text-muted"></small>
-                        </div>
-                        {% if form.password.errors %}
-                        {% for error in form.password.errors %}<div class="text-danger small mt-2">{{ error }}</div>{%
-                        endfor %}
-                        {% endif %}
                     </div>
-                    <div class="col-md-6">
-                        {{ form.confirm_password.label(class="form-label") }}
-                        <div class="input-group">
-                            {{ form.confirm_password(class="form-control form-control-futuristic",
-                            id="confirm_password_input",
+                    <div>
+                        <label
+                            class="block text-[0.55rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">Verify
+                            Key</label>
+                        <div class="relative">
+                            {{ form.confirm_password(class="nm-input h-11 text-sm pr-10", id="confirm_password_input",
                             placeholder="••••••••") }}
-                            <button class="btn btn-outline-futuristic border-start-0" type="button"
-                                id="toggleConfirmPassword">
-                                <i class="fas fa-eye text-accent"></i>
+                            <button
+                                class="absolute right-3 top-1/2 -translate-y-1/2 text-soft-primary/40 hover:text-soft-primary transition-colors"
+                                type="button" id="toggleConfirmPassword">
+                                <i class="fas fa-eye text-xs"></i>
                             </button>
                         </div>
                         {% if form.confirm_password.errors %}
-                        {% for error in form.confirm_password.errors %}<div class="text-danger small mt-2">{{ error }}
-                        </div>{% endfor %}
+                        {% for error in form.confirm_password.errors %}
+                        <div class="text-red-600 text-[0.55rem] font-bold mt-1 ml-1">{{ error }}</div>
+                        {% endfor %}
                         {% endif %}
                     </div>
                 </div>
 
-                <div class="d-grid mt-5">
-                    {{ form.submit(class="btn btn-futuristic py-3") }}
+                <!-- Password Strength -->
+                <div class="mb-8">
+                    <div class="flex gap-2 mb-1.5" id="strengthBars">
+                        <div class="flex-1 h-1 bg-soft-primary/10 rounded-full"></div>
+                        <div class="flex-1 h-1 bg-soft-primary/10 rounded-full"></div>
+                        <div class="flex-1 h-1 bg-soft-primary/10 rounded-full"></div>
+                        <div class="flex-1 h-1 bg-soft-primary/10 rounded-full"></div>
+                    </div>
+                    <div class="flex justify-between items-center px-1">
+                        <small id="strengthText"
+                            class="text-[0.45rem] font-black text-soft-primary uppercase tracking-widest opacity-30">Security
+                            Level</small>
+                        <i class="fas fa-shield-alt text-[0.5rem] text-soft-primary opacity-20"></i>
+                    </div>
+                </div>
+
+                <div class="mb-8 pt-2">
+                    {{ form.submit(class="nm-button w-full py-3 text-[0.7rem] uppercase tracking-[0.2em] font-black") }}
                 </div>
             </form>
 
-            <div class="text-center mt-4 pt-3" style="border-top: 1px solid var(--border-subtle);">
-                <p class="text-muted small mb-0">
-                    Already have an account?
-                    <a href="{{ url_for('auth.login') }}" class="text-accent fw-semibold text-decoration-none">Sign
-                        In</a>
+            <div class="text-center pt-6 border-t border-soft-primary/5">
+                <p class="text-[0.5rem] font-black text-soft-primary uppercase tracking-widest">
+                    Already Registered?
+                    <a href="{{ url_for('auth.login') }}"
+                        class="text-soft-dark hover:underline ml-1 transition-colors">SignIn Portal</a>
                 </p>
             </div>
         </div>
@@ -149,7 +173,6 @@
             }
         }
 
-        // Password visibility toggle
         togglePasswordBtn.addEventListener('click', function () {
             const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
             passwordInput.setAttribute('type', type);
@@ -157,7 +180,6 @@
             this.querySelector('i').classList.toggle('fa-eye-slash');
         });
 
-        // Confirm password visibility toggle
         toggleConfirmPasswordBtn.addEventListener('click', function () {
             const type = confirmPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
             confirmPasswordInput.setAttribute('type', type);
@@ -165,52 +187,36 @@
             this.querySelector('i').classList.toggle('fa-eye-slash');
         });
 
-        // Password strength checker
         function checkPasswordStrength(password) {
             let strength = 0;
             const bars = document.querySelectorAll('#strengthBars > div');
             const strengthText = document.getElementById('strengthText');
 
             if (password.length === 0) {
-                bars.forEach(bar => bar.style.background = 'var(--border-medium)');
-                strengthText.textContent = '';
+                bars.forEach(bar => bar.style.background = 'rgba(75, 134, 180, 0.1)');
+                strengthText.textContent = 'Security Level';
                 return;
             }
 
-            // Length check
             if (password.length >= 8) strength++;
             if (password.length >= 12) strength++;
-
-            // Character variety checks
             if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
-            if (/[0-9]/.test(password)) strength++;
-            if (/[^a-zA-Z0-9]/.test(password)) strength++;
+            if (/[0-9]/.test(password) || /[^a-zA-Z0-9]/.test(password)) strength++;
 
-            // Limit to 4 bars
             strength = Math.min(strength, 4);
 
-            // Update bars
             bars.forEach((bar, index) => {
                 if (index < strength) {
                     if (strength === 1) bar.style.background = '#ff4444';
                     else if (strength === 2) bar.style.background = '#ffaa00';
-                    else if (strength === 3) bar.style.background = '#ffdd00';
-                    else bar.style.background = 'var(--accent-primary)';
+                    else bar.style.background = '#4b86b4';
                 } else {
-                    bar.style.background = 'var(--border-medium)';
+                    bar.style.background = 'rgba(75, 134, 180, 0.1)';
                 }
             });
 
-            // Update text
-            const messages = [
-                '',
-                'Weak - Add more characters',
-                'Fair - Add numbers or symbols',
-                'Good - Consider adding special characters',
-                'Strong - Excellent password!'
-            ];
+            const messages = ['', 'Weak', 'Fair', 'Good', 'Strong'];
             strengthText.textContent = messages[strength];
-            strengthText.style.color = strength >= 3 ? 'var(--accent-primary)' : 'var(--text-muted)';
         }
 
         passwordInput.addEventListener('input', function () {

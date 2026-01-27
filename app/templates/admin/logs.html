@@ -1,45 +1,76 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="row mb-4">
-    <div class="col-md-12">
-        <h2>{{ title }}</h2>
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+<div class="max-w-6xl mx-auto px-4 py-12">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-12">
+        <div>
+            <h2 class="text-3xl font-black text-soft-dark tracking-tight">{{ title.split(' ')[0] }} <span
+                    class="text-soft-primary">{{ ' '.join(title.split(' ')[1:]) }}</span></h2>
+            <p class="text-[0.6rem] font-bold text-soft-primary uppercase tracking-[0.2em] opacity-60">Telemetry
+                monitoring for the institutional node</p>
+        </div>
+        <div class="flex items-center gap-3">
+            <a href="{{ url_for('admin.dashboard') }}"
+                class="nm-button px-5 py-3 text-[0.6rem] font-black uppercase tracking-widest no-underline opacity-50">Infrastructure</a>
             <a href="{{ url_for('admin.download_logs', role_name='Teacher' if 'Teacher' in title else 'Student') }}"
-                class="btn btn-success">
-                <i class="fas fa-download me-1"></i> Download CSV
+                class="nm-button px-5 py-3 text-[0.6rem] font-black uppercase tracking-widest no-underline text-soft-primary">
+                <i class="fas fa-download mr-2"></i> Export Data
             </a>
         </div>
     </div>
-</div>
 
-<div class="card">
-    <div class="card-body">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Timestamp</th>
-                    <th>User</th>
-                    <th>Action</th>
-                    <th>Details</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for log in logs %}
-                <tr>
-                    <td>{{ log.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
-                    <td>{{ log.user.username }} ({{ log.user.email }})</td>
-                    <td>{{ log.action }}</td>
-                    <td>{{ log.details }}</td>
-                </tr>
-                {% else %}
-                <tr>
-                    <td colspan="4" class="text-center">No activity logs found.</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <!-- Logs Nexus -->
+    <div class="nm-flat p-6 rounded-3xl overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead>
+                    <tr class="border-b border-soft-primary/5">
+                        <th
+                            class="pb-6 text-left text-[0.55rem] font-black text-soft-primary uppercase tracking-[0.2em] opacity-40">
+                            Timeline</th>
+                        <th
+                            class="pb-6 text-left text-[0.55rem] font-black text-soft-primary uppercase tracking-[0.2em] opacity-40">
+                            Entity</th>
+                        <th
+                            class="pb-6 text-left text-[0.55rem] font-black text-soft-primary uppercase tracking-[0.2em] opacity-40">
+                            Action</th>
+                        <th
+                            class="pb-6 text-left text-[0.55rem] font-black text-soft-primary uppercase tracking-[0.2em] opacity-40">
+                            Metadata</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-soft-primary/5">
+                    {% for log in logs %}
+                    <tr class="group hover:bg-soft-primary/5 transition-colors">
+                        <td class="py-5 text-[0.6rem] font-bold text-soft-primary/60 whitespace-nowrap">{{
+                            log.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                        <td class="py-5">
+                            <div class="flex flex-col">
+                                <span class="text-[0.65rem] font-black text-soft-dark">{{ log.user.username }}</span>
+                                <span class="text-[0.5rem] font-bold text-soft-primary/40 uppercase tracking-widest">{{
+                                    log.user.email }}</span>
+                            </div>
+                        </td>
+                        <td class="py-5">
+                            <span
+                                class="nm-inset px-2.5 py-1 rounded text-[0.55rem] font-black text-soft-primary uppercase tracking-widest">{{
+                                log.action }}</span>
+                        </td>
+                        <td class="py-5 text-[0.65rem] font-bold text-soft-dark line-clamp-1 max-w-xs">{{ log.details }}
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4" class="py-20 text-center opacity-30">
+                            <i class="fas fa-stream text-4xl mb-4"></i>
+                            <p class="text-[0.6rem] font-black uppercase tracking-widest">No Telemetry Detected</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 {% endblock %}

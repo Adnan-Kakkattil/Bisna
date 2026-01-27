@@ -1,0 +1,99 @@
+<nav class="navbar navbar-expand-lg fixed-top navbar-autohide" style="background: transparent; top: 1rem;">
+    <div class="container">
+        <div class="navbar-soft py-3 px-4 flex justify-between items-center w-full"
+            style="border-radius: 20px; box-shadow: 8px 8px 16px var(--c-shadow-dark), -8px -8px 16px var(--c-shadow-light);">
+
+            <!-- Logo - Always Left -->
+            <a class="navbar-brand text-soft-dark hover:opacity-80 font-black tracking-tighter mb-0"
+                style="font-size: clamp(1.25rem, 2.5vw, 1.75rem);" href="{{ url_for('main.index') }}">EduStack</a>
+
+            <!-- Mobile Toggle -->
+            <button class="navbar-toggler border-0 nm-button p-2 d-lg-none" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
+                <i class="fas fa-bars text-soft-primary"></i>
+            </button>
+
+            <!-- Nav Items -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-lg-center gap-2 mt-4 mt-lg-0">
+                    {% if current_user.is_authenticated %}
+
+                    <!-- Dashboard Link -->
+                    <li class="nav-item">
+                        {% if current_user.role.name == 'Super Admin' %}
+                        <a class="nav-link px-3 py-2 text-soft-primary font-bold text-xs uppercase tracking-wider hover:opacity-80 transition-opacity"
+                            href="{{ url_for('super_admin.dashboard') }}">
+                            <i class="fas fa-th-large me-1 opacity-50"></i> Dashboard
+                        </a>
+                        {% elif current_user.role.name == 'Admin' %}
+                        <a class="nav-link px-3 py-2 text-soft-primary font-bold text-xs uppercase tracking-wider hover:opacity-80 transition-opacity"
+                            href="{{ url_for('admin.dashboard') }}">
+                            <i class="fas fa-desktop me-1 opacity-50"></i> Dashboard
+                        </a>
+                        {% elif current_user.role.name == 'Teacher' %}
+                        <a class="nav-link px-3 py-2 text-soft-primary font-bold text-xs uppercase tracking-wider hover:opacity-80 transition-opacity"
+                            href="{{ url_for('main.teacher_dashboard') }}">
+                            <i class="fas fa-chalkboard-teacher me-1 opacity-50"></i> Dashboard
+                        </a>
+                        {% endif %}
+                    </li>
+
+                    <!-- Notes Link (for non-admins) -->
+                    {% if current_user.role.name not in ['Admin', 'Super Admin'] %}
+                    <li class="nav-item">
+                        <a class="nav-link px-3 py-2 text-soft-primary font-bold text-xs uppercase tracking-wider hover:opacity-80 transition-opacity"
+                            href="{{ url_for('notes.list_notes') }}">
+                            <i class="fas fa-book-open me-1 opacity-50"></i> Resources
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    <!-- Super Admin Links -->
+                    {% if current_user.role.name == 'Super Admin' %}
+                    <li class="nav-item">
+                        <a class="nav-link px-3 py-2 text-soft-primary font-bold text-xs uppercase tracking-wider hover:opacity-80 transition-opacity"
+                            href="{{ url_for('super_admin.manage_admins') }}">
+                            <i class="fas fa-user-shield me-1 opacity-50"></i> Admins
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-3 py-2 text-soft-primary font-bold text-xs uppercase tracking-wider hover:opacity-80 transition-opacity"
+                            href="{{ url_for('super_admin.manage_colleges') }}">
+                            <i class="fas fa-university me-1 opacity-50"></i> Colleges
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    <!-- Profile Button -->
+                    <li class="nav-item">
+                        <a class="nm-button text-decoration-none px-4 py-2 text-xs font-bold uppercase tracking-wider d-inline-block"
+                            href="{{ url_for('auth.profile') }}">
+                            <i class="fas fa-user-circle me-1 opacity-50"></i> Profile
+                        </a>
+                    </li>
+
+                    <!-- Logout Button -->
+                    <li class="nav-item">
+                        <a class="nm-button text-decoration-none px-4 py-2 text-xs font-bold uppercase tracking-wider d-inline-block"
+                            style="color: #ef4444; background: rgba(239, 68, 68, 0.05);"
+                            href="{{ url_for('auth.logout') }}">
+                            <i class="fas fa-power-off me-1 opacity-70"></i> Logout
+                        </a>
+                    </li>
+
+                    {% else %}
+                    <!-- Guest Navigation -->
+                    <li class="nav-item">
+                        <a class="nav-link px-4 py-2 text-soft-primary font-bold text-xs uppercase tracking-wider hover:opacity-80 transition-opacity"
+                            href="{{ url_for('auth.login') }}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nm-button text-decoration-none px-5 py-2 text-xs font-bold uppercase tracking-wider d-inline-block"
+                            href="{{ url_for('auth.register') }}">Get Started</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>

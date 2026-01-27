@@ -32,16 +32,32 @@ def index():
 def teacher_dashboard():
     if current_user.role.name != 'Teacher':
         return redirect(url_for('main.index'))
-    from app.models import Course
+    from app.models import Course, Note, Role, User
     courses = Course.query.filter_by(college_id=current_user.college_id).all()
-    # Fetch verified students for THIS college (Teachers manage students)
-    from app.models import Role, User
+    
+    # Fetch verified students for THIS college
     verified_students = User.query.join(Role).filter(
         User.is_verified == True,
         Role.name == 'Student',
         User.college_id == current_user.college_id
     ).all()
-    return render_template('teacher/dashboard.html', courses=courses, verified_students=verified_students)
+
+    # Fetch notes belonging to users in this college
+    verified_notes = Note.query.join(User).filter(
+        Note.is_verified == True,
+        User.college_id == current_user.college_id
+    ).all()
+
+    pending_notes = Note.query.join(User).filter(
+        Note.is_verified == False,
+        User.college_id == current_user.college_id
+    ).all()
+
+    return render_template('teacher/dashboard.html', 
+                           courses=courses, 
+                           verified_students=verified_students,
+                           verified_notes=verified_notes,
+                           pending_notes=pending_notes)
 
 @main.route('/student/report/<int:user_id>')
 @login_required

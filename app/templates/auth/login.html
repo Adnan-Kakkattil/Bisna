@@ -1,62 +1,64 @@
 {% extends "base.html" %}
 {% block title %}Login{% endblock %}
 {% block content %}
-<div class="row justify-content-center align-items-center min-vh-100 py-5">
-    <div class="col-md-5">
-        <div class="glass-card p-5" style="border: 2px solid var(--border-medium);">
-            <div class="mb-5">
-                <div class="accent-dot mb-3"></div>
-                <h2 class="fw-bold mb-2" style="font-size: 2.5rem;">Welcome Back</h2>
-                <p class="text-muted">Sign in to access your academic portal</p>
+<div class="flex flex-col justify-center items-center min-vh-100 py-12 px-4">
+    <div class="w-full max-w-md">
+        <div class="nm-flat p-8 md:p-10 border-t-4 border-soft-primary/20">
+            <div class="mb-8 text-center">
+                <h2 class="text-3xl font-black text-soft-dark tracking-tight">Sign <span
+                        class="text-soft-primary">In</span></h2>
+                <p class="text-[0.55rem] font-bold text-soft-primary uppercase tracking-[0.2em] opacity-50">Authorized
+                    Access Portal</p>
             </div>
 
             <form method="POST" action="">
                 {{ form.hidden_tag() }}
 
-                <div class="mb-4">
-                    {{ form.email.label(class="form-label") }}
-                    {{ form.email(class="form-control form-control-futuristic", placeholder="your.email@college.edu") }}
-                    {% if form.email.errors %}
-                    {% for error in form.email.errors %}<div class="text-danger small mt-2">{{ error }}</div>{% endfor
-                    %}
-                    {% endif %}
+                <div class="mb-6">
+                    <label
+                        class="block text-[0.55rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">Credentials
+                        Node</label>
+                    {{ form.email(class="nm-input h-11 text-sm", placeholder="Email Address") }}
                 </div>
 
-                <div class="row mb-4">
-                    <div class="col-md-6">
-                        {{ form.role.label(class="form-label") }}
-                        {{ form.role(class="form-select form-control-futuristic", id="role") }}
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div>
+                        <label
+                            class="block text-[0.55rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">Role
+                            Node</label>
+                        {{ form.role(class="nm-input h-11 text-sm cursor-pointer", id="role") }}
                     </div>
-                    <div class="col-md-6" id="college_id_div">
-                        {{ form.college_id.label(class="form-label") }}
-                        {{ form.college_id(class="form-control form-control-futuristic", placeholder="College ID") }}
+                    <div id="college_id_div">
+                        <label
+                            class="block text-[0.55rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">CID
+                            Node</label>
+                        {{ form.college_id(class="nm-input h-11 text-sm", placeholder="CIDA001") }}
                     </div>
                 </div>
 
-                <div class="mb-4">
-                    {{ form.password.label(class="form-label") }}
-                    {{ form.password(class="form-control form-control-futuristic", placeholder="Enter your password") }}
-                    {% if form.password.errors %}
-                    {% for error in form.password.errors %}<div class="text-danger small mt-2">{{ error }}</div>{%
-                    endfor %}
-                    {% endif %}
+                <div class="mb-6">
+                    <label
+                        class="block text-[0.55rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">Sequence
+                        Key</label>
+                    {{ form.password(class="nm-input h-11 text-sm", placeholder="••••••••") }}
                 </div>
 
-                <div class="mb-4 form-check">
-                    {{ form.remember(class="form-check-input") }}
-                    {{ form.remember.label(class="form-check-label text-muted") }}
+                <div class="flex items-center mb-8 ml-1">
+                    {{ form.remember(class="w-4 h-4 cursor-pointer accent-soft-primary opacity-60") }}
+                    {{ form.remember.label(class="ml-3 text-[0.55rem] font-black text-soft-primary uppercase
+                    tracking-widest cursor-pointer opacity-50") }}
                 </div>
 
-                <div class="d-grid mb-4">
-                    {{ form.submit(class="btn btn-futuristic py-3") }}
+                <div class="mb-8">
+                    {{ form.submit(class="nm-button w-full py-3 text-[0.7rem] uppercase tracking-[0.2em] font-black") }}
                 </div>
             </form>
 
-            <div class="text-center pt-3" style="border-top: 1px solid var(--border-subtle);">
-                <p class="text-muted small mb-0">
-                    New user?
-                    <a href="{{ url_for('auth.register') }}" class="text-accent fw-semibold text-decoration-none">Create
-                        Account</a>
+            <div class="text-center pt-6 border-t border-soft-primary/5">
+                <p class="text-[0.5rem] font-black text-soft-primary uppercase tracking-widest">
+                    Unregistered?
+                    <a href="{{ url_for('auth.register') }}"
+                        class="text-soft-dark hover:underline ml-1 transition-colors">Enroll Hub</a>
                 </p>
             </div>
         </div>

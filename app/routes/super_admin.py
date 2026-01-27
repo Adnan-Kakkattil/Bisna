@@ -12,23 +12,42 @@ super_admin = Blueprint('super_admin', __name__)
 @login_required
 @role_required('Super Admin')
 def dashboard():
-    colleges = College.query.all()
-    # Pending Admins
+    colleges_count = College.query.count()
+    pending_count = User.query.join(Role).filter(
+        User.is_verified == False,
+        Role.name == 'Admin',
+        User.college_id != None
+    ).count()
+    admins_count = User.query.join(Role).filter(Role.name == 'Admin').count()
+    
+    return render_template('super_admin/dashboard.html', 
+                          colleges_count=colleges_count, 
+                          pending_count=pending_count,
+                          admins_count=admins_count)
+
+@super_admin.route('/super_admin/admins')
+@login_required
+@role_required('Super Admin')
+def manage_admins():
     pending_users = User.query.join(Role).filter(
         User.is_verified == False,
         Role.name == 'Admin',
         User.college_id != None
     ).all()
-    
     verified_admins = User.query.join(Role).filter(
         User.is_verified == True,
         Role.name == 'Admin'
     ).all()
-    
-    return render_template('super_admin/dashboard.html', 
-                           colleges=colleges, 
-                           pending_users=pending_users,
-                           verified_admins=verified_admins)
+    return render_template('super_admin/admins.html', 
+                          pending_users=pending_users,
+                          verified_admins=verified_admins)
+
+@super_admin.route('/super_admin/colleges')
+@login_required
+@role_required('Super Admin')
+def manage_colleges():
+    colleges = College.query.all()
+    return render_template('super_admin/colleges.html', colleges=colleges)
 
 @super_admin.route('/super_admin/college/add', methods=['GET', 'POST'])
 @login_required
@@ -76,7 +95,7 @@ def edit_college(college_id):
         return redirect(url_for('super_admin.dashboard'))
     elif request.method == 'GET':
         form.name.data = college.name
-    return render_template('super_admin/manage.html', form=form, title='Edit College')
+    return render_template('super_admin/manage.html', form=form, title='Edit College', college=college)
 
 @super_admin.route('/super_admin/logs')
 @login_required

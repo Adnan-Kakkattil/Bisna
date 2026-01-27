@@ -1,35 +1,41 @@
 {% extends "base.html" %}
 {% block title %}Edit Material Title{% endblock %}
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="card shadow">
-            <div class="card-header bg-warning text-dark">
-                <h3 class="mb-0">Edit Material Title</h3>
+<div class="flex flex-col justify-center items-center min-vh-100 py-12 px-4">
+    <div class="w-full max-w-md">
+        <div class="nm-flat p-8 md:p-10 border-t-4 border-soft-primary/20 text-center">
+            <div class="mb-8">
+                <h2 class="text-3xl font-black text-soft-dark tracking-tight">Edit <span
+                        class="text-soft-primary">Meta</span></h2>
+                <p class="text-[0.55rem] font-bold text-soft-primary uppercase tracking-[0.2em] opacity-50">Refine the
+                    identification of this knowledge node</p>
             </div>
-            <div class="card-body">
-                <div class="alert alert-info py-2">
-                    <small>Topic: {{ note.topic.name }}</small>
+
+            <div class="nm-inset p-4 rounded-xl mb-8">
+                <p class="text-[0.6rem] font-black text-soft-primary uppercase tracking-widest opacity-40">Topic: {{
+                    note.topic.name }}</p>
+            </div>
+
+            <form method="POST" action="">
+                {{ form.hidden_tag() }}
+                <div class="mb-6 text-left">
+                    <label
+                        class="block text-[0.55rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">Resource
+                        Title</label>
+                    {{ form.title(class="nm-input h-11 text-sm") }}
+                    {% if form.title.errors %}
+                    {% for error in form.title.errors %}
+                    <div class="text-red-500 text-[0.55rem] font-bold mt-1 ml-1">{{ error }}</div>
+                    {% endfor %}
+                    {% endif %}
                 </div>
-                <form method="POST" action="">
-                    {{ form.hidden_tag() }}
-                    <div class="mb-3">
-                        {{ form.title.label(class="form-label fw-bold") }}
-                        {{ form.title(class="form-control form-control-lg") }}
-                        {% if form.title.errors %}
-                        <div class="text-danger mt-1">
-                            {% for error in form.title.errors %}
-                            <span>{{ error }}</span>
-                            {% endfor %}
-                        </div>
-                        {% endif %}
-                    </div>
-                    <div class="d-grid gap-2">
-                        {{ form.submit(class="btn btn-warning") }}
-                        <a href="{{ url_for('notes.list_notes') }}" class="btn btn-outline-secondary">Cancel</a>
-                    </div>
-                </form>
-            </div>
+
+                <div class="grid grid-cols-2 gap-3 pt-2">
+                    <a href="{{ url_for('notes.list_notes') }}"
+                        class="nm-button py-3 text-[0.6rem] uppercase tracking-widest font-black text-center no-underline opacity-50">Cancel</a>
+                    {{ form.submit(class="nm-button py-3 text-[0.6rem] uppercase tracking-widest font-black") }}
+                </div>
+            </form>
         </div>
     </div>
 </div>

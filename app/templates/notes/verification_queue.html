@@ -1,81 +1,91 @@
 {% extends "base.html" %}
 {% block title %}Verification Queue{% endblock %}
 {% block content %}
-<div class="glass-card p-4 p-md-5">
-    <div class="d-flex justify-content-between align-items-center mb-5">
+<div class="max-w-6xl mx-auto px-4 py-8">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-10">
         <div>
-            <h2 class="fw-bold mb-1">Content <span class="text-gradient">Review</span></h2>
-            <p class="text-muted small">Verify and approve submitted materials</p>
+            <h2 class="text-3xl font-black text-soft-dark tracking-tight">Content <span
+                    class="text-soft-primary">Review</span></h2>
+            <p class="text-[0.6rem] font-bold text-soft-primary uppercase tracking-[0.2em] opacity-60">Authorize
+                intelligence modules for repository sync</p>
         </div>
-        <div class="badge-futuristic">
-            {{ notes|length }} PENDING
+        <div class="nm-flat px-4 py-2 rounded-full flex items-center gap-2">
+            <i class="fas fa-clock text-soft-primary text-[0.6rem]"></i>
+            <span class="text-[0.6rem] font-black text-soft-primary uppercase tracking-widest">{{ notes|length }}
+                Pending Nodes</span>
         </div>
     </div>
 
-    <div class="table-responsive">
-        <table class="table table-hover border-glass align-middle">
-            <thead>
-                <tr class="text-muted small">
-                    <th>RESOURCE</th>
-                    <th>TOPIC</th>
-                    <th>SOURCE</th>
-                    <th>TIMESTAMP</th>
-                    <th class="text-end">ACTIONS</th>
-                </tr>
-            </thead>
-            <tbody class="text-white">
-                {% for note in notes %}
-                <tr class="border-glass align-middle">
-                    <td>
-                        <div class="d-flex align-items-center gap-3">
-                            <div class="rounded bg-glass p-2 border border-glass">
-                                {% if note.material_type == 'url' %}
-                                <i class="fas fa-link text-accent"></i>
-                                {% elif note.material_type in ['pdf', 'docx'] %}
-                                <i class="fas fa-file-code text-accent"></i>
-                                {% else %}
-                                <i class="fas fa-file-medical text-accent"></i>
-                                {% endif %}
-                            </div>
-                            <div>
-                                <div class="fw-bold">
-                                    {% if note.material_type == 'url' %}
-                                    <a href="{{ note.file_url }}" target="_blank"
-                                        class="text-white text-decoration-none hover-glow">{{ note.title }}</a>
-                                    {% else %}
-                                    <a href="{{ url_for('notes.download_file', filename=note.filename) }}"
-                                        target="_blank" class="text-white text-decoration-none hover-glow">{{ note.title
-                                        }}</a>
-                                    {% endif %}
-                                </div>
-                                <span class="badge-futuristic py-0 px-2"
-                                    style="font-size: 0.6rem; background: rgba(255,255,255,0.05); color: #888;">{{
-                                    note.material_type|upper }}</span>
-                            </div>
-                        </div>
-                    </td>
-                    <td><span class="small opacity-75">{{ note.topic.name }}</span></td>
-                    <td><span class="small text-accent fw-bold">{{ note.uploader.username }}</span></td>
-                    <td><span class="small opacity-50">{{ note.upload_date.strftime('%d %b %Y') }}</span></td>
-                    <td class="text-end">
-                        <div class="d-flex gap-2 justify-content-end">
-                            <a href="{{ url_for('notes.approve_note', note_id=note.id) }}"
-                                class="btn btn-sm btn-futuristic px-3">Approve</a>
-                            <a href="{{ url_for('notes.reject_note', note_id=note.id) }}"
-                                class="btn btn-sm btn-outline-futuristic text-danger border-danger px-3">Reject</a>
-                        </div>
-                    </td>
-                </tr>
+    <!-- Review Grid -->
+    {% if notes %}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for note in notes %}
+        <div class="nm-flat p-6 flex flex-col">
+            <div class="flex justify-between items-start mb-4">
+                <div
+                    class="nm-inset px-2.5 py-1 text-[0.45rem] font-black text-soft-primary uppercase tracking-widest truncate max-w-[140px]">
+                    {{ note.topic.unit.subject.name }}
+                </div>
+                <div class="nm-inset w-8 h-8 flex items-center justify-center text-soft-primary text-xs">
+                    {% if note.material_type == 'url' %}<i class="fas fa-link"></i>
+                    {% elif note.material_type in ['pdf', 'docx'] %}<i class="fas fa-file-code"></i>
+                    {% else %}<i class="fas fa-file-medical"></i>{% endif %}
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <h3 class="text-sm font-black text-soft-dark mb-1 leading-snug">{{ note.title }}</h3>
+                <div class="flex items-center gap-2">
+                    <span class="text-[0.5rem] font-black text-soft-primary uppercase tracking-widest opacity-40">{{
+                        note.uploader.username }}</span>
+                    <span class="w-1 h-1 bg-soft-primary/20 rounded-full"></span>
+                    <span class="text-[0.5rem] font-black text-soft-primary uppercase tracking-widest opacity-40">{{
+                        note.upload_date.strftime('%d %b %Y') }}</span>
+                </div>
+            </div>
+
+            <div class="nm-inset p-3 mb-6 flex-grow">
+                <p class="text-[0.55rem] font-bold text-soft-primary/60 uppercase leading-relaxed">
+                    Topic: <span class="text-soft-dark">{{ note.topic.name }}</span><br>
+                    Phase: <span class="text-soft-dark">Semester {{ note.topic.unit.subject.semester.number }}</span>
+                </p>
+            </div>
+
+            <div class="flex gap-2">
+                {% if note.material_type == 'url' %}
+                <a href="{{ note.file_url }}" target="_blank"
+                    class="nm-button flex-grow py-2 text-[0.55rem] font-black uppercase text-center no-underline">Internal
+                    Link</a>
                 {% else %}
-                <tr>
-                    <td colspan="5" class="text-center py-5 opacity-50">
-                        <i class="fas fa-folder-open fa-3x mb-3"></i>
-                        <p>No pending materials for review.</p>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                <a href="{{ url_for('notes.download_file', filename=note.filename) }}" target="_blank"
+                    class="nm-button flex-grow py-2 text-[0.55rem] font-black uppercase text-center no-underline">View
+                    Node</a>
+                {% endif %}
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 mt-3">
+                <a href="{{ url_for('notes.approve_note', note_id=note.id) }}"
+                    class="nm-button py-2.5 text-[0.6rem] font-black uppercase text-center text-green-600/70 border-green-500/10 no-underline">Authorize</a>
+                <a href="{{ url_for('notes.reject_note', note_id=note.id) }}"
+                    class="nm-button py-2.5 text-[0.6rem] font-black uppercase text-center text-red-600/70 border-red-500/10 no-underline"
+                    onclick="return confirm('Reject access?');">Reject</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="nm-flat py-20 flex flex-col items-center justify-center opacity-30 rounded-3xl">
+        <i class="fas fa-satellite-dish text-6xl mb-4"></i>
+        <p class="text-[0.65rem] font-black uppercase tracking-[0.2em]">Queue Clean • All Nodes Synchronized</p>
+    </div>
+    {% endif %}
+
+    <div class="text-center mt-12">
+        <a href="{{ url_for('main.teacher_dashboard') if current_user.role.name == 'Teacher' else url_for('admin.dashboard') }}"
+            class="text-[0.55rem] font-black text-soft-primary uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity no-underline">
+            <i class="fas fa-chevron-left mr-1"></i> Return to Infrastructure
+        </a>
     </div>
 </div>
 {% endblock %}

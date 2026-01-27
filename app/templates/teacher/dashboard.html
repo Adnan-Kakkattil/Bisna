@@ -22,173 +22,172 @@
 </script>
 {% endblock %}
 {% block content %}
-<div class="row g-4">
-    <div class="col-12 col-lg-4">
-        <!-- System Control Panel -->
-        <div class="glass-card mb-4 p-4" style="border-top: 4px solid var(--accent-primary);">
-            <h4 class="fw-bold mb-4 text-gradient"><i class="fas fa-tools me-2"></i>Quick Actions</h4>
-            <div class="d-grid gap-3">
-                <a href="{{ url_for('admin.manage_unit') }}" class="btn btn-outline-futuristic text-start">
-                    <i class="fas fa-plus-square me-2 text-accent"></i>Add Unit
-                </a>
-                <a href="{{ url_for('admin.manage_topic') }}" class="btn btn-outline-futuristic text-start">
-                    <i class="fas fa-plus-circle me-2 text-accent"></i>Add Topic
-                </a>
-                <hr class="border-glass opacity-25">
-                <a href="{{ url_for('notes.upload_note') }}" class="btn btn-futuristic text-start">
-                    <i class="fas fa-upload me-2"></i>Upload Material
-                </a>
-                <a href="{{ url_for('notes.verification_queue') }}" class="btn btn-outline-futuristic text-start">
-                    <i class="fas fa-shield-alt me-2 text-accent"></i>Review Queue
-                </a>
-            </div>
+<div class="flex flex-col gap-6 max-w-6xl mx-auto py-4">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+        <div>
+            <h2 class="text-3xl font-black text-soft-dark tracking-tight">Teacher <span
+                    class="text-soft-primary">Portal</span></h2>
+            <p class="text-[0.55rem] font-bold text-soft-primary uppercase tracking-[0.2em] opacity-60">Academic
+                Management Node</p>
         </div>
-
-        <!-- Student Registry -->
-        <div class="glass-card p-4" style="border-top: 3px solid var(--accent-primary);">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <div>
-                    <h4 class="fw-bold mb-1 text-gradient"><i class="fas fa-users me-2"></i>Students</h4>
-                    <p class="text-muted small mb-0">Active learners in your domain</p>
-                </div>
-                <a href="{{ url_for('main.view_student_logs') }}" class="btn btn-sm btn-outline-futuristic">
-                    <i class="fas fa-history me-2"></i>Audit Logs
-                </a>
-            </div>
-            {% if verified_students %}
-            <div class="row g-3">
-                {% for student in verified_students %}
-                <div class="col-12">
-                    <div class="bg-glass border border-glass rounded-4 p-3 clickable-row hover-lift position-relative"
-                        data-bs-toggle="modal" data-bs-target="#studentModal" data-username="{{ student.username }}"
-                        data-reg-num="{{ student.register_number }}"
-                        data-report-url="{{ url_for('main.student_report', user_id=student.id) }}"
-                        style="cursor: pointer; transition: all 0.3s ease;">
-                        <div class="d-flex align-items-center gap-3">
-                            <div class="position-relative">
-                                <div class="rounded-circle d-flex align-items-center justify-content-center"
-                                    style="width: 48px; height: 48px; background: linear-gradient(135deg, rgba(202, 255, 51, 0.1) 0%, rgba(202, 255, 51, 0.05) 100%); border: 2px solid rgba(202, 255, 51, 0.3);">
-                                    <i class="fas fa-user-graduate text-accent" style="font-size: 1.2rem;"></i>
-                                </div>
-                            </div>
-                            <div class="flex-grow-1">
-                                <div class="d-flex align-items-center gap-2 mb-1">
-                                    <h6 class="fw-bold mb-0 text-white">{{ student.username }}</h6>
-                                </div>
-                                <div class="d-flex align-items-center gap-2">
-                                    <span class="badge-futuristic py-1 px-2"
-                                        style="font-size: 0.65rem; background: rgba(255,255,255,0.05);">
-                                        <i class="fas fa-id-card me-1"></i>{{ student.register_number or 'PENDING' }}
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="text-end">
-                                <i class="fas fa-chevron-right text-muted opacity-50"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-            {% else %}
-            <div class="text-center py-5">
-                <i class="fas fa-user-slash fa-3x text-muted opacity-25 mb-3"></i>
-                <p class="text-muted small mb-0">No verified students found.</p>
-            </div>
-            {% endif %}
+        <div class="nm-flat px-4 py-2 rounded-full flex items-center gap-2">
+            <i class="fas fa-id-badge text-soft-primary text-[0.6rem]"></i>
+            <span class="text-[0.55rem] font-black text-soft-primary uppercase tracking-widest">{{ current_user.username
+                }}</span>
         </div>
     </div>
 
-    <div class="col-12 col-lg-8">
-        <div class="glass-card p-4 p-md-5">
-            <div class="d-flex justify-content-between align-items-center mb-5">
-                <div>
-                    <h2 class="fw-bold mb-1">Faculty <span class="text-gradient">Dashboard</span></h2>
-                    <p class="text-muted small">Welcome, {{ current_user.username }}</p>
+    <!-- Minimal Analytics -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="nm-flat p-5 text-center">
+            <div class="nm-inset w-10 h-10 mx-auto flex items-center justify-center mb-3 rounded-lg text-soft-primary">
+                <i class="fas fa-file-alt text-base"></i>
+            </div>
+            <div class="text-xl font-black text-soft-dark mb-0.5">{{ verified_notes|length }}</div>
+            <div class="text-[0.45rem] font-black text-soft-primary uppercase tracking-widest opacity-50">Active Modules
+            </div>
+        </div>
+        <div class="nm-flat p-5 text-center">
+            <div class="nm-inset w-10 h-10 mx-auto flex items-center justify-center mb-3 rounded-lg text-amber-500/70">
+                <i class="fas fa-clock text-base"></i>
+            </div>
+            <div class="text-xl font-black text-soft-dark mb-0.5">{{ pending_notes|length }}</div>
+            <div class="text-[0.45rem] font-black text-soft-primary uppercase tracking-widest opacity-50">Queue Status
+            </div>
+        </div>
+        <div class="nm-flat p-5 text-center sm:col-span-2 lg:col-span-2">
+            <div class="flex items-center justify-between px-2">
+                <div class="text-start">
+                    <div class="text-sm font-black text-soft-dark uppercase tracking-tighter">Campus Registry</div>
+                    <div class="text-[0.45rem] font-black text-soft-primary uppercase tracking-widest opacity-40">
+                        Verified Student Node Sync</div>
                 </div>
-                <div class="badge-futuristic">
-                    <i class="fas fa-network-wired me-2"></i>{{ current_user.college.name }}
+                <div class="nm-inset w-12 h-12 rounded-xl flex items-center justify-center text-soft-primary">
+                    <i class="fas fa-user-graduate text-xl"></i>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <h5 class="fw-bold mb-4 opacity-75 tracking-widest" style="font-size: 0.8rem;">COURSE STRUCTURE</h5>
-            <div class="accordion accordion-flush" id="syllabusAccordion">
-                {% for course in courses %}
-                <div class="accordion-item bg-transparent border-glass mb-3 rounded-4 overflow-hidden">
-                    <div class="accordion-header" id="heading-{{ course.id }}">
-                        <button
-                            class="accordion-button collapsed bg-transparent text-white border-0 shadow-none fw-bold w-100 p-3"
-                            type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ course.id }}">
-                            <i class="fas fa-cube me-3 text-accent"></i>{{ course.name }}
-                        </button>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Rapid Actions -->
+        <div class="nm-flat p-6 flex flex-col">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="nm-inset p-2 rounded-lg text-soft-primary">
+                    <i class="fas fa-bolt text-sm"></i>
+                </div>
+                <h5 class="text-[0.6rem] font-black text-soft-dark uppercase tracking-widest">Rapid Actions</h5>
+            </div>
+            <div class="flex flex-col gap-3">
+                <a href="{{ url_for('notes.upload_note') }}" class="nm-button p-4 no-underline group">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[0.65rem] font-black uppercase">Sync Material</span>
+                        <i class="fas fa-plus text-[0.6rem] opacity-30 group-hover:opacity-100 transition-opacity"></i>
                     </div>
-                    <div id="collapse-{{ course.id }}" class="accordion-collapse collapse"
-                        data-bs-parent="#syllabusAccordion">
-                        <div class="accordion-body bg-glass">
-                            {% if course.semesters %}
-                            {% for sem in course.semesters %}
-                            <div class="mb-4 ps-4 border-start border-glass">
-                                <div class="mb-3">
-                                    <span class="badge-futuristic"
-                                        style="background: rgba(255,255,255,0.05); color: #fff;">PHASE {{ sem.number
-                                        }}</span>
-                                </div>
-                                {% if sem.subjects %}
-                                <div class="row g-3">
-                                    {% for sub in sem.subjects %}
-                                    <div class="col-md-6">
-                                        <div class="bg-glass rounded-3 p-3 border border-glass hover-lift">
-                                            <div class="small fw-bold">{{ sub.name }}</div>
-                                            <div class="small text-muted">{{ sub.units|length }} Units Sync</div>
-                                        </div>
-                                    </div>
-                                    {% endfor %}
-                                </div>
-                                {% else %}
-                                <p class="text-muted small">No active modules found.</p>
-                                {% endif %}
+                </a>
+                <a href="{{ url_for('notes.list_notes') }}" class="nm-button p-4 no-underline group">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[0.65rem] font-black uppercase">Knowledge Grid</span>
+                        <i
+                            class="fas fa-external-link-alt text-[0.6rem] opacity-30 group-hover:opacity-100 transition-opacity"></i>
+                    </div>
+                </a>
+                <a href="{{ url_for('notes.verification_queue') }}" class="nm-button p-4 no-underline group">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[0.65rem] font-black uppercase">Verify Queue</span>
+                        <span class="nm-inset px-2 py-0.5 text-[0.5rem]">{{ pending_notes|length }}</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Student Registry Link -->
+        <div class="nm-flat p-6 lg:col-span-2 flex flex-col">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-3">
+                    <div class="nm-inset p-2 rounded-lg text-soft-primary">
+                        <i class="fas fa-users text-sm"></i>
+                    </div>
+                    <h5 class="text-[0.6rem] font-black text-soft-dark uppercase tracking-widest">Student Registry</h5>
+                </div>
+                <a href="{{ url_for('main.view_student_logs') }}"
+                    class="nm-button px-3 py-1.5 text-[0.55rem] font-black uppercase no-underline">
+                    <i class="fas fa-history me-1"></i> Audit
+                </a>
+            </div>
+
+            <div class="flex-grow flex flex-col justify-center">
+                <a href="{{ url_for('admin.view_students') }}" class="nm-button p-6 no-underline block group">
+                    <div class="flex justify-between items-center">
+                        <div class="flex items-center gap-4">
+                            <div
+                                class="nm-inset w-10 h-10 rounded-lg flex items-center justify-center text-soft-primary">
+                                <i class="fas fa-user-graduate"></i>
                             </div>
-                            {% endfor %}
-                            {% else %}
-                            <p class="text-muted small ps-4">Zero phases recorded.</p>
-                            {% endif %}
+                            <div>
+                                <div class="text-[0.7rem] font-black text-soft-dark uppercase">Access Course Registry
+                                </div>
+                                <p
+                                    class="text-[0.5rem] text-soft-primary font-bold uppercase tracking-widest opacity-40">
+                                    {{ verified_students|length }} Sync Entities</p>
+                            </div>
                         </div>
+                        <i
+                            class="fas fa-chevron-right text-soft-primary opacity-20 group-hover:opacity-100 transition-opacity"></i>
                     </div>
-                </div>
-                {% else %}
-                <div class="text-center py-5">
-                    <i class="fas fa-folder-open fa-3x text-muted opacity-25 mb-3"></i>
-                    <p class="text-muted">Repository Null</p>
-                </div>
-                {% endfor %}
+                </a>
+            </div>
+
+            <div class="mt-6 pt-6 border-t border-soft-primary/5 flex items-center justify-between">
+                <span class="text-[0.45rem] font-black text-soft-primary uppercase tracking-widest opacity-30">Teacher
+                    Node</span>
+                <span class="text-[0.45rem] font-black text-soft-primary/50 uppercase tracking-widest">Authorized Access
+                    Only</span>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Registry Detail Modal -->
-<div class="modal fade" id="studentModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content glass-card border-glass overflow-hidden shadow-lg">
-            <div class="modal-header border-glass">
-                <h5 class="modal-title fw-bold text-gradient">Entity Analysis</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+<!-- Knowledge Structures -->
+<div class="nm-flat p-6 mb-6">
+    <div class="flex items-center gap-3 mb-6">
+        <div class="nm-inset p-2 rounded-lg text-soft-primary">
+            <i class="fas fa-cube text-sm"></i>
+        </div>
+        <h5 class="text-[0.6rem] font-black text-soft-dark uppercase tracking-widest">Knowledge Structures</h5>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for course in courses %}
+        <div class="nm-inset p-5">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="nm-flat w-8 h-8 rounded flex items-center justify-center text-soft-primary text-xs">
+                    <i class="fas fa-book"></i>
+                </div>
+                <h4 class="text-[0.65rem] font-black text-soft-dark uppercase tracking-tight">{{ course.name }}</h4>
             </div>
-            <div class="modal-body p-4 p-md-5">
-                <div class="text-center mb-5">
-                    <div class="rounded-circle bg-glass p-4 d-inline-block border border-accent border-2 mb-4">
-                        <i class="fas fa-user-circle fa-5x text-accent"></i>
+            <div class="space-y-4">
+                {% for sem in course.semesters %}
+                <div class="pl-3 border-l-2 border-soft-primary/10">
+                    <span
+                        class="text-[0.45rem] font-black text-soft-primary/40 uppercase tracking-widest block mb-1.5">Sem
+                        {{ sem.number }}</span>
+                    <div class="flex flex-col gap-1.5">
+                        {% for sub in sem.subjects %}
+                        <div class="nm-flat px-3 py-1.5 flex justify-between items-center">
+                            <span class="text-[0.55rem] font-bold text-soft-dark/80">{{ sub.name }}</span>
+                            <span class="text-[0.45rem] font-black text-soft-primary/30 uppercase">{{ sub.units|length
+                                }} Units</span>
+                        </div>
+                        {% endfor %}
                     </div>
-                    <h3 id="student-modal-username" class="fw-bold text-white mb-2"></h3>
-                    <div class="badge-futuristic" id="student-modal-reg-num"></div>
                 </div>
-                <div class="d-grid gap-3">
-                    <a id="student-modal-report-link" href="#" class="btn btn-futuristic">
-                        <i class="fas fa-file-export me-2"></i>GENERATE ACTIVITY AUDIT
-                    </a>
-                </div>
+                {% endfor %}
             </div>
         </div>
+        {% endfor %}
     </div>
+</div>
 </div>
 {% endblock %}
