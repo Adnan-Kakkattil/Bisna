@@ -25,15 +25,15 @@ EduStack utilizes a bespoke Neumorphic (Soft UI) design system, creating a tacti
 
 | Landing Page | Login Page |
 | :---: | :---: |
-| ![Landing Page](file:///C:/Users/LENOVO/.gemini/antigravity/brain/5ee8c34f-12e0-4df1-a5d9-a20c81ddd157/uploaded_media_0_1769511425121.png) | ![Login Page](file:///C:/Users/LENOVO/.gemini/antigravity/brain/5ee8c34f-12e0-4df1-a5d9-a20c81ddd157/uploaded_media_1_1769511425121.png) |
+| ![Landing Page](app/static/img/screenshots/landing.png) | ![Login Page](app/static/img/screenshots/login.png) |
 
 | Super Admin Dashboard | Admin Dashboard |
 | :---: | :---: |
-| ![Super Admin Dashboard](file:///C:/Users/LENOVO/.gemini/antigravity/brain/5ee8c34f-12e0-4df1-a5d9-a20c81ddd157/uploaded_media_2_1769511425121.png) | ![Admin Dashboard](file:///C:/Users/LENOVO/.gemini/antigravity/brain/5ee8c34f-12e0-4df1-a5d9-a20c81ddd157/uploaded_media_3_1769511425121.png) |
+| ![Super Admin Dashboard](app/static/img/screenshots/super_admin.png) | ![Admin Dashboard](app/static/img/screenshots/admin.png) |
 
 | Teacher Portal | Student Dashboard |
 | :---: | :---: |
-| ![Teacher Portal](file:///C:/Users/LENOVO/.gemini/antigravity/brain/5ee8c34f-12e0-4df1-a5d9-a20c81ddd157/uploaded_media_4_1769511425121.png) | ![Student Dashboard](file:///C:/Users/LENOVO/.gemini/antigravity/brain/5ee8c34f-12e0-4df1-a5d9-a20c81ddd157/uploaded_media_1769511719893.png) |
+| ![Teacher Portal](app/static/img/screenshots/teacher.png) | ![Student Dashboard](app/static/img/screenshots/student.png) |
 
 ## �🛠️ Tech Stack
 - **Backend**: Python, Flask, Jinja2
