@@ -22,171 +22,172 @@
 </script>
 {% endblock %}
 {% block content %}
-<div class="flex flex-col gap-6 max-w-6xl mx-auto py-4">
+<div class="flex flex-col gap-8 max-w-6xl mx-auto py-6">
     <!-- Header -->
-    <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-6">
         <div>
-            <h2 class="text-3xl font-black text-soft-dark tracking-tight">Teacher <span
+            <h2 class="text-3xl font-black text-soft-dark tracking-tight mb-1">Teacher <span
                     class="text-soft-primary">Portal</span></h2>
-            <p class="text-[0.55rem] font-bold text-soft-primary uppercase tracking-[0.2em] opacity-60">Academic
-                Management Node</p>
+            <p class="text-[0.7rem] font-bold text-gray-400 uppercase tracking-widest">Academic Module Management</p>
         </div>
-        <div class="nm-flat px-4 py-2 rounded-full flex items-center gap-2">
-            <i class="fas fa-id-badge text-soft-primary text-[0.6rem]"></i>
-            <span class="text-[0.55rem] font-black text-soft-primary uppercase tracking-widest">{{ current_user.username
+        <div class="bg-white border border-gray-100 px-5 py-2 rounded-full flex items-center gap-3 shadow-sm">
+            <div class="w-1.5 h-1.5 bg-soft-primary rounded-full animate-pulse"></div>
+            <span class="text-[0.65rem] font-bold text-soft-primary uppercase tracking-widest">{{ current_user.username
                 }}</span>
         </div>
     </div>
 
-    <!-- Minimal Analytics -->
+    <!-- Analytics Matrix -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <div class="nm-flat p-5 text-center">
-            <div class="nm-inset w-10 h-10 mx-auto flex items-center justify-center mb-3 rounded-lg text-soft-primary">
+        <div class="mat-card p-6 text-center border-none shadow-md">
+            <div
+                class="w-10 h-10 mx-auto flex items-center justify-center mb-3 rounded-lg bg-soft-bg text-soft-primary">
                 <i class="fas fa-file-alt text-base"></i>
             </div>
-            <div class="text-xl font-black text-soft-dark mb-0.5">{{ verified_notes|length }}</div>
-            <div class="text-[0.45rem] font-black text-soft-primary uppercase tracking-widest opacity-50">Active Modules
-            </div>
+            <div class="text-2xl font-black text-soft-dark mb-0.5">{{ verified_notes|length }}</div>
+            <div class="text-[0.6rem] font-bold text-gray-400 uppercase tracking-widest">Published</div>
         </div>
-        <div class="nm-flat p-5 text-center">
-            <div class="nm-inset w-10 h-10 mx-auto flex items-center justify-center mb-3 rounded-lg text-amber-500/70">
+        <div class="mat-card p-6 text-center border-none shadow-md">
+            <div class="w-10 h-10 mx-auto flex items-center justify-center mb-3 rounded-lg bg-amber-50 text-amber-500">
                 <i class="fas fa-clock text-base"></i>
             </div>
-            <div class="text-xl font-black text-soft-dark mb-0.5">{{ pending_notes|length }}</div>
-            <div class="text-[0.45rem] font-black text-soft-primary uppercase tracking-widest opacity-50">Queue Status
-            </div>
+            <div class="text-2xl font-black text-soft-dark mb-0.5">{{ pending_notes|length }}</div>
+            <div class="text-[0.6rem] font-bold text-gray-400 uppercase tracking-widest">In Review</div>
         </div>
-        <div class="nm-flat p-5 text-center sm:col-span-2 lg:col-span-2">
+        <div class="mat-card p-6 sm:col-span-2 lg:col-span-2 border-none shadow-md">
             <div class="flex items-center justify-between px-2">
                 <div class="text-start">
-                    <div class="text-sm font-black text-soft-dark uppercase tracking-tighter">Campus Registry</div>
-                    <div class="text-[0.45rem] font-black text-soft-primary uppercase tracking-widest opacity-40">
-                        Verified Student Node Sync</div>
+                    <div class="text-sm font-bold text-soft-dark uppercase tracking-wide">Registry Control</div>
+                    <div class="text-[0.65rem] font-medium text-gray-400 uppercase tracking-widest">Manage class
+                        enrollment</div>
                 </div>
-                <div class="nm-inset w-12 h-12 rounded-xl flex items-center justify-center text-soft-primary">
+                <div class="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center text-soft-primary">
                     <i class="fas fa-user-graduate text-xl"></i>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- Rapid Actions -->
-        <div class="nm-flat p-6 flex flex-col">
-            <div class="flex items-center gap-3 mb-6">
-                <div class="nm-inset p-2 rounded-lg text-soft-primary">
-                    <i class="fas fa-bolt text-sm"></i>
+    <!-- Console Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Action Control -->
+        <div class="mat-card p-6 flex flex-col">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="w-10 h-10 rounded-lg bg-gray-50 flex items-center justify-center text-soft-primary">
+                    <i class="fas fa-bolt"></i>
                 </div>
-                <h5 class="text-[0.6rem] font-black text-soft-dark uppercase tracking-widest">Rapid Actions</h5>
+                <h5 class="text-sm font-bold text-soft-dark uppercase tracking-wider">Rapid Controls</h5>
             </div>
-            <div class="flex flex-col gap-3">
-                <a href="{{ url_for('notes.upload_note') }}" class="nm-button p-4 no-underline group">
-                    <div class="flex justify-between items-center">
-                        <span class="text-[0.65rem] font-black uppercase">Sync Material</span>
-                        <i class="fas fa-plus text-[0.6rem] opacity-30 group-hover:opacity-100 transition-opacity"></i>
-                    </div>
+            <div class="flex flex-col gap-4">
+                <a href="{{ url_for('notes.upload_note') }}"
+                    class="mat-button mat-button-primary p-5 no-underline group shadow-lg rounded-2xl flex justify-between items-center transition-all">
+                    <span class="text-[0.75rem] font-bold uppercase tracking-tight">Upload Material</span>
+                    <i class="fas fa-plus text-[0.7rem] opacity-50 group-hover:opacity-100 transition-opacity"></i>
                 </a>
-                <a href="{{ url_for('notes.list_notes') }}" class="nm-button p-4 no-underline group">
-                    <div class="flex justify-between items-center">
-                        <span class="text-[0.65rem] font-black uppercase">Knowledge Grid</span>
-                        <i
-                            class="fas fa-external-link-alt text-[0.6rem] opacity-30 group-hover:opacity-100 transition-opacity"></i>
-                    </div>
+                <a href="{{ url_for('notes.list_notes') }}"
+                    class="bg-gray-50 hover:bg-gray-100 p-5 rounded-2xl no-underline group flex justify-between items-center transition-all">
+                    <span class="text-[0.75rem] font-bold text-soft-dark uppercase tracking-tight">Module Grid</span>
+                    <i
+                        class="fas fa-external-link-alt text-[0.7rem] text-gray-300 group-hover:text-soft-primary transition-opacity"></i>
                 </a>
-                <a href="{{ url_for('notes.verification_queue') }}" class="nm-button p-4 no-underline group">
-                    <div class="flex justify-between items-center">
-                        <span class="text-[0.65rem] font-black uppercase">Verify Queue</span>
-                        <span class="nm-inset px-2 py-0.5 text-[0.5rem]">{{ pending_notes|length }}</span>
-                    </div>
+                <a href="{{ url_for('notes.verification_queue') }}"
+                    class="bg-gray-50 hover:bg-gray-100 p-5 rounded-2xl no-underline group flex justify-between items-center transition-all">
+                    <span class="text-[0.75rem] font-bold text-soft-dark uppercase tracking-tight">Review Queue</span>
+                    <span class="bg-white border border-gray-100 px-3 py-1 rounded-full text-[0.6rem] font-bold">{{
+                        pending_notes|length }}</span>
                 </a>
             </div>
         </div>
 
-        <!-- Student Registry Link -->
-        <div class="nm-flat p-6 lg:col-span-2 flex flex-col">
-            <div class="flex items-center justify-between mb-6">
+        <!-- Student Management Link -->
+        <div class="mat-card p-6 lg:col-span-2 flex flex-col">
+            <div class="flex items-center justify-between mb-8">
                 <div class="flex items-center gap-3">
-                    <div class="nm-inset p-2 rounded-lg text-soft-primary">
-                        <i class="fas fa-users text-sm"></i>
+                    <div class="w-10 h-10 rounded-lg bg-gray-50 flex items-center justify-center text-soft-primary">
+                        <i class="fas fa-users"></i>
                     </div>
-                    <h5 class="text-[0.6rem] font-black text-soft-dark uppercase tracking-widest">Student Registry</h5>
+                    <h5 class="text-sm font-bold text-soft-dark uppercase tracking-wider">Student Console</h5>
                 </div>
                 <a href="{{ url_for('main.view_student_logs') }}"
-                    class="nm-button px-3 py-1.5 text-[0.55rem] font-black uppercase no-underline">
-                    <i class="fas fa-history me-1"></i> Audit
+                    class="mat-button mat-button-outline px-5 py-2 text-[0.65rem] font-bold uppercase no-underline rounded-full flex items-center gap-2">
+                    <i class="fas fa-history text-[0.6rem]"></i> Activity Logs
                 </a>
             </div>
 
             <div class="flex-grow flex flex-col justify-center">
-                <a href="{{ url_for('admin.view_students') }}" class="nm-button p-6 no-underline block group">
+                <a href="{{ url_for('admin.view_students') }}"
+                    class="bg-gray-50 hover:border-soft-primary/30 border border-transparent p-8 rounded-3xl no-underline block group transition-all">
                     <div class="flex justify-between items-center">
-                        <div class="flex items-center gap-4">
+                        <div class="flex items-center gap-6">
                             <div
-                                class="nm-inset w-10 h-10 rounded-lg flex items-center justify-center text-soft-primary">
-                                <i class="fas fa-user-graduate"></i>
+                                class="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center text-soft-primary group-hover:scale-110 transition-transform">
+                                <i class="fas fa-user-graduate text-2xl"></i>
                             </div>
                             <div>
-                                <div class="text-[0.7rem] font-black text-soft-dark uppercase">Access Course Registry
-                                </div>
-                                <p
-                                    class="text-[0.5rem] text-soft-primary font-bold uppercase tracking-widest opacity-40">
-                                    {{ verified_students|length }} Sync Entities</p>
+                                <div
+                                    class="text-lg font-bold text-soft-dark uppercase tracking-tight group-hover:text-soft-primary transition-colors">
+                                    Access Registry</div>
+                                <p class="text-[0.65rem] text-gray-400 font-bold uppercase tracking-widest mt-1">
+                                    {{ verified_students|length }} Finalized Enrollments</p>
                             </div>
                         </div>
-                        <i
-                            class="fas fa-chevron-right text-soft-primary opacity-20 group-hover:opacity-100 transition-opacity"></i>
+                        <i class="fas fa-chevron-right text-gray-200 group-hover:text-soft-primary transition-all"></i>
                     </div>
                 </a>
             </div>
 
-            <div class="mt-6 pt-6 border-t border-soft-primary/5 flex items-center justify-between">
-                <span class="text-[0.45rem] font-black text-soft-primary uppercase tracking-widest opacity-30">Teacher
-                    Node</span>
-                <span class="text-[0.45rem] font-black text-soft-primary/50 uppercase tracking-widest">Authorized Access
-                    Only</span>
+            <div class="mt-8 pt-8 border-t border-gray-50 flex items-center justify-between">
+                <span class="text-[0.6rem] font-bold text-gray-300 uppercase tracking-widest">Authority Level</span>
+                <span class="text-[0.6rem] font-bold text-soft-primary/40 uppercase tracking-widest">Verified Faculty
+                    Access</span>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Knowledge Structures -->
-<div class="nm-flat p-6 mb-6">
-    <div class="flex items-center gap-3 mb-6">
-        <div class="nm-inset p-2 rounded-lg text-soft-primary">
-            <i class="fas fa-cube text-sm"></i>
-        </div>
-        <h5 class="text-[0.6rem] font-black text-soft-dark uppercase tracking-widest">Knowledge Structures</h5>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {% for course in courses %}
-        <div class="nm-inset p-5">
-            <div class="flex items-center gap-3 mb-4">
-                <div class="nm-flat w-8 h-8 rounded flex items-center justify-center text-soft-primary text-xs">
-                    <i class="fas fa-book"></i>
-                </div>
-                <h4 class="text-[0.65rem] font-black text-soft-dark uppercase tracking-tight">{{ course.name }}</h4>
+    <!-- Syllabus Management -->
+    <div class="mat-card p-8">
+        <div class="flex items-center gap-4 mb-10">
+            <div class="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center text-soft-primary">
+                <i class="fas fa-cube text-lg"></i>
             </div>
-            <div class="space-y-4">
-                {% for sem in course.semesters %}
-                <div class="pl-3 border-l-2 border-soft-primary/10">
-                    <span
-                        class="text-[0.45rem] font-black text-soft-primary/40 uppercase tracking-widest block mb-1.5">Sem
-                        {{ sem.number }}</span>
-                    <div class="flex flex-col gap-1.5">
-                        {% for sub in sem.subjects %}
-                        <div class="nm-flat px-3 py-1.5 flex justify-between items-center">
-                            <span class="text-[0.55rem] font-bold text-soft-dark/80">{{ sub.name }}</span>
-                            <span class="text-[0.45rem] font-black text-soft-primary/30 uppercase">{{ sub.units|length
-                                }} Units</span>
-                        </div>
-                        {% endfor %}
+            <div>
+                <h5 class="text-base font-bold text-soft-dark uppercase tracking-wider">Academic Matrix</h5>
+                <p class="text-[0.65rem] font-medium text-gray-400">Deployed Courses & Subordinate Subjects</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for course in courses %}
+            <div
+                class="bg-white border border-gray-100 p-6 rounded-3xl hover:border-soft-primary/20 transition-all shadow-sm">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center text-soft-primary">
+                        <i class="fas fa-book"></i>
                     </div>
+                    <h4 class="text-xs font-bold text-soft-dark uppercase tracking-wider">{{ course.name }}</h4>
                 </div>
-                {% endfor %}
+                <div class="space-y-6">
+                    {% for sem in course.semesters %}
+                    <div class="pl-4 border-l-2 border-gray-100">
+                        <span
+                            class="text-[0.6rem] font-bold text-gray-400 uppercase tracking-widest block mb-3">Semester
+                            {{ sem.number }}</span>
+                        <div class="flex flex-col gap-2">
+                            {% for sub in sem.subjects %}
+                            <div
+                                class="bg-gray-50/50 p-3 rounded-xl flex justify-between items-center hover:bg-gray-50 transition-colors">
+                                <span class="text-[0.7rem] font-bold text-soft-dark/80">{{ sub.name }}</span>
+                                <span class="text-[0.6rem] font-bold text-gray-300 uppercase">{{ sub.units|length }}
+                                    Units</span>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
 </div>
 </div>

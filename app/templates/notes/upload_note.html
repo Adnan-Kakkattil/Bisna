@@ -3,148 +3,151 @@
 {% block content %}
 <div class="flex flex-col justify-center items-center min-vh-100 py-12 px-4">
     <div class="w-full max-w-3xl">
-        <div class="nm-flat p-8 md:p-10 border-t-4 border-soft-primary/20">
+        <div class="mat-card p-8 md:p-12 border-none shadow-xl">
             <div class="mb-10 text-center">
-                <h2 class="text-3xl font-black text-soft-dark tracking-tight">Sync <span
-                        class="text-soft-primary">Material</span></h2>
-                <p class="text-[0.55rem] font-bold text-soft-primary uppercase tracking-[0.2em] opacity-50">Upload
-                    academic intelligence to the repository</p>
+                <h2 class="text-3xl font-black text-soft-dark tracking-tight mb-2">Resource <span
+                        class="text-soft-primary">Upload</span></h2>
+                <p class="text-[0.7rem] font-bold text-gray-400 uppercase tracking-widest">Contribute to the academic
+                    ecosystem</p>
             </div>
 
             <form method="POST" action="" enctype="multipart/form-data" id="uploadForm">
                 {{ form.hidden_tag() }}
 
-                <!-- Academic Context -->
-                <div class="nm-inset p-6 rounded-2xl mb-8">
-                    <div class="flex items-center gap-3 mb-6">
-                        <div
-                            class="nm-flat w-8 h-8 rounded-lg flex items-center justify-center text-soft-primary text-xs">
-                            <i class="fas fa-project-diagram"></i>
+                <!-- Academic Metadata -->
+                <div class="bg-gray-50/50 border border-gray-100 p-8 rounded-[2rem] mb-10">
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="w-10 h-10 rounded-xl bg-soft-primary text-white flex items-center justify-center">
+                            <i class="fas fa-sitemap text-sm"></i>
                         </div>
-                        <h5 class="text-[0.6rem] font-black text-soft-dark uppercase tracking-widest">Academic Context
-                        </h5>
+                        <div>
+                            <h5 class="text-sm font-bold text-soft-dark uppercase tracking-wider">Classification</h5>
+                            <p class="text-[0.6rem] font-medium text-gray-400 uppercase tracking-widest">Define the
+                                academic destination</p>
+                        </div>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                        <div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                        <div class="flex flex-col gap-2">
                             <label
-                                class="block text-[0.5rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">Course
-                                Node</label>
-                            <select class="nm-input h-10 text-xs font-bold" id="courseSelect">
+                                class="text-[0.65rem] font-bold text-gray-500 uppercase tracking-wider ml-1">Course</label>
+                            <select class="mat-input h-11 text-sm bg-white cursor-pointer" id="courseSelect">
                                 <option value="">Select Course...</option>
                             </select>
                         </div>
-                        <div>
+                        <div class="flex flex-col gap-2">
                             <label
-                                class="block text-[0.5rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">Phase
-                                Segment</label>
-                            <select class="nm-input h-10 text-xs font-bold opacity-50" id="semesterSelect" disabled>
+                                class="text-[0.65rem] font-bold text-gray-500 uppercase tracking-wider ml-1">Semester</label>
+                            <select class="mat-input h-11 text-sm bg-white cursor-pointer opacity-50"
+                                id="semesterSelect" disabled>
                                 <option value="">Select Semester...</option>
                             </select>
                         </div>
-                        <div>
+                        <div class="flex flex-col gap-2">
                             <label
-                                class="block text-[0.5rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">Module
-                                Nexus</label>
-                            <select class="nm-input h-10 text-xs font-bold opacity-50" id="subjectSelect" disabled>
+                                class="text-[0.65rem] font-bold text-gray-500 uppercase tracking-wider ml-1">Subject</label>
+                            <select class="mat-input h-11 text-sm bg-white cursor-pointer opacity-50" id="subjectSelect"
+                                disabled>
                                 <option value="">Select Subject...</option>
                             </select>
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="flex flex-col gap-2">
                             <label
-                                class="block text-[0.5rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">Unit
-                                Layer</label>
-                            <select class="nm-input h-10 text-xs font-bold opacity-50" id="unitSelect" disabled>
+                                class="text-[0.65rem] font-bold text-gray-500 uppercase tracking-wider ml-1">Unit</label>
+                            <select class="mat-input h-11 text-sm bg-white cursor-pointer opacity-50" id="unitSelect"
+                                disabled>
                                 <option value="">Select Unit...</option>
                             </select>
                         </div>
-                        <div>
+                        <div class="flex flex-col gap-2">
                             <label
-                                class="block text-[0.5rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">Specific
-                                Topic</label>
-                            {{ form.topic(class="nm-input h-10 text-xs font-bold opacity-50", id="topicSelect",
-                            disabled=True) }}
+                                class="text-[0.65rem] font-bold text-gray-500 uppercase tracking-wider ml-1">Topic</label>
+                            {{ form.topic(class="mat-input h-11 text-sm bg-white cursor-pointer opacity-50",
+                            id="topicSelect", disabled=True) }}
                         </div>
                     </div>
                 </div>
 
-                <!-- Material Details -->
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                    <div class="md:col-span-3">
-                        <label
-                            class="block text-[0.55rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">Resource
+                <!-- Content Configuration -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+                    <div class="md:col-span-3 flex flex-col gap-2">
+                        <label class="text-[0.65rem] font-bold text-gray-500 uppercase tracking-wider ml-1">Material
                             Title</label>
-                        {{ form.title(class="nm-input h-11 text-sm", placeholder="e.g., Quantum Mechanics Lecture
-                        Notes") }}
+                        {{ form.title(class="mat-input h-11 text-sm", placeholder="e.g., Advanced Calculus Notes") }}
                         {% if form.title.errors %}
-                        {% for error in form.title.errors %}<div
-                            class="text-red-500 text-[0.55rem] font-bold mt-1 ml-1">{{ error }}</div>{% endfor %}
+                        {% for error in form.title.errors %}<div class="text-red-500 text-[0.6rem] font-bold mt-1 ml-1">
+                            {{ error }}</div>{% endfor %}
                         {% endif %}
                     </div>
-                    <div>
+                    <div class="flex flex-col gap-2">
                         <label
-                            class="block text-[0.55rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">Type</label>
-                        {{ form.material_type(class="nm-input h-11 text-sm cursor-pointer", id="materialTypeSelect") }}
+                            class="text-[0.65rem] font-bold text-gray-500 uppercase tracking-wider ml-1">Format</label>
+                        {{ form.material_type(class="mat-input h-11 text-sm cursor-pointer bg-white",
+                        id="materialTypeSelect") }}
                     </div>
                 </div>
 
-                <!-- Upload Section -->
-                <div id="fileUploadGroup" class="mb-10">
+                <!-- Upload Nexus -->
+                <div id="fileUploadGroup" class="mb-12">
                     <label
-                        class="block text-[0.55rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">Material
+                        class="block text-[0.65rem] font-bold text-gray-500 uppercase tracking-wider mb-2 ml-1">Payload
                         Source</label>
                     <div id="dropZone"
-                        class="nm-inset p-10 rounded-2xl text-center cursor-pointer transition-all hover:scale-[0.99] active:scale-[0.98]">
-                        <div class="py-4">
+                        class="border-2 border-dashed border-gray-100 bg-gray-50/30 p-12 rounded-3xl text-center cursor-pointer transition-all hover:border-soft-primary/40 hover:bg-soft-bg/20">
+                        <div class="py-2">
                             <div
-                                class="nm-flat w-16 h-16 mx-auto flex items-center justify-center mb-4 rounded-2xl text-soft-primary">
+                                class="w-16 h-16 mx-auto flex items-center justify-center mb-6 rounded-2xl bg-white shadow-sm text-soft-primary">
                                 <i class="fas fa-cloud-upload-alt text-2xl"></i>
                             </div>
-                            <h5 class="text-xs font-black text-soft-dark uppercase tracking-wide">Drop target or click
-                                to browse</h5>
-                            <p
-                                class="text-[0.5rem] text-soft-primary font-bold uppercase tracking-widest opacity-40 mt-1">
-                                PDF, DOCX, PPT, or Media (Max 100MB)</p>
+                            <h5 class="text-sm font-bold text-soft-dark uppercase tracking-wide">Drag & Drop Material
+                            </h5>
+                            <p class="text-[0.6rem] text-gray-400 font-bold uppercase tracking-widest mt-2">PDF, DOCX,
+                                PPT (Max 100MB)</p>
+
                             <span id="fileNameDisplay"
-                                class="nm-flat inline-block px-4 py-1.5 rounded-full text-[0.5rem] font-black text-soft-primary uppercase tracking-widest d-none mt-6"></span>
+                                class="inline-block mt-6 px-5 py-2 rounded-full bg-soft-primary text-white text-[0.6rem] font-bold uppercase tracking-widest d-none"></span>
                             {{ form.file(class="d-none", id="fileInput") }}
                         </div>
                     </div>
                     {% if form.file.errors %}
                     {% for error in form.file.errors %}<div
-                        class="text-red-500 text-[0.55rem] font-bold mt-1 ml-1 text-center">{{ error }}</div>{% endfor
-                    %}
+                        class="text-red-500 text-[0.6rem] font-bold mt-2 ml-1 text-center">{{ error }}</div>{% endfor %}
                     {% endif %}
                 </div>
 
-                <div id="urlInputGroup" class="mb-10 d-none">
+                <div id="urlInputGroup" class="mb-12 d-none">
                     <label
-                        class="block text-[0.55rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">External
-                        Nexus Link</label>
-                    {{ form.file_url(class="nm-input h-11 text-sm", placeholder="https://youtube.com/...") }}
-                    <p class="text-[0.5rem] text-soft-primary font-bold uppercase tracking-widest opacity-40 mt-2 ml-1">
-                        Integrate resources from Google Drive, YouTube, or external silos.</p>
+                        class="block text-[0.65rem] font-bold text-gray-500 uppercase tracking-wider mb-2 ml-1">External
+                        Link</label>
+                    {{ form.file_url(class="mat-input h-11 text-sm", placeholder="https://drive.google.com/...") }}
+                    <p class="text-[0.6rem] text-gray-400 font-bold uppercase tracking-widest mt-3 ml-1">Link to
+                        resources hosted on external platforms.</p>
                     {% if form.file_url.errors %}
-                    {% for error in form.file_url.errors %}<div class="text-red-500 text-[0.55rem] font-bold mt-1 ml-1">
+                    {% for error in form.file_url.errors %}<div class="text-red-500 text-[0.6rem] font-bold mt-2 ml-1">
                         {{ error }}</div>{% endfor %}
                     {% endif %}
                 </div>
 
                 <div class="pt-4">
-                    {{ form.submit(class="nm-button w-full py-4 text-[0.7rem] uppercase tracking-[0.2em] font-black") }}
+                    {{ form.submit(class="mat-button mat-button-primary w-full py-4 text-[0.7rem] uppercase
+                    tracking-widest font-black rounded-full shadow-lg") }}
                 </div>
 
-                <div class="text-center mt-8">
+                <div class="text-center mt-10">
                     <a href="{{ url_for('main.teacher_dashboard') }}"
-                        class="text-[0.55rem] font-black text-soft-primary uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity no-underline">
-                        <i class="fas fa-chevron-left mr-1"></i> Return to Portal
+                        class="text-[0.65rem] font-bold text-gray-400 uppercase tracking-widest hover:text-soft-primary transition-colors no-underline">
+                        <i class="fas fa-arrow-left mr-2"></i> Return to Portal
                     </a>
                 </div>
             </form>
         </div>
     </div>
+</div>
+
+</div>
+</div>
 </div>
 
 <script>

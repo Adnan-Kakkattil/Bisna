@@ -96,12 +96,19 @@ def seed_final_data():
                 db.session.add(admin)
 
             # 6. Teachers (10 per college)
+            teacher_names = [
+                "Dr. Alan Turing", "Prof. Grace Hopper", "Dr. John von Neumann", 
+                "Prof. Ada Lovelace", "Dr. Claude Shannon", "Prof. Barbara Liskov",
+                "Dr. Tim Berners-Lee", "Prof. Donald Knuth", "Dr. Ken Thompson", "Prof. Linus Torvalds"
+            ]
             for t_idx in range(1, 11):
                 teacher_email = f"teacher{t_idx}@{base_slug}.edu"
+                teacher_name = teacher_names[t_idx-1]
                 teacher = User.query.filter_by(email=teacher_email).first()
                 if not teacher:
                     teacher = User(
                         username=f"teacher{t_idx}_{base_slug}",
+                        name=teacher_name,
                         email=teacher_email,
                         password_hash=default_password,
                         role=role_objs['Teacher'],
@@ -117,6 +124,7 @@ def seed_final_data():
                     if not User.query.filter_by(email=student_email).first():
                         student = User(
                             username=f"student{t_idx}_{s_idx}_{base_slug}",
+                            name=f"Student {t_idx}-{s_idx}",
                             email=student_email,
                             password_hash=default_password,
                             role=role_objs['Student'],
@@ -136,7 +144,7 @@ def seed_final_data():
                     ]
                     for r_title, r_file, r_type in resource_types:
                         note = Note(
-                            title=f"{r_title} ({teacher.username})",
+                            title=f"{r_title} ({teacher.name})",
                             filename=r_file if r_type != "url" else "External Link",
                             file_url=r_file if r_type == "url" else "https://res.cloudinary.com/demo/image/upload/v1312461204/sample.pdf",
                             material_type=r_type,

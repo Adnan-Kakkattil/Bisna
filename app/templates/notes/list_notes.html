@@ -7,19 +7,20 @@
     <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
         <div>
             <h2 class="text-3xl font-black text-soft-dark tracking-tight">Resource <span
-                    class="text-soft-primary">Nexus</span></h2>
-            <p class="text-[0.6rem] font-bold text-soft-primary uppercase tracking-[0.2em] opacity-60">Academic
-                Intelligence Repository</p>
+                    class="text-soft-primary">Library</span></h2>
+            <p class="text-[0.6rem] font-bold text-soft-primary uppercase tracking-[0.2em] opacity-60">Study Materials &
+                Guides</p>
         </div>
         <div class="flex gap-3">
-            <div class="nm-flat px-4 py-2 rounded-full flex items-center gap-2">
+            <div class="bg-white border border-gray-100 px-4 py-2 rounded-full flex items-center gap-2 shadow-sm">
                 <i class="fas fa-layer-group text-soft-primary text-[0.6rem]"></i>
-                <span class="text-[0.6rem] font-black text-soft-primary uppercase tracking-widest">{{ notes|length }}
-                    Modules Sync</span>
+                <span class="text-[0.6rem] font-bold text-gray-500 uppercase tracking-widest">{{ notes|length }}
+                    Materials</span>
             </div>
-            {% if current_user.role.name in ['Teacher', 'Admin'] %}
-            <a href="{{ url_for('notes.upload_note') }}" class="nm-button px-4 py-2 no-underline">
-                <i class="fas fa-plus me-1 text-[0.6rem]"></i> Sync New
+            {% if current_user.is_authenticated and current_user.role.name in ['Teacher', 'Admin'] %}
+            <a href="{{ url_for('notes.upload_note') }}"
+                class="mat-button mat-button-primary px-4 py-2 no-underline text-[0.7rem] rounded-full shadow-md">
+                <i class="fas fa-plus me-1 text-[0.6rem]"></i> Upload New
             </a>
             {% endif %}
         </div>
@@ -27,24 +28,24 @@
 
     <!-- Search & Filter Hub -->
     <form method="GET" action="{{ url_for('notes.list_notes') }}" class="mb-10">
-        <div class="nm-flat p-6 flex flex-col gap-6">
-            <!-- Universal Search -->
+        <div class="mat-card p-6 flex flex-col gap-6">
+            <!-- Search -->
             <div class="relative group">
                 <i
                     class="fas fa-search absolute left-5 top-1/2 -translate-y-1/2 text-soft-primary opacity-40 group-focus-within:opacity-100 transition-opacity"></i>
-                <input type="text" name="q" value="{{ search_query }}" class="nm-input pl-12 h-11"
-                    placeholder="Scan knowledge nodes...">
+                <input type="text" name="q" value="{{ search_query }}" class="mat-input pl-12 h-11"
+                    placeholder="Search materials...">
                 <button type="submit"
-                    class="absolute right-2 top-1/2 -translate-y-1/2 nm-button h-8 px-4 text-[0.6rem] font-black uppercase">Search</button>
+                    class="absolute right-2 top-1/2 -translate-y-1/2 mat-button mat-button-primary h-8 px-4 text-[0.7rem] rounded-md">Search</button>
             </div>
 
-            <!-- Tactical Filters -->
+            <!-- Filters -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <div class="flex flex-col gap-2">
-                    <label
-                        class="text-[0.55rem] font-black text-soft-primary uppercase tracking-widest ml-1 opacity-50">Domain</label>
-                    <select name="course_id" class="nm-input h-9 text-[0.7rem] font-bold" onchange="this.form.submit()">
-                        <option value="">All Domains</option>
+                    <label class="text-[0.65rem] font-bold text-soft-dark uppercase tracking-wider ml-1">Course</label>
+                    <select name="course_id" class="mat-input h-11 text-sm cursor-pointer"
+                        onchange="this.form.submit()">
+                        <option value="">All Courses</option>
                         {% for c in courses %}
                         <option value="{{ c.id }}" {% if selected_course==c.id %}selected{% endif %}>{{ c.name }}
                         </option>
@@ -53,10 +54,10 @@
                 </div>
                 <div class="flex flex-col gap-2">
                     <label
-                        class="text-[0.55rem] font-black text-soft-primary uppercase tracking-widest ml-1 opacity-50">Phase</label>
-                    <select name="semester_num" class="nm-input h-9 text-[0.7rem] font-bold"
+                        class="text-[0.65rem] font-bold text-soft-dark uppercase tracking-wider ml-1">Semester</label>
+                    <select name="semester_num" class="mat-input h-11 text-sm cursor-pointer"
                         onchange="this.form.submit()">
-                        <option value="">All Phases</option>
+                        <option value="">All Semesters</option>
                         {% for num in semester_nums %}
                         <option value="{{ num }}" {% if selected_semester_num==num %}selected{% endif %}>Semester {{ num
                             }}</option>
@@ -64,11 +65,10 @@
                     </select>
                 </div>
                 <div class="flex flex-col gap-2">
-                    <label
-                        class="text-[0.55rem] font-black text-soft-primary uppercase tracking-widest ml-1 opacity-50">Module</label>
-                    <select name="subject_id" class="nm-input h-9 text-[0.7rem] font-bold"
+                    <label class="text-[0.65rem] font-bold text-soft-dark uppercase tracking-wider ml-1">Subject</label>
+                    <select name="subject_id" class="mat-input h-11 text-sm cursor-pointer"
                         onchange="this.form.submit()">
-                        <option value="">All Modules</option>
+                        <option value="">All Subjects</option>
                         {% for sub in subjects %}
                         <option value="{{ sub.id }}" {% if selected_subject==sub.id %}selected{% endif %}>{{ sub.name }}
                         </option>
@@ -77,8 +77,8 @@
                 </div>
                 <div class="flex items-end">
                     <a href="{{ url_for('notes.list_notes') }}"
-                        class="nm-button w-full h-9 text-red-500/70 border-red-500/10 hover:text-red-600 no-underline text-[0.6rem]">
-                        <i class="fas fa-undo me-2"></i> Reset Grid
+                        class="mat-button mat-button-outline w-full h-11 text-red-600 border-red-200 hover:bg-red-50 no-underline text-xs">
+                        <i class="fas fa-undo me-2"></i> Reset Filters
                     </a>
                 </div>
             </div>
@@ -89,13 +89,13 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {% if notes %}
         {% for note in notes %}
-        <div class="nm-flat p-6 group hover:translate-y-[-4px] transition-all duration-300 flex flex-col">
+        <div class="mat-card p-6 flex flex-col hover:border-soft-primary transition-all duration-300">
             <div class="flex justify-between items-start mb-4">
                 <div
-                    class="nm-inset px-2.5 py-1 text-[0.5rem] font-black text-soft-primary uppercase tracking-widest max-w-[150px] truncate">
+                    class="bg-soft-bg text-soft-dark px-3 py-1 rounded-full text-[0.6rem] font-bold uppercase tracking-wider truncate max-w-[160px]">
                     {{ note.topic.unit.subject.semester.course.name }}
                 </div>
-                <div class="nm-inset w-8 h-8 flex items-center justify-center text-soft-primary text-xs">
+                <div class="text-soft-primary text-sm opacity-60">
                     {% if note.material_type == 'pdf' %}<i class="fas fa-file-pdf"></i>
                     {% elif note.material_type in ['docx', 'doc'] %}<i class="fas fa-file-word"></i>
                     {% elif note.material_type == 'url' %}<i class="fas fa-link"></i>
@@ -103,41 +103,44 @@
                 </div>
             </div>
 
-            <h3 class="text-sm font-black text-soft-dark mb-1 leading-snug">{{ note.title }}</h3>
-            <p class="text-[0.55rem] font-bold text-soft-primary opacity-40 uppercase mb-4">{{ note.uploader.username }}
+            <h3 class="text-base font-bold text-soft-dark mb-1 leading-snug">{{ note.title }}</h3>
+            <p class="text-[0.65rem] font-medium text-gray-500 uppercase mb-4">By {{ note.uploader.name or
+                note.uploader.username }}
             </p>
 
-            <div class="nm-inset p-3 mb-4 space-y-1.5 flex-grow">
+            <div class="bg-gray-50 rounded-lg p-4 mb-5 space-y-2 flex-grow">
                 <div
-                    class="flex justify-between items-center text-[0.5rem] font-black uppercase tracking-widest text-soft-primary/30">
+                    class="flex justify-between items-center text-[0.6rem] font-bold uppercase tracking-wide text-gray-400">
                     <span>Module</span>
-                    <span class="text-soft-primary/80 text-end ml-2">{{ note.topic.unit.subject.name }}</span>
+                    <span class="text-gray-600 text-end ml-2">{{ note.topic.unit.subject.name }}</span>
                 </div>
                 <div
-                    class="flex justify-between items-center text-[0.5rem] font-black uppercase tracking-widest text-soft-primary/30">
+                    class="flex justify-between items-center text-[0.6rem] font-bold uppercase tracking-wide text-gray-400">
                     <span>Topic</span>
-                    <span class="text-soft-primary/80 text-end ml-2">{{ note.topic.name }}</span>
+                    <span class="text-gray-600 text-end ml-2">{{ note.topic.name }}</span>
                 </div>
             </div>
 
             <div class="flex gap-2">
                 {% if note.material_type == 'url' %}
-                <a href="{{ note.file_url }}" class="nm-button flex-grow py-2.5 no-underline" target="_blank">
+                <a href="{{ note.file_url }}" class="mat-button mat-button-primary flex-grow text-xs no-underline"
+                    target="_blank">
                     <i class="fas fa-external-link-alt me-2"></i> Access
                 </a>
                 {% else %}
                 <a href="{{ url_for('notes.view_file', filename=note.filename) }}"
-                    class="nm-button flex-grow py-2.5 no-underline" target="_blank">
+                    class="mat-button mat-button-primary flex-grow text-xs no-underline" target="_blank">
                     <i class="fas fa-eye me-2"></i> View
                 </a>
                 <a href="{{ url_for('notes.download_file', filename=note.filename) }}"
-                    class="nm-button w-10 flex items-center justify-center">
+                    class="mat-button mat-button-outline w-11 flex items-center justify-center">
                     <i class="fas fa-download"></i>
                 </a>
                 {% endif %}
-                {% if current_user.role.name in ['Teacher', 'Admin'] or current_user.id == note.user_id %}
+                {% if current_user.is_authenticated and (current_user.role.name in ['Teacher', 'Admin'] or
+                current_user.id == note.user_id) %}
                 <a href="{{ url_for('notes.edit_note', note_id=note.id) }}"
-                    class="nm-button w-10 flex items-center justify-center text-soft-primary/60">
+                    class="mat-button mat-button-outline w-11 flex items-center justify-center text-gray-400">
                     <i class="fas fa-edit"></i>
                 </a>
                 {% endif %}
@@ -147,7 +150,7 @@
         {% else %}
         <div class="col-span-full py-20 flex flex-col items-center justify-center opacity-30">
             <i class="fas fa-database text-6xl mb-4"></i>
-            <p class="text-[0.65rem] font-black uppercase tracking-[0.2em]">Zero Knowledge Nodes Found</p>
+            <p class="text-[0.65rem] font-black uppercase tracking-[0.2em]">No Materials Found</p>
         </div>
         {% endif %}
     </div>

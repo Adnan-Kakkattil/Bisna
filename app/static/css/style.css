@@ -1,123 +1,137 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 :root {
-    /* Pure Neumorphic Palette */
-    --bg-soft: #e5e9f0;
-    /* Slightly lighter background */
-    --c-shadow-dark: #bec8d9;
-    /* Lighter shadows for subtlety */
-    --c-shadow-light: #ffffff;
-    --c-primary: #5289b5;
-    --c-accent: #6eb5e9;
-    --c-dark: #2a4d69;
+    /* Color Palette - Celestial Violet & Blue */
+    --md-surface: #ffffff;
+    --md-background: #fcfdfd;
+    --md-primary: #55508d;
+    --md-primary-container: #bee7e8;
+    --md-on-primary: #ffffff;
+    --md-secondary: #726da8;
+    --md-accent: #7d8cc4;
+    --md-outline: #e1e1f1;
+    --md-error: #ba1a1a;
+    --md-text-main: #2a2b3d;
+    --md-text-muted: #6b6c85;
 
-    /* Refined Shadows - More Minimal */
-    --nm-shadow-out: 6px 6px 12px var(--c-shadow-dark), -6px -6px 12px var(--c-shadow-light);
-    --nm-shadow-in: inset 4px 4px 8px var(--c-shadow-dark), inset -4px -4px 8px var(--c-shadow-light);
-    --nm-shadow-sm: 3px 3px 6px var(--c-shadow-dark), -3px -3px 6px var(--c-shadow-light);
+    /* Elevation System */
+    --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05);
+    --shadow-2: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-3: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 
-    --text-main: #34495e;
-    /* Softer dark text */
-    --text-muted: #7f8c8d;
-    --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --transition: all 0.2s cubic-bezier(0, 0, 0.2, 1);
 }
 
 body {
-    background-color: var(--bg-soft);
-    color: var(--text-main);
+    background: var(--md-background);
+    color: var(--md-text-main);
     font-family: 'Inter', sans-serif;
     min-height: 100vh;
-    padding-top: 80px;
-    /* Reduced top padding */
+    padding-top: 0;
+    line-height: 1.5;
     overflow-x: hidden;
 }
 
-/* Neumorphic Core Utilities - Minimal Scale */
-.nm-flat {
-    background: var(--bg-soft);
-    box-shadow: var(--nm-shadow-out);
-    border-radius: 14px;
-    /* Reduced from 20px */
-    border: 1px solid rgba(255, 255, 255, 0.5);
+/* Material Texture Overlay */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
+    opacity: 0.04;
+    /* Reduced for minimalism */
+    pointer-events: none;
+    z-index: 100;
 }
 
-.nm-inset {
-    background: var(--bg-soft);
-    box-shadow: var(--nm-shadow-in);
-    border-radius: 12px;
-    /* Reduced from 16px */
-    border: none;
-}
-
-.nm-button {
-    background: var(--bg-soft);
-    box-shadow: var(--nm-shadow-out);
-    border-radius: 10px;
-    /* Reduced from 12px */
-    padding: 10px 20px;
-    /* Reduced padding */
-    font-weight: 700;
-    font-size: 0.75rem;
-    /* Standardizing smaller text */
-    color: var(--c-primary);
+/* Base Material Components */
+.mat-card {
+    background: var(--md-surface);
+    box-shadow: var(--shadow-1);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--md-outline);
     transition: var(--transition);
-    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.mat-card:hover {
+    box-shadow: var(--shadow-2);
+}
+
+.mat-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    text-decoration: none !important;
-}
-
-.nm-button:hover {
-    color: var(--c-dark);
-    transform: translateY(-2px);
-    /* Reduced movement */
-    box-shadow: 8px 8px 16px var(--c-shadow-dark), -8px -8px 16px var(--c-shadow-light);
-}
-
-.nm-button:active {
-    box-shadow: var(--nm-shadow-in);
-    transform: scale(0.98);
-}
-
-.nm-input {
-    background: var(--bg-soft);
-    box-shadow: var(--nm-shadow-in);
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    padding: 10px 16px;
-    /* Reduced padding */
-    color: var(--text-main);
-    font-size: 0.85rem;
-    width: 100%;
-    outline: none;
+    padding: 0 24px;
+    height: 44px;
+    /* standardized height to fix clipping */
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-size: 0.875rem;
     transition: var(--transition);
+    cursor: pointer;
+    border: 1px solid transparent;
+    text-decoration: none !important;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
 }
 
-.nm-input:focus {
-    box-shadow: var(--nm-shadow-out);
+.mat-button-primary {
+    background: var(--md-primary);
+    color: var(--md-on-primary);
+}
+
+.mat-button-primary:hover {
+    background: var(--md-secondary);
+    box-shadow: var(--shadow-2);
+}
+
+.mat-button-outline {
+    background: transparent;
+    border: 1px solid var(--md-outline);
+    color: var(--md-primary);
+}
+
+.mat-input {
+    background: var(--md-surface);
+    border: 1px solid var(--md-outline);
+    border-radius: var(--radius-sm);
+    height: 44px;
+    /* standardized height */
+    padding: 0 16px;
+    font-size: 0.95rem;
+    color: var(--md-text-main);
+    width: 100%;
+    transition: var(--transition);
+    outline: none;
+}
+
+.mat-input:focus {
+    border-color: var(--md-primary);
+    box-shadow: 0 0 0 3px rgba(85, 80, 141, 0.15);
 }
 
 /* Navigation */
-body {
-    padding-top: 100px;
-    /* Adjusted for floating navbar */
-}
-
-.navbar-soft {
-    background: var(--bg-soft);
-    border-radius: 20px;
-    box-shadow: 8px 8px 16px var(--c-shadow-dark), -8px -8px 16px var(--c-shadow-light);
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+.navbar-mat {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--md-outline);
+    box-shadow: var(--shadow-1);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
 }
 
 .navbar-autohide {
     transform: translateY(0);
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .navbar-autohide.navbar-hidden {
-    transform: translateY(-180%);
+    transform: translateY(-120%);
 }
 
 .nav-pill {
@@ -146,11 +160,25 @@ body {
 }
 
 /* Legend & Accents */
+/* Text & Colors */
+.text-soft-primary {
+    color: var(--c-primary);
+}
+
+.text-soft-dark {
+    color: var(--c-dark);
+}
+
+.bg-soft-primary {
+    background-color: var(--c-primary);
+}
+
 .text-gradient {
     background: linear-gradient(135deg, var(--c-dark) 0%, var(--c-primary) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+    font-weight: 900;
 }
 
 /* Animations */

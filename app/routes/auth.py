@@ -58,7 +58,7 @@ def register():
 
             # Valid student - Create user
             # We save register_number if they typed it, but verification was pure email
-            user = User(username=form.username.data, email=form.email.data, password_hash=hashed_password, role=role,
+            user = User(username=form.username.data, name=form.name.data, email=form.email.data, password_hash=hashed_password, role=role,
                         college_id=college_id, register_number=reg_num, is_verified=True)
             
             registry_entry.is_registered = True
@@ -70,7 +70,7 @@ def register():
         # Teacher logic
         elif role.name == 'Teacher':
              # College ID validation already done above
-             user = User(username=form.username.data, email=form.email.data, password_hash=hashed_password, role=role,
+             user = User(username=form.username.data, name=form.name.data, email=form.email.data, password_hash=hashed_password, role=role,
                         college_id=college_id, is_verified=False)
              db.session.add(user)
              db.session.commit()
@@ -79,7 +79,7 @@ def register():
 
         # Admin logic
         elif role.name == 'Admin':
-             user = User(username=form.username.data, email=form.email.data, password_hash=hashed_password, role=role,
+             user = User(username=form.username.data, name=form.name.data, email=form.email.data, password_hash=hashed_password, role=role,
                         college_id=college_id, is_verified=False)
              db.session.add(user)
              db.session.commit()
@@ -99,7 +99,7 @@ def register_admin():
         role = Role.query.filter_by(name='Admin').first()
         hashed_password = generate_password_hash(form.password.data)
         
-        user = User(username=form.username.data, email=form.email.data, password_hash=hashed_password, role=role,
+        user = User(username=form.username.data, name=form.name.data, email=form.email.data, password_hash=hashed_password, role=role,
                     college_id=form.college.data, is_verified=False)
         db.session.add(user)
         db.session.commit()
@@ -119,7 +119,7 @@ def register_super_admin():
         hashed_password = generate_password_hash(form.password.data)
         
         # Super Admin is inherently verified and college-less
-        user = User(username=form.username.data, email=form.email.data, password_hash=hashed_password, role=role,
+        user = User(username=form.username.data, name=form.name.data, email=form.email.data, password_hash=hashed_password, role=role,
                     college_id=None, is_verified=True)
         db.session.add(user)
         db.session.commit()

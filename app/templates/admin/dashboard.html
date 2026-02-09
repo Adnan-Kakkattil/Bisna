@@ -40,164 +40,175 @@
 </script>
 {% endblock %}
 {% block content %}
-<div class="flex flex-col gap-6 max-w-6xl mx-auto py-4">
+<div class="flex flex-col gap-8 max-w-6xl mx-auto py-6">
     <!-- Header -->
-    <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-6">
         <div>
-            <h2 class="text-3xl font-black text-soft-dark tracking-tight">Admin <span
-                    class="text-soft-primary">Dashboard</span></h2>
-            <p class="text-[0.55rem] font-bold text-soft-primary uppercase tracking-[0.2em] opacity-60">Infrastructure
-                Control Node</p>
+            <h2 class="text-3xl font-black text-soft-dark tracking-tight mb-1">Admin <span
+                    class="text-soft-primary">Portal</span></h2>
+            <p class="text-[0.7rem] font-bold text-gray-400 uppercase tracking-widest">Digital Infrastructure Management
+            </p>
         </div>
-        <div class="nm-flat px-4 py-2 rounded-full flex items-center gap-2">
-            <div class="w-1.5 h-1.5 bg-green-500 rounded-full"></div>
-            <span class="text-[0.55rem] font-black text-soft-primary uppercase tracking-widest">Active</span>
+        <div class="bg-white border border-gray-100 px-5 py-2 rounded-full flex items-center gap-2 shadow-sm">
+            <div class="w-2 h-2 bg-green-500 rounded-full shadow-[0_0_8px_rgba(34,197,94,0.4)]"></div>
+            <span class="text-[0.65rem] font-bold text-gray-500 uppercase tracking-widest">System Active</span>
         </div>
     </div>
 
-    <!-- Minimal Stats -->
+    <!-- Stats Matrix -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <a href="{{ url_for('admin.view_faculty') }}" class="nm-button p-5 text-center no-underline block group">
+        <a href="{{ url_for('admin.view_faculty') }}" class="mat-card p-6 text-center group no-underline">
             <div
-                class="nm-inset w-10 h-10 mx-auto flex items-center justify-center mb-3 rounded-lg text-soft-primary group-hover:scale-105 transition-transform">
-                <i class="fas fa-chalkboard-teacher text-base"></i>
+                class="w-12 h-12 mx-auto flex items-center justify-center mb-4 rounded-xl bg-soft-bg text-soft-primary group-hover:bg-soft-primary group-hover:text-white transition-colors">
+                <i class="fas fa-chalkboard-teacher text-lg"></i>
             </div>
-            <div class="text-xl font-black text-soft-dark mb-0.5">{{ verified_teachers|length }}</div>
-            <div class="text-[0.45rem] font-black text-soft-primary uppercase tracking-widest opacity-50">Faculty
-                Registry</div>
+            <div class="text-2xl font-black text-soft-dark mb-0.5">{{ verified_teachers|length }}</div>
+            <div class="text-[0.6rem] font-bold text-gray-400 uppercase tracking-widest">Faculty Members</div>
         </a>
-        <a href="{{ url_for('admin.view_students') }}" class="nm-button p-5 text-center no-underline block group">
+        <a href="{{ url_for('admin.view_students') }}" class="mat-card p-6 text-center group no-underline">
             <div
-                class="nm-inset w-10 h-10 mx-auto flex items-center justify-center mb-3 rounded-lg text-soft-primary group-hover:scale-105 transition-transform">
-                <i class="fas fa-user-graduate text-base"></i>
+                class="w-12 h-12 mx-auto flex items-center justify-center mb-4 rounded-xl bg-soft-bg text-soft-primary group-hover:bg-soft-primary group-hover:text-white transition-colors">
+                <i class="fas fa-user-graduate text-lg"></i>
             </div>
-            <div class="text-xl font-black text-soft-dark mb-0.5">{{ verified_students|length }}</div>
-            <div class="text-[0.45rem] font-black text-soft-primary uppercase tracking-widest opacity-50">Student
-                Registry</div>
+            <div class="text-2xl font-black text-soft-dark mb-0.5">{{ verified_students|length }}</div>
+            <div class="text-[0.6rem] font-bold text-gray-400 uppercase tracking-widest">Student Database</div>
         </a>
-        <div class="nm-flat p-5 text-center border-t-2 border-red-500/5">
-            <div class="nm-inset w-10 h-10 mx-auto flex items-center justify-center mb-3 rounded-lg text-red-500/60">
-                <i class="fas fa-key text-base"></i>
+        <div class="mat-card p-6 text-center border-red-50">
+            <div class="w-12 h-12 mx-auto flex items-center justify-center mb-4 rounded-xl bg-red-50 text-red-500">
+                <i class="fas fa-key text-lg"></i>
             </div>
-            <div class="text-xl font-black text-red-600 mb-0.5">{{ pending_teachers|length }}</div>
-            <div class="text-[0.45rem] font-black text-red-600/30 uppercase tracking-widest">Pending Syncs</div>
+            <div class="text-2xl font-black text-red-600 mb-0.5">{{ pending_teachers|length }}</div>
+            <div class="text-[0.6rem] font-bold text-red-300 uppercase tracking-widest">Pending Access</div>
         </div>
     </div>
 
-    <!-- Tactical Hub -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- Registry Hub -->
-        <div class="nm-flat p-6 flex flex-col">
-            <div class="flex items-center gap-3 mb-6">
-                <div class="nm-inset p-2 rounded-lg text-soft-primary">
-                    <i class="fas fa-address-book text-sm"></i>
+    <!-- Main Console -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Navigation Panel -->
+        <div class="mat-card p-6 flex flex-col">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="w-10 h-10 rounded-lg bg-gray-50 flex items-center justify-center text-soft-primary">
+                    <i class="fas fa-address-book"></i>
                 </div>
-                <h5 class="text-[0.6rem] font-black text-soft-dark uppercase tracking-widest">Registry Hub</h5>
+                <h5 class="text-sm font-bold text-soft-dark uppercase tracking-wider">Access Registry</h5>
             </div>
 
             <div class="flex flex-col gap-4">
-                <a href="{{ url_for('admin.view_faculty') }}" class="nm-button p-4 no-underline block group">
-                    <div class="flex justify-between items-center">
-                        <span class="text-[0.65rem] font-black text-soft-dark uppercase">Personnel</span>
-                        <i
-                            class="fas fa-chevron-right text-soft-primary opacity-20 group-hover:opacity-100 transition-opacity"></i>
+                <a href="{{ url_for('admin.view_faculty') }}"
+                    class="bg-gray-50 hover:bg-gray-100 p-5 rounded-2xl no-underline group flex justify-between items-center transition-colors">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-users text-gray-400 group-hover:text-soft-primary"></i>
+                        <span class="text-[0.75rem] font-bold text-soft-dark uppercase tracking-tight">Personnel
+                            Directory</span>
                     </div>
+                    <i class="fas fa-chevron-right text-gray-200 group-hover:text-soft-primary transition-colors"></i>
                 </a>
-                <a href="{{ url_for('admin.view_students') }}" class="nm-button p-4 no-underline block group">
-                    <div class="flex justify-between items-center">
-                        <span class="text-[0.65rem] font-black text-soft-dark uppercase">Students</span>
-                        <i
-                            class="fas fa-chevron-right text-soft-primary opacity-20 group-hover:opacity-100 transition-opacity"></i>
+                <a href="{{ url_for('admin.view_students') }}"
+                    class="bg-gray-50 hover:bg-gray-100 p-5 rounded-2xl no-underline group flex justify-between items-center transition-colors">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-user-graduate text-gray-400 group-hover:text-soft-primary"></i>
+                        <span class="text-[0.75rem] font-bold text-soft-dark uppercase tracking-tight">Student
+                            Manager</span>
                     </div>
+                    <i class="fas fa-chevron-right text-gray-200 group-hover:text-soft-primary transition-colors"></i>
                 </a>
             </div>
 
-            <div class="mt-auto pt-6">
-                <div class="nm-inset p-3 flex items-center justify-between">
-                    <span class="text-[0.5rem] font-black text-soft-primary uppercase tracking-widest opacity-30">Node
-                        Status</span>
-                    <span class="text-[0.5rem] font-black text-soft-primary/60 uppercase">Operational</span>
+            <div class="mt-auto pt-8">
+                <div class="bg-gray-50/50 p-4 rounded-xl flex items-center justify-between">
+                    <span class="text-[0.6rem] font-bold text-gray-400 uppercase tracking-widest">Node Path</span>
+                    <span class="text-[0.6rem] font-medium text-soft-primary/60">admin/dashboard.v2</span>
                 </div>
             </div>
         </div>
 
-        <!-- Verification Nexus -->
-        <div class="nm-flat p-6 lg:col-span-2">
-            <div class="flex items-center gap-3 mb-6">
-                <div class="nm-inset p-2 rounded-lg text-soft-primary">
-                    <i class="fas fa-user-check text-sm"></i>
+        <!-- Review Nexus -->
+        <div class="mat-card p-6 lg:col-span-2">
+            <div class="flex items-center gap-3 mb-8">
+                <div class="w-10 h-10 rounded-lg bg-gray-50 flex items-center justify-center text-soft-primary">
+                    <i class="fas fa-user-check"></i>
                 </div>
-                <h5 class="text-[0.6rem] font-black text-soft-dark uppercase tracking-widest">Verification Nexus</h5>
+                <h5 class="text-sm font-bold text-soft-dark uppercase tracking-wider">Verification Queue</h5>
             </div>
 
             {% if pending_teachers %}
-            <div class="flex flex-col gap-3">
+            <div class="flex flex-col gap-4">
                 {% for teacher in pending_teachers %}
-                <div class="nm-inset p-3 flex flex-col md:flex-row justify-between items-center gap-4">
-                    <div>
-                        <div class="text-xs font-black text-soft-dark">{{ teacher.username }}</div>
-                        <div class="text-[0.55rem] font-bold text-soft-primary uppercase opacity-50">{{ teacher.email }}
+                <div
+                    class="bg-white border border-gray-100 p-4 rounded-2xl flex flex-col md:flex-row justify-between items-center gap-4 hover:border-soft-primary/20 transition-colors">
+                    <div class="flex items-center gap-4">
+                        <div
+                            class="w-10 h-10 rounded-lg bg-soft-bg flex items-center justify-center text-soft-primary font-bold">
+                            {{ teacher.username[0]|upper }}
+                        </div>
+                        <div>
+                            <div class="text-sm font-bold text-soft-dark">{{ teacher.username }}</div>
+                            <div class="text-[0.65rem] font-medium text-gray-400">{{ teacher.email }}</div>
                         </div>
                     </div>
                     <div class="flex gap-2">
                         <a href="{{ url_for('admin.verify_teacher', user_id=teacher.id, action='approve') }}"
-                            class="nm-button px-4 py-1 text-[0.55rem]">Approve</a>
+                            class="mat-button mat-button-primary px-5 py-2 text-[0.6rem] rounded-full">Approve</a>
                         <a href="{{ url_for('admin.verify_teacher', user_id=teacher.id, action='reject') }}"
-                            class="nm-button px-4 py-1 text-[0.55rem] text-red-600/70"
+                            class="mat-button px-5 py-2 text-[0.6rem] text-red-500 border border-red-50 hover:bg-red-50 rounded-full"
                             onclick="return confirm('Reject access?');">Reject</a>
                     </div>
                 </div>
                 {% endfor %}
             </div>
             {% else %}
-            <div class="flex flex-col items-center justify-center py-8 opacity-20">
-                <i class="fas fa-satellite-dish text-4xl mb-3"></i>
-                <p class="text-[0.5rem] font-black uppercase">Queue Clean</p>
+            <div class="flex flex-col items-center justify-center py-12 text-gray-200">
+                <i class="fas fa-inbox text-5xl mb-4"></i>
+                <p class="text-[0.7rem] font-bold uppercase tracking-widest">Queue is currently empty</p>
             </div>
             {% endif %}
         </div>
     </div>
 
-    <!-- Syllabus Matrix -->
-    <div class="nm-flat p-6">
-        <div class="flex items-center justify-between mb-6">
-            <div class="flex items-center gap-3">
-                <div class="nm-inset p-2 rounded-lg text-soft-primary">
-                    <i class="fas fa-sitemap text-sm"></i>
+    <!-- Curriculum Grid -->
+    <div class="mat-card p-8">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-10">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center text-soft-primary">
+                    <i class="fas fa-sitemap text-lg"></i>
                 </div>
-                <h5 class="text-[0.6rem] font-black text-soft-dark uppercase tracking-widest">Syllabus Matrix</h5>
+                <div>
+                    <h5 class="text-base font-bold text-soft-dark uppercase tracking-wider">Curriculum Matrix</h5>
+                    <p class="text-[0.65rem] font-medium text-gray-400">Map and configure academic units</p>
+                </div>
             </div>
-            <div class="flex gap-2">
+            <div class="flex gap-3">
                 <a href="{{ url_for('admin.manage_course') }}"
-                    class="nm-button px-3 py-1.5 text-[0.55rem] no-underline">
-                    <i class="fas fa-plus me-1 text-[0.5rem]"></i> Course
+                    class="mat-button mat-button-primary px-5 py-2 text-[0.7rem] no-underline rounded-full flex items-center gap-2">
+                    <i class="fas fa-plus text-[0.6rem]"></i> New Course
                 </a>
                 <a href="{{ url_for('admin.upload_student_data') }}"
-                    class="nm-button px-3 py-1.5 text-[0.55rem] no-underline bg-soft-primary/5">
-                    <i class="fas fa-file-import me-1 text-[0.5rem]"></i> Sync Registry
+                    class="mat-button mat-button-outline px-5 py-2 text-[0.7rem] no-underline rounded-full flex items-center gap-2">
+                    <i class="fas fa-file-import text-[0.6rem]"></i> Import Registry
                 </a>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {% for course in courses %}
-            <div class="nm-inset p-5">
-                <div class="flex justify-between items-center mb-4">
-                    <h4 class="text-[0.7rem] font-black text-soft-dark uppercase tracking-tight">{{ course.name }}</h4>
+            <div
+                class="bg-gray-50/50 border border-gray-100 p-6 rounded-3xl hover:border-soft-primary/20 transition-colors group">
+                <div class="flex justify-between items-center mb-6">
+                    <h4 class="text-xs font-bold text-soft-dark uppercase tracking-wider">{{ course.name }}</h4>
                     <a href="{{ url_for('admin.edit_course', course_id=course.id) }}"
-                        class="text-soft-primary/30 hover:text-soft-primary transition-colors"><i
-                            class="fas fa-edit text-[0.6rem]"></i></a>
+                        class="text-gray-300 hover:text-soft-primary transition-colors"><i
+                            class="fas fa-edit text-xs"></i></a>
                 </div>
-                <div class="space-y-4">
+                <div class="space-y-5">
                     {% for sem in course.semesters %}
-                    <div class="pl-3 border-l-2 border-soft-primary/10">
-                        <span
-                            class="text-[0.45rem] font-black text-soft-primary/40 uppercase tracking-widest block mb-1.5">P{{
-                            sem.number }} Phase</span>
+                    <div class="pl-4 border-l-2 border-gray-100">
+                        <span class="text-[0.6rem] font-bold text-gray-400 uppercase tracking-widest block mb-2">Phase
+                            {{ sem.number }}</span>
                         <div class="flex flex-wrap gap-2">
                             {% for sub in sem.subjects %}
-                            <span class="nm-flat px-2 py-0.5 text-[0.55rem] font-bold text-soft-dark/70">{{ sub.name
-                                }}</span>
+                            <span
+                                class="bg-white border border-gray-100 px-3 py-1 text-[0.6rem] font-bold text-gray-600 rounded-full shadow-sm">{{
+                                sub.name }}</span>
                             {% endfor %}
                         </div>
                     </div>

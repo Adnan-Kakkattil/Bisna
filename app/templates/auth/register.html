@@ -3,12 +3,11 @@
 {% block content %}
 <div class="flex flex-col justify-center items-center min-vh-100 py-12 px-4">
     <div class="w-full max-w-2xl">
-        <div class="nm-flat p-8 md:p-10 border-t-4 border-soft-primary/20">
+        <div class="mat-card p-8 md:p-10 border-none shadow-xl">
             <div class="mb-10 text-center">
-                <h2 class="text-3xl font-black text-soft-dark tracking-tight">Create <span
-                        class="text-soft-primary">Account</span></h2>
-                <p class="text-[0.55rem] font-bold text-soft-primary uppercase tracking-[0.2em] opacity-50">Join
-                    Institutional Learning Community</p>
+                <h2 class="text-3xl font-black text-soft-dark tracking-tight mb-2">Create Account</h2>
+                <p class="text-[0.7rem] font-bold text-gray-400 uppercase tracking-widest">Join the EduStack community
+                </p>
             </div>
 
             <form method="POST" action="">
@@ -18,23 +17,23 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                     <div>
                         <label
-                            class="block text-[0.55rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">Role
-                            Node</label>
-                        {{ form.role(class="nm-input h-11 text-sm cursor-pointer", id="role_select") }}
+                            class="block text-[0.65rem] font-bold text-gray-500 uppercase tracking-wider mb-2 ml-1">Account
+                            Type</label>
+                        {{ form.role(class="mat-input h-11 text-sm cursor-pointer", id="role_select") }}
                     </div>
 
                     <div id="college_dropdown_div" style="display: none;">
                         <label
-                            class="block text-[0.55rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">Campus
-                            Node</label>
-                        {{ form.college(class="nm-input h-11 text-sm cursor-pointer") }}
+                            class="block text-[0.65rem] font-bold text-gray-500 uppercase tracking-wider mb-2 ml-1">Select
+                            College</label>
+                        {{ form.college(class="mat-input h-11 text-sm cursor-pointer") }}
                     </div>
 
                     <div id="college_id_div" style="display: none;">
                         <label
-                            class="block text-[0.55rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">CID
-                            Node</label>
-                        {{ form.college_id(class="nm-input h-11 text-sm", placeholder="CIDA001") }}
+                            class="block text-[0.65rem] font-bold text-gray-500 uppercase tracking-wider mb-2 ml-1">College
+                            ID</label>
+                        {{ form.college_id(class="mat-input h-11 text-sm", placeholder="CIDA001") }}
                     </div>
                 </div>
 
@@ -42,23 +41,22 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                     <div>
                         <label
-                            class="block text-[0.55rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">Entity
-                            Name</label>
-                        {{ form.username(class="nm-input h-11 text-sm", placeholder="john_doe") }}
+                            class="block text-[0.65rem] font-bold text-gray-500 uppercase tracking-wider mb-2 ml-1">Username</label>
+                        {{ form.username(class="mat-input h-11 text-sm", placeholder="john_doe") }}
                         {% if form.username.errors %}
                         {% for error in form.username.errors %}
-                        <div class="text-red-600 text-[0.55rem] font-bold mt-1 ml-1">{{ error }}</div>
+                        <div class="text-red-600 text-[0.6rem] font-bold mt-1 ml-1">{{ error }}</div>
                         {% endfor %}
                         {% endif %}
                     </div>
                     <div>
                         <label
-                            class="block text-[0.55rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">Email
-                            Node</label>
-                        {{ form.email(class="nm-input h-11 text-sm", placeholder="john@college.edu") }}
+                            class="block text-[0.65rem] font-bold text-gray-500 uppercase tracking-wider mb-2 ml-1">Email
+                            Address</label>
+                        {{ form.email(class="mat-input h-11 text-sm", placeholder="john@college.edu") }}
                         {% if form.email.errors %}
                         {% for error in form.email.errors %}
-                        <div class="text-red-600 text-[0.55rem] font-bold mt-1 ml-1">{{ error }}</div>
+                        <div class="text-red-600 text-[0.6rem] font-bold mt-1 ml-1">{{ error }}</div>
                         {% endfor %}
                         {% endif %}
                     </div>
@@ -66,13 +64,12 @@
 
                 <!-- Register Number -->
                 <div id="reg_num_div" class="mb-6" style="display: none;">
-                    <label
-                        class="block text-[0.55rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">Registry
-                        Number</label>
-                    {{ form.register_number(class="nm-input h-11 text-sm", placeholder="REG2024001") }}
+                    <label class="block text-[0.65rem] font-bold text-gray-500 uppercase tracking-wider mb-2 ml-1">Roll
+                        / Register Number</label>
+                    {{ form.register_number(class="mat-input h-11 text-sm", placeholder="REG2024001") }}
                     {% if form.register_number.errors %}
                     {% for error in form.register_number.errors %}
-                    <div class="text-red-600 text-[0.55rem] font-bold mt-1 ml-1">{{ error }}</div>
+                    <div class="text-red-600 text-[0.6rem] font-bold mt-1 ml-1">{{ error }}</div>
                     {% endfor %}
                     {% endif %}
                 </div>
@@ -81,65 +78,65 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-3">
                     <div>
                         <label
-                            class="block text-[0.55rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">Sequence
-                            Key</label>
+                            class="block text-[0.65rem] font-bold text-gray-500 uppercase tracking-wider mb-2 ml-1">Password</label>
                         <div class="relative">
-                            {{ form.password(class="nm-input h-11 text-sm pr-10", id="password_input",
+                            {{ form.password(class="mat-input h-11 text-sm pr-10", id="password_input",
                             placeholder="••••••••") }}
                             <button
-                                class="absolute right-3 top-1/2 -translate-y-1/2 text-soft-primary/40 hover:text-soft-primary transition-colors"
+                                class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-soft-primary transition-colors"
                                 type="button" id="togglePassword">
-                                <i class="fas fa-eye text-xs"></i>
+                                <i class="fas fa-eye text-sm"></i>
                             </button>
                         </div>
                     </div>
                     <div>
                         <label
-                            class="block text-[0.55rem] font-black text-soft-primary uppercase tracking-widest mb-2 ml-1 opacity-60">Verify
-                            Key</label>
+                            class="block text-[0.65rem] font-bold text-gray-500 uppercase tracking-wider mb-2 ml-1">Confirm
+                            Password</label>
                         <div class="relative">
-                            {{ form.confirm_password(class="nm-input h-11 text-sm pr-10", id="confirm_password_input",
+                            {{ form.confirm_password(class="mat-input h-11 text-sm pr-10", id="confirm_password_input",
                             placeholder="••••••••") }}
                             <button
-                                class="absolute right-3 top-1/2 -translate-y-1/2 text-soft-primary/40 hover:text-soft-primary transition-colors"
+                                class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-soft-primary transition-colors"
                                 type="button" id="toggleConfirmPassword">
-                                <i class="fas fa-eye text-xs"></i>
+                                <i class="fas fa-eye text-sm"></i>
                             </button>
                         </div>
                         {% if form.confirm_password.errors %}
                         {% for error in form.confirm_password.errors %}
-                        <div class="text-red-600 text-[0.55rem] font-bold mt-1 ml-1">{{ error }}</div>
+                        <div class="text-red-600 text-[0.6rem] font-bold mt-1 ml-1">{{ error }}</div>
                         {% endfor %}
                         {% endif %}
                     </div>
                 </div>
 
                 <!-- Password Strength -->
-                <div class="mb-8">
-                    <div class="flex gap-2 mb-1.5" id="strengthBars">
-                        <div class="flex-1 h-1 bg-soft-primary/10 rounded-full"></div>
-                        <div class="flex-1 h-1 bg-soft-primary/10 rounded-full"></div>
-                        <div class="flex-1 h-1 bg-soft-primary/10 rounded-full"></div>
-                        <div class="flex-1 h-1 bg-soft-primary/10 rounded-full"></div>
+                <div class="mb-10">
+                    <div class="flex gap-2 mb-2" id="strengthBars">
+                        <div class="flex-1 h-1.5 bg-gray-100 rounded-full"></div>
+                        <div class="flex-1 h-1.5 bg-gray-100 rounded-full"></div>
+                        <div class="flex-1 h-1.5 bg-gray-100 rounded-full"></div>
+                        <div class="flex-1 h-1.5 bg-gray-100 rounded-full"></div>
                     </div>
                     <div class="flex justify-between items-center px-1">
                         <small id="strengthText"
-                            class="text-[0.45rem] font-black text-soft-primary uppercase tracking-widest opacity-30">Security
+                            class="text-[0.6rem] font-bold text-gray-400 uppercase tracking-widest">Security
                             Level</small>
-                        <i class="fas fa-shield-alt text-[0.5rem] text-soft-primary opacity-20"></i>
+                        <i class="fas fa-shield-alt text-xs text-gray-200"></i>
                     </div>
                 </div>
 
                 <div class="mb-8 pt-2">
-                    {{ form.submit(class="nm-button w-full py-3 text-[0.7rem] uppercase tracking-[0.2em] font-black") }}
+                    {{ form.submit(class="mat-button mat-button-primary w-full h-12 shadow-lg rounded-full text-xs",
+                    value="Create My Account") }}
                 </div>
             </form>
 
-            <div class="text-center pt-6 border-t border-soft-primary/5">
-                <p class="text-[0.5rem] font-black text-soft-primary uppercase tracking-widest">
-                    Already Registered?
+            <div class="text-center pt-8 border-t border-gray-50">
+                <p class="text-[0.65rem] font-bold text-gray-400 uppercase tracking-widest">
+                    Already a member?
                     <a href="{{ url_for('auth.login') }}"
-                        class="text-soft-dark hover:underline ml-1 transition-colors">SignIn Portal</a>
+                        class="text-soft-primary hover:text-soft-accent ml-1 transition-colors no-underline">Log In</a>
                 </p>
             </div>
         </div>

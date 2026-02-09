@@ -9,6 +9,7 @@ class RegistrationForm(FlaskForm):
     college = SelectField('College', coerce=int, validators=[Optional()]) # Used for Admin
     college_id = StringField('College ID (e.g., CIDA001)', validators=[Optional()]) # Used for Teacher/Student
     username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
+    name = StringField('Full Name', validators=[Optional(), Length(max=120)])
     email = StringField('Email', validators=[DataRequired(), Email()])
     register_number = StringField('Register Number', validators=[Optional()]) # Used for Student
     password = PasswordField('Password', validators=[DataRequired()])
@@ -29,6 +30,7 @@ class RegistrationForm(FlaskForm):
 class AdminRegistrationForm(FlaskForm):
     username = StringField('Username',
                            validators=[DataRequired(), Length(min=2, max=20)])
+    name = StringField('Full Name', validators=[DataRequired(), Length(max=120)])
     email = StringField('Email',
                         validators=[DataRequired(), Email()])
     college = SelectField('College', coerce=int, validators=[DataRequired()])
@@ -55,6 +57,7 @@ class AdminRegistrationForm(FlaskForm):
 class SuperAdminRegistrationForm(FlaskForm):
     username = StringField('Username',
                            validators=[DataRequired(), Length(min=2, max=20)])
+    name = StringField('Full Name', validators=[DataRequired(), Length(max=120)])
     email = StringField('Email',
                         validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])

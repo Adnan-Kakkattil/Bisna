@@ -88,11 +88,11 @@ EduStack utilizes a bespoke Neumorphic (Soft UI) design system, creating a tacti
    ```bash
    python run.py
    ```
-   Visit `http://127.0.0.1:5000` in your browser.
+   Visit `http://127.0.0.1:8000` in your browser.
 
 ## 👤 Test Credentials
 
-The system is pre-seeded with multiple demo accounts. Use these for testing:
+The system is pre-seeded with multiple demo accounts, now featuring **realistic full names** for a more immersive experience.
 
 ### 🌟 Super Admin
 | Email | Password | Access Level |
@@ -114,7 +114,7 @@ The system is organized into multiple independent institutional nodes. Each coll
 
 ## 👤 User Directory & Credentials
 
-The system is pre-seeded with **~666 total accounts** across all colleges.
+The system is pre-seeded with **~666 total accounts** across all colleges, each with a designated **Full Name** (e.g., "Dr. Alan Turing").
 
 ### 🌟 Global Access
 A complete list of credentials (Admin, Teacher, Student) for all colleges can be found in `login_credentials.txt`.
@@ -129,17 +129,17 @@ For any college listed above, use the following patterns (replace `[slug]` with 
 | **Student** | `student[teacher_idx]_[1-10]@[slug].edu` | `password123` |
 
 > [!TIP]
-> Each **Teacher** is seeded with **at least 3 resources** (PDFs, Docs, or URLs) associated with their specific college syllabus.
+> Each **Teacher** is seeded with **at least 3 resources** (PDFs, Docs, or URLs) associated with their specific college syllabus. Resource cards now display the teacher's full name.
 
 ## 📂 Project Structure
 ```text
 Bisna/
 ├── app/               # Flask Application & Core Logic
-├── bin/               # Maintenance & Seeding Scripts
+├── bin/               # Maintenance (setup_db, seed_final_data, clear_data)
 ├── instance/          # Database & Local Storage
 ├── .env               # Environment configuration
 ├── config.py          # Static settings
 ├── login_credentials.txt # Institutional access registry
 ├── requirements.txt   # Dependencies
-└── run.py             # Entry sequence
+└── run.py             # Entry sequence (Configured for Port 8000)
 ```

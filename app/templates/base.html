@@ -12,96 +12,103 @@
             theme: {
                 extend: {
                     colors: {
-                        'soft-bg': '#e0e5ec',
-                        'soft-primary': '#4b86b4',
-                        'soft-accent': '#63ace5',
-                        'soft-dark': '#2a4d69',
+                        'soft-bg': '#fcfdfd',
+                        'soft-primary': '#55508d',
+                        'soft-accent': '#726da8',
+                        'soft-blue': '#7d8cc4',
+                        'soft-dark': '#2a2b3d',
                     }
                 }
             }
         }
     </script>
-    <!-- Custom Neumorphic Styles -->
+    <!-- Custom Material Styles -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Bootstrap CSS for modals/collapse (Overridden by Tailwind where needed) -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
-    <nav class="fixed-top navbar-autohide w-full px-2 py-2" style="background: transparent; z-index: 2000;">
+    <!-- Top Centered Header -->
+    <header class="py-5 bg-white border-b border-gray-50">
+        <div class="container mx-auto text-center px-4">
+            <h1 class="text-4xl md:text-5xl font-black text-soft-dark tracking-tight leading-none mb-2">
+                EduStack <span class="text-soft-primary">Portal</span>
+            </h1>
+            <p class="text-[0.65rem] md:text-[0.75rem] font-bold text-gray-400 uppercase tracking-[0.3em]">
+                Professional Academic Management Platform
+            </p>
+        </div>
+    </header>
+
+    <nav class="sticky top-0 navbar-autohide w-full px-2 py-4" style="background: transparent; z-index: 2000;">
         <div class="container mx-auto" style="max-width: 1200px;">
-            <div class="navbar-soft w-full px-4 py-2 flex items-center justify-between shadow-lg">
-                <!-- Logo -->
-                <a class="text-soft-dark hover:opacity-80 font-black tracking-tighter no-underline flex-shrink-0"
-                    style="font-size: 1.25rem;" href="{{ url_for('main.index') }}">
-                    EduStack
-                </a>
+            <div class="navbar-mat w-full px-6 py-3 flex items-center justify-between rounded-2xl">
+                <!-- Navigation Hub -->
+                <div class="flex items-center gap-6">
+                    <a class="text-soft-dark hover:opacity-80 font-black tracking-tighter no-underline flex-shrink-0"
+                        style="font-size: 1.1rem;" href="{{ url_for('main.index') }}">
+                        <i class="fas fa-layer-group text-soft-primary mr-2"></i>EduStack
+                    </a>
+                </div>
 
-                <!-- Navigation Links - Always Visible -->
-                <div class="flex flex-wrap items-center justify-end gap-2 md:gap-3 flex-grow">
+                <!-- Navigation Links -->
+                <div class="flex flex-wrap items-center justify-end gap-4 flex-grow">
                     {% if current_user.is_authenticated %}
-                    {% if current_user.role.name == 'Super Admin' %}
-                    <a href="{{ url_for('super_admin.dashboard') }}"
-                        class="nm-button px-3 py-1.5 text-[0.55rem] font-black uppercase tracking-widest no-underline flex items-center gap-2">
-                        <i class="fas fa-th-large text-[0.6rem]"></i> <span>Dashboard</span>
-                    </a>
-                    {% elif current_user.role.name == 'Admin' %}
-                    <a href="{{ url_for('admin.dashboard') }}"
-                        class="nm-button px-3 py-1.5 text-[0.55rem] font-black uppercase tracking-widest no-underline flex items-center gap-2">
-                        <i class="fas fa-desktop text-[0.6rem]"></i> <span>Dashboard</span>
-                    </a>
-                    <a href="{{ url_for('admin.view_faculty') }}"
-                        class="nm-button px-3 py-1.5 text-[0.55rem] font-black uppercase tracking-widest no-underline flex items-center gap-2">
-                        <i class="fas fa-user-tie text-[0.6rem]"></i> <span>Faculty</span>
-                    </a>
-                    <a href="{{ url_for('admin.view_students') }}"
-                        class="nm-button px-3 py-1.5 text-[0.55rem] font-black uppercase tracking-widest no-underline flex items-center gap-2">
-                        <i class="fas fa-user-graduate text-[0.6rem]"></i> <span>Students</span>
-                    </a>
-                    {% elif current_user.role.name == 'Teacher' %}
-                    <a href="{{ url_for('main.teacher_dashboard') }}"
-                        class="nm-button px-3 py-1.5 text-[0.55rem] font-black uppercase tracking-widest no-underline flex items-center gap-2">
-                        <i class="fas fa-chalkboard-teacher text-[0.6rem]"></i> <span>Portal</span>
-                    </a>
-                    <a href="{{ url_for('admin.view_students') }}"
-                        class="nm-button px-3 py-1.5 text-[0.55rem] font-black uppercase tracking-widest no-underline flex items-center gap-2">
-                        <i class="fas fa-users text-[0.6rem]"></i> <span>Registry</span>
-                    </a>
-                    {% endif %}
+                    <div class="flex items-center gap-2">
+                        {% if current_user.role.name == 'Super Admin' %}
+                        <a href="{{ url_for('super_admin.dashboard') }}"
+                            class="mat-button px-4 py-1.5 text-xs no-underline">
+                            Dashboard
+                        </a>
+                        {% elif current_user.role.name == 'Admin' %}
+                        <a href="{{ url_for('admin.dashboard') }}" class="mat-button px-4 py-1.5 text-xs no-underline">
+                            Dashboard
+                        </a>
+                        <a href="{{ url_for('admin.view_faculty') }}"
+                            class="mat-button px-4 py-1.5 text-xs no-underline">
+                            Faculty
+                        </a>
+                        {% elif current_user.role.name == 'Teacher' %}
+                        <a href="{{ url_for('main.teacher_dashboard') }}"
+                            class="mat-button px-4 py-1.5 text-xs no-underline">
+                            Portal
+                        </a>
+                        {% endif %}
 
-                    <a href="{{ url_for('notes.list_notes') }}"
-                        class="text-soft-primary font-black text-[0.55rem] uppercase tracking-[0.2em] no-underline px-2 hover:opacity-100 opacity-40 transition-opacity">
-                        Resources
-                    </a>
+                        <a href="{{ url_for('notes.list_notes') }}"
+                            class="text-soft-dark font-bold text-xs no-underline px-2 hover:text-soft-primary transition-colors">
+                            Resources
+                        </a>
+                    </div>
 
-                    <div class="flex items-center gap-1.5 ml-1">
+                    <div class="flex items-center gap-2 border-l pl-4 border-gray-200">
                         <a href="{{ url_for('auth.profile') }}"
-                            class="nm-button w-8 h-8 rounded-full flex items-center justify-center p-0" title="Profile">
-                            <i class="fas fa-user-circle text-soft-primary text-xs"></i>
+                            class="w-9 h-9 rounded-full bg-gray-100 flex items-center justify-center hover:bg-gray-200 transition-colors"
+                            title="Profile">
+                            <i class="fas fa-user text-soft-primary"></i>
                         </a>
                         <a href="{{ url_for('auth.logout') }}"
-                            class="nm-button w-8 h-8 rounded-full flex items-center justify-center p-0 hover:text-red-500/60"
+                            class="w-9 h-9 rounded-full bg-red-50 text-red-600 flex items-center justify-center hover:bg-red-100 transition-colors"
                             title="Logout">
-                            <i class="fas fa-sign-out-alt text-[0.6rem]"></i>
+                            <i class="fas fa-power-off text-sm"></i>
                         </a>
                     </div>
                     {% else %}
                     <!-- Guest -->
                     <a href="{{ url_for('notes.list_notes') }}"
-                        class="text-soft-primary font-black text-[0.55rem] uppercase tracking-[0.2em] no-underline px-3 hover:opacity-100 opacity-40 transition-opacity">
+                        class="text-soft-dark font-bold text-xs no-underline px-3 hover:text-soft-primary transition-colors">
                         Resources
                     </a>
                     <a href="{{ url_for('auth.login') }}"
-                        class="text-soft-primary font-black text-[0.55rem] uppercase tracking-[0.2em] no-underline px-3 hover:opacity-100 opacity-40 transition-opacity">
+                        class="text-soft-dark font-bold text-xs no-underline px-3 hover:text-soft-primary transition-colors">
                         Login
                     </a>
                     <a href="{{ url_for('auth.register') }}"
-                        class="nm-button px-4 py-1.5 text-[0.55rem] font-black uppercase tracking-[0.2em] no-underline">
-                        Join
+                        class="mat-button mat-button-primary px-6 py-2 text-xs no-underline rounded-full shadow-md">
+                        Join EduStack
                     </a>
                     {% endif %}
                 </div>
