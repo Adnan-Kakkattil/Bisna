@@ -198,6 +198,39 @@ def approve_note(note_id):
     flash('Note approved.', 'success')
     return redirect(url_for('notes.verification_queue'))
 
+@notes.route('/notes/delete/<int:note_id>', methods=['POST'])
+@login_required
+def delete_note(note_id):
+    note = Note.query.get_or_404(note_id)
+    
+    # Permission check: Teacher/Admin or Uploader
+    can_delete = current_user.role.name in ['Teacher', 'Admin'] or current_user.id == note.user_id
+    if not can_delete:
+        flash('Unauthorized access.', 'danger')
+        return redirect(url_for('notes.list_notes'))
+    
+    title = note.title
+    filename = note.filename
+    
+    # File cleanup
+    if filename and not note.file_url:
+        file_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
+        if os.path.exists(file_path):
+            try:
+                os.remove(file_path)
+            except Exception as e:
+                print(f"Error deleting file: {e}")
+                flash('Note record deleted, but there was an issue removing the physical file.', 'warning')
+
+    # Remove verification status first due to FK
+    VerificationStatus.query.filter_by(note_id=note.id).delete()
+    db.session.delete(note)
+    db.session.commit()
+    
+    log_activity('Delete Note', f'Deleted note "{title}"')
+    flash(f'Note "{title}" has been deleted.', 'success')
+    return redirect(url_for('notes.list_notes'))
+
 @notes.route('/notes/edit/<int:note_id>', methods=['GET', 'POST'])
 @login_required
 def edit_note(note_id):

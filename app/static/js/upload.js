@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
     handleModalForm('saveCourseBtn', '/api/courses', () => ({ name: document.getElementById('newCourseName').value }));
 
     handleModalForm('saveSemesterBtn', '/api/semesters', () => ({
-        name: document.getElementById('newSemesterName').value,
+        number: document.getElementById('newSemesterName').value,
         course_id: courseSelect.value
     }), () => {
         // Refresh semester list after adding
@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     handleModalForm('saveUnitBtn', '/api/units', () => ({
-        name: document.getElementById('newUnitName').value,
+        number: document.getElementById('newUnitName').value,
         subject_id: subjectSelect.value
     }), () => {
         fetchData(`/api/subjects/${subjectSelect.value}/units`, unitSelect);

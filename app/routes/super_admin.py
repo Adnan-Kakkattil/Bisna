@@ -29,18 +29,24 @@ def dashboard():
 @login_required
 @role_required('Super Admin')
 def manage_admins():
-    pending_users = User.query.join(Role).filter(
-        User.is_verified == False,
-        Role.name == 'Admin',
-        User.college_id != None
-    ).all()
     verified_admins = User.query.join(Role).filter(
         User.is_verified == True,
         Role.name == 'Admin'
     ).all()
     return render_template('super_admin/admins.html', 
-                          pending_users=pending_users,
                           verified_admins=verified_admins)
+
+@super_admin.route('/super_admin/approve_admins')
+@login_required
+@role_required('Super Admin')
+def approve_admins():
+    pending_users = User.query.join(Role).filter(
+        User.is_verified == False,
+        Role.name == 'Admin',
+        User.college_id != None
+    ).all()
+    return render_template('super_admin/pending_admins.html', 
+                          pending_users=pending_users)
 
 @super_admin.route('/super_admin/colleges')
 @login_required
@@ -79,7 +85,7 @@ def verify_user(user_id, action):
         flash(f'User {username} rejected/deleted.', 'danger')
     
     db.session.commit()
-    return redirect(url_for('super_admin.dashboard'))
+    return redirect(url_for('super_admin.approve_admins'))
 
 @super_admin.route('/super_admin/college/edit/<int:college_id>', methods=['GET', 'POST'])
 @login_required

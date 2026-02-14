@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %} - EduStack</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -35,10 +36,10 @@
     <header class="py-5 bg-white border-b border-gray-50">
         <div class="container mx-auto text-center px-4">
             <h1 class="text-4xl md:text-5xl font-black text-soft-dark tracking-tight leading-none mb-2">
-                EduStack <span class="text-soft-primary">Portal</span>
+                EduStack
             </h1>
             <p class="text-[0.65rem] md:text-[0.75rem] font-bold text-gray-400 uppercase tracking-[0.3em]">
-                Professional Academic Management Platform
+                Your College Portal
             </p>
         </div>
     </header>
@@ -108,7 +109,7 @@
                     </a>
                     <a href="{{ url_for('auth.register') }}"
                         class="mat-button mat-button-primary px-6 py-2 text-xs no-underline rounded-full shadow-md">
-                        Join EduStack
+                        Join Us
                     </a>
                     {% endif %}
                 </div>

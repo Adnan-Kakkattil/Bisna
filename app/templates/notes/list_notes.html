@@ -1,21 +1,20 @@
 {% extends "base.html" %}
-{% block title %}Resource Nexus{% endblock %}
+{% block title %}Study Materials{% endblock %}
 
 {% block content %}
 <div class="max-w-6xl mx-auto px-4 py-6">
     <!-- Header Nexus -->
     <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
         <div>
-            <h2 class="text-3xl font-black text-soft-dark tracking-tight">Resource <span
-                    class="text-soft-primary">Library</span></h2>
-            <p class="text-[0.6rem] font-bold text-soft-primary uppercase tracking-[0.2em] opacity-60">Study Materials &
-                Guides</p>
+            <h2 class="text-3xl font-black text-soft-dark tracking-tight">Library</h2>
+            <p class="text-[0.6rem] font-bold text-soft-primary uppercase tracking-[0.2em] opacity-60">Find notes and
+                guides here</p>
         </div>
         <div class="flex gap-3">
             <div class="bg-white border border-gray-100 px-4 py-2 rounded-full flex items-center gap-2 shadow-sm">
                 <i class="fas fa-layer-group text-soft-primary text-[0.6rem]"></i>
                 <span class="text-[0.6rem] font-bold text-gray-500 uppercase tracking-widest">{{ notes|length }}
-                    Materials</span>
+                    Files</span>
             </div>
             {% if current_user.is_authenticated and current_user.role.name in ['Teacher', 'Admin'] %}
             <a href="{{ url_for('notes.upload_note') }}"
@@ -111,7 +110,7 @@
             <div class="bg-gray-50 rounded-lg p-4 mb-5 space-y-2 flex-grow">
                 <div
                     class="flex justify-between items-center text-[0.6rem] font-bold uppercase tracking-wide text-gray-400">
-                    <span>Module</span>
+                    <span>Subject</span>
                     <span class="text-gray-600 text-end ml-2">{{ note.topic.unit.subject.name }}</span>
                 </div>
                 <div
@@ -140,9 +139,19 @@
                 {% if current_user.is_authenticated and (current_user.role.name in ['Teacher', 'Admin'] or
                 current_user.id == note.user_id) %}
                 <a href="{{ url_for('notes.edit_note', note_id=note.id) }}"
-                    class="mat-button mat-button-outline w-11 flex items-center justify-center text-gray-400">
+                    class="mat-button mat-button-outline w-11 flex items-center justify-center text-gray-400"
+                    title="Edit Note">
                     <i class="fas fa-edit"></i>
                 </a>
+                <form action="{{ url_for('notes.delete_note', note_id=note.id) }}" method="POST" class="inline"
+                    onsubmit="return confirm('Are you sure you want to delete this resource? This action cannot be undone.');">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="submit"
+                        class="mat-button mat-button-outline w-11 flex items-center justify-center text-red-400 hover:text-red-600 hover:bg-red-50"
+                        title="Delete Note">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </form>
                 {% endif %}
             </div>
         </div>

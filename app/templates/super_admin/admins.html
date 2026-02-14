@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Manage Administrators{% endblock %}
+{% block title %}Manage Admins{% endblock %}
 {% block scripts %}
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -28,80 +28,16 @@
     <!-- Header -->
     <div class="flex flex-col md:flex-row justify-between items-center gap-6">
         <div>
-            <h2 class="text-4xl font-black text-soft-dark tracking-tight">Admin <span
-                    class="text-soft-primary">Verification</span></h2>
+            <h2 class="text-4xl font-black text-soft-dark tracking-tight">Approve <span
+                    class="text-soft-primary">Admins</span></h2>
             <p class="text-[0.65rem] font-bold text-soft-primary uppercase tracking-[0.2em] opacity-60">Manage
-                institutional administrative nodes</p>
+                admins for different colleges</p>
         </div>
         <div class="flex gap-4">
             <a href="{{ url_for('super_admin.view_logs') }}" class="nm-button flex items-center gap-2 text-sm">
                 <i class="fas fa-terminal"></i> Activity Logs
             </a>
         </div>
-    </div>
-
-    <!-- Pending Authorizations -->
-    <div class="nm-flat p-6 md:p-10 border-l-8 border-soft-primary">
-        <div class="flex items-center gap-4 mb-8">
-            <div class="nm-inset p-3 rounded-2xl text-soft-primary">
-                <i class="fas fa-shield-alt text-xl"></i>
-            </div>
-            <div>
-                <h5 class="text-xs font-black text-soft-dark uppercase tracking-[0.2em] leading-none mb-1">Queue
-                    Management</h5>
-                <p class="text-[0.6rem] font-bold text-soft-primary uppercase tracking-widest opacity-60">Pending Node
-                    Authorizations</p>
-            </div>
-        </div>
-
-        {% if pending_users %}
-        <div class="overflow-x-auto rounded-2xl nm-inset p-1">
-            <table class="w-full text-left border-collapse">
-                <thead>
-                    <tr class="text-soft-primary text-[0.65rem] font-black uppercase tracking-[0.2em]">
-                        <th class="py-5 px-6">User Entity</th>
-                        <th class="py-5 px-6">College Node</th>
-                        <th class="py-5 px-6 text-right">Sequence</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-soft-primary/5">
-                    {% for user in pending_users %}
-                    <tr class="hover:bg-white/40 transition-colors group">
-                        <td class="py-5 px-6">
-                            <div class="font-black text-soft-dark text-lg mb-0.5 leading-none">{{ user.username }}</div>
-                            <div
-                                class="text-[0.65rem] font-black text-soft-primary/60 uppercase tracking-widest italic">
-                                {{ user.role.name }}</div>
-                        </td>
-                        <td class="py-5 px-6">
-                            <span
-                                class="nm-flat px-4 py-1.5 rounded-full text-[0.65rem] font-black text-soft-primary uppercase tracking-widest bg-white/50">
-                                {{ user.college.name }}
-                            </span>
-                        </td>
-                        <td class="py-5 px-6 text-right">
-                            <div class="flex gap-3 justify-end">
-                                <a href="{{ url_for('super_admin.verify_user', user_id=user.id, action='approve') }}"
-                                    class="nm-button py-2.5 px-6 text-[0.65rem] uppercase tracking-widest text-green-700 font-black">Approve</a>
-                                <a href="{{ url_for('super_admin.verify_user', user_id=user.id, action='reject') }}"
-                                    class="nm-button py-2.5 px-6 text-[0.65rem] uppercase tracking-widest text-red-600 font-black"
-                                    onclick="return confirm('Reject this user registration?');">Reject</a>
-                            </div>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        {% else %}
-        <div class="flex flex-col items-center justify-center py-16 opacity-60">
-            <div class="nm-inset w-24 h-24 flex items-center justify-center rounded-full mb-6">
-                <i class="fas fa-satellite-dish text-5xl text-soft-primary/30"></i>
-            </div>
-            <p class="font-black text-soft-primary text-xs uppercase tracking-[0.2em]">All nodes synchronized. No
-                pending requests.</p>
-        </div>
-        {% endif %}
     </div>
 
     <!-- Active Administrators -->
@@ -111,10 +47,10 @@
                 <i class="fas fa-users-cog text-xl"></i>
             </div>
             <div>
-                <h5 class="text-xs font-black text-soft-dark uppercase tracking-[0.2em] leading-none mb-1">Node Registry
+                <h5 class="text-xs font-black text-soft-dark uppercase tracking-[0.2em] leading-none mb-1">Active Admins
                 </h5>
-                <p class="text-[0.6rem] font-bold text-soft-primary uppercase tracking-widest opacity-60">Active
-                    Administrative Entities</p>
+                <p class="text-[0.6rem] font-bold text-soft-primary uppercase tracking-widest opacity-60">Registered
+                    College Admins</p>
             </div>
         </div>
 
@@ -130,7 +66,7 @@
                     <div class="font-black text-soft-dark text-xl leading-none mb-1">{{ user.username }}</div>
                     <div
                         class="text-[0.6rem] font-black text-soft-primary uppercase tracking-widest italic mb-2 opacity-60">
-                        {{ user.college.name }}</div>
+                        {{ user.college.name }} ({{ user.college.formatted_id }})</div>
                     <div class="text-[0.7rem] text-soft-primary font-bold">{{ user.email }}</div>
                 </div>
                 {% if user.is_online %}
@@ -142,8 +78,7 @@
             </div>
             {% endfor %}
             {% else %}
-            <div class="col-span-full text-center py-16 opacity-40 italic font-bold">No verified admin nodes active in
-                the sequence.</div>
+            <div class="col-span-full text-center py-16 opacity-40 italic font-bold">No registered admins found.</div>
             {% endif %}
         </div>
     </div>
@@ -171,23 +106,22 @@
                         <i class="fas fa-exclamation-triangle"></i>
                     </div>
                     <div>
-                        <div class="text-[0.6rem] font-black text-red-600 uppercase tracking-widest mb-1">Critical
-                            Warning</div>
-                        <p class="text-[0.65rem] font-bold text-soft-primary leading-tight">Revoking entity access
-                            cascades through all associated college sub-nodes.</p>
+                        <div class="text-[0.6rem] font-black text-red-600 uppercase tracking-widest mb-1">Warning</div>
+                        <p class="text-[0.65rem] font-bold text-soft-primary leading-tight">Removing this admin will
+                            also remove their access to all their college materials.</p>
                     </div>
                 </div>
 
                 <div class="flex gap-4 mt-8">
                     <a id="modal-report-link" href="#"
                         class="nm-button flex-1 py-4 text-xs tracking-widest no-underline">
-                        <i class="fas fa-project-diagram mr-2"></i> Audit Path
+                        <i class="fas fa-project-diagram mr-2"></i> View Profile
                     </a>
                     <form id="modal-delete-form" method="POST" action="" class="flex-1">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                         <button type="submit"
                             class="nm-button w-full py-4 text-xs tracking-widest text-red-600 font-black">
-                            Decommission
+                            Remove Admin
                         </button>
                     </form>
                 </div>
